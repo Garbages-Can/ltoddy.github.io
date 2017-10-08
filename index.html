@@ -20,7 +20,7 @@
 
 <body>
     <!-- navigation bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top">
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -35,28 +35,20 @@
 
                 <ul class="nav navbar-nav">
 
-                    <!--Lisp-Scheme-->
                     <li><a href="essay/Lisp_Scheme/index.html">Lisp-Scheme</a></li>
 
-                    <!-- Python -->
                     <li><a href="essay/Python/index.html">Python</a></li>
 
-                    <!-- Java -->
                     <li><a href="essay/Java/index.html">Java</a></li>
 
-                    <!-- C - Cpp -->
                     <li><a href="essay/C_Cpp/index.html">C-Cpp</a></li>
 
-                    <!-- Golang -->
                     <li><a href="essay/Golang/index.html">Golang</a></li>
 
-                    <!-- 前端 -->
                     <li><a href="essay/front_end/index.html">前端</a></li>
 
-                    <!-- 数据结构与算法 -->
                     <li><a href="essay/data_structures_and_algorithms/index.html">数据结构与算法</a></li>
 
-                    <!-- 闲谈 -->
                     <li><a href="essay/chat/index.html">闲谈</a></li>
 
                 </ul>
@@ -66,10 +58,10 @@
                 </ul>
             </div>
         </div>
-    </nav> <!-- navigation bar -->
+    </nav>  -->
+    <!-- navigation bar -->
 
-    <div class="jumbotron" style="margin-top: 20px; margin-bottom: -20px">
-        <!-- content -->
+    <!-- <div class="jumbotron" style="margin-top: 20px; margin-bottom: -20px">
         <div class="container" style="margin-top: 20px; margin-bottom: -20px">
             <div class="row">
                 <div class="col-sm-8">
@@ -82,7 +74,7 @@
                         <h2>Who am I</h2>
                     </div>
                     <div class="well">
-                        <pre><code>#!/usr/bin/scheme --script
+                        <pre><code>#!/usr/bin/scheme
 (define (who-am-I introduce)
     ;;; I am just a tech and a student
   (let ((code-by '(Scheme Python Java C JavaScript))
@@ -109,7 +101,6 @@
                         <img class="img-thumbnail" src="static/me.jpg" alt="me" style="width: 200px; height: 200px">
                     </div>
 
-                    <!-- 友情链接 -->
                     <div class="row container" id="nav" style="position: fixed; width: 230px">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -125,7 +116,45 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+    <!-- navigation bar -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ltoddy的博客  (。・`ω´・) 仔细一想,纯属扯淡(慌张)</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://algo.site" target="_blank">博客</a></li>
+                    <li><a href="https://github.com/LToddy" target="_blank">Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- content -->
+    <div class="container">
+        <div class="col-sm-8">
+            <ul class="list-group">
+
+                <a class="list-group-item" href="essay/Lisp_Scheme/Scheme环境搭建.html">Scheme 环境配置</a>
+                <a class="list-group-item" href="essay/chat/浅谈程序设计.html">浅谈程序设计</a>
+            </ul>
+        </div>
+
+        <div class="col-sm-3 col-sm-offset-1">
+            <img class="img-thumbnail" src="static/me.jpg" alt="me" style="width: 200px; height: 200px">
+        </div>
     </div>
+
 </body>
 
 </html>
