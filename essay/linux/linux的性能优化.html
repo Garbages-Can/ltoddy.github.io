@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>linux的性能优化</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap-theme.css">
+    <link rel="icon" href="../../images/me.jpg">
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <h3>linux的性能优化</h3>
+        </div>
+        <pre>1、CPU，MEM
+2、DISK－－RAID
+3、网络相关的外设，网卡
+
+linux系统性能分析：
+top：linux系统的负载，CPU，MEM，SWAP，占用CPU和内存比较的进程，杀死占用性能高的进程。
+<code>[root@linuxbox ~]# top
+top - 22:45:24 up 22:53,  5 users,  load average: 0.00, 0.00, 0.00</code>
+当前的时间，开机时间为22小时53分钟，5个用户在线，linux系统的负载（CPU核数＊1），最近1分钟，最近5分钟，最近15分钟。
+
+<code>Tasks: 151 total,   1 running, 150 sleeping,   0 stopped,   0 zombie</code>
+系统已打开的进程总数为151个，1个正在运行，150休眠，0个停止，0个阻塞。
+
+<code>Cpu0  :  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Cpu1  :  0.0%us,  0.3%sy,  0.0%ni, 99.7%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Cpu2  :  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Cpu3  :  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</code>
+按1（123的1）显示CPU的所有核。
+id,wa:　
+id=100%,wa=0% 表示系统负载非常低。
+id=0%,wa=100% 表示系统我载非常高。
+id=100%,wa=100% 表示CPU压力低，磁盘、网络可能压力高，可能死锁。
+id=0%,wa=0%   表示CPU压力大，有进程在占用CPU做运算。
+
+<code>Mem:   1914488k total,   468192k used,  1446296k free,    73692k buffers
+Swap:   835576k total,        0k used,   835576k free,   240788k cached</code>
+物理内存为2G，规划内存为468M左右，剩余内存为1.44G,共享缓存为73M，高速缓存240M。
+虚拟内存为835M，没有使用，剩余835M。
+使用内存：高速缓存＋共享缓存＝320M
+
+<code>[root@linuxbox ~]# cat /proc/meminfo
+MemTotal:        1914488 kB
+MemFree:         1446568 kB
+Buffers:           73940 kB    共享缓存
+Cached:           240792 kB    高速缓存
+SwapCached:            0 kB
+Active:           142040 kB    活动缓存
+Inactive:         196632 kB    非活动缓存
+Active(anon):      24120 kB
+Inactive(anon):      128 kB
+Active(file):     117920 kB
+Inactive(file):   196504 kB
+Unevictable:           0 kB</code>
+
+L(小写） 显示或关闭linux系统负载行
+t     显示或关闭进程和CPU行。
+m      显示或关闭内存行。
+1     显示或关闭多核CPU显示。
+z     显示或关闭颜色
+b     显示或关闭高负载的进程。
+k     杀死进程
+r     调整进程的优先级，默认优先级为0, 20~-19 　-19优先级最高。
+h     查看帮助。
+
+sar　显示CPU的性能，磁盘，页面，IO的信息。
+
+<code>[root@linuxbox ~]# sar 1 10
+[root@linuxbox ~]# sar 1 10
+Linux 2.6.32-431.20.3.el6.x86_64 (linuxbox)     2015年09月18日  _x86_64_        (4 CPU)
+
+23时14分13秒     CPU     %user     %nice   %system   %iowait    %steal     %idle
+23时14分14秒     all      0.00      0.00      0.25      0.00      0.00     99.75
+23时14分15秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+23时14分16秒     all      0.00      0.00      0.25      0.00      0.00     99.75
+23时14分17秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+23时14分18秒     all      0.00      0.00      0.25      0.00      0.00     99.75
+23时14分19秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+23时14分20秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+23时14分21秒     all      0.00      0.00      0.25      0.00      0.00     99.75
+23时14分22秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+23时14分23秒     all      0.00      0.00      0.00      0.00      0.00    100.00
+平均时间:     all      0.00      0.00      0.10      0.00      0.00     99.90
+
+23时20分35秒     CPU     %user     %nice   %system   %iowait    %steal     %idle
+23时20分36秒     all      0.00      0.00     11.95      0.00      0.00     88.05
+23时20分38秒     all      0.00      0.00     32.70      3.77      0.00     63.52
+23时20分39秒     all      0.00      0.00     23.08     38.06      0.00     38.87
+23时20分40秒     all      0.00      0.00      7.02     26.32      0.00     66.67
+23时20分41秒     all      0.00      0.00     10.81     40.54      0.00     48.65
+23时20分42秒     all      0.00      0.00     20.49     42.62      0.00     36.89
+
+[root@linuxbox ~]# sar -d 1 每秒扫描一次。
+23时23分07秒       DEV       tps  rd_sec/s  wr_sec/s  avgrq-sz  avgqu-sz     await     svctm     %util
+23时23分08秒   dev11-0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+23时23分08秒   dev8-16      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+23时23分08秒    dev8-0    256.45  65651.61      0.00    256.00      2.60     10.16      6.18    158.39
+23时23分08秒   dev8-32    143.55     12.90 102812.90    716.31      3.53     24.60     10.57    151.77
+23时23分08秒   dev8-64    109.68      0.00 101161.29    922.35      3.07     25.90     14.74    161.61
+23时23分08秒   dev8-80      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+23时23分08秒   dev8-48    108.06      0.00 101161.29    936.12      2.86     24.33     13.60    146.94
+23时23分08秒  dev253-0    254.84  65238.71      0.00    256.00      2.59     10.18      6.21    158.23
+23时23分08秒  dev253-1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+23时23分08秒    dev9-0  24879.03     12.90 199019.35      8.00      0.00      0.00      0.00      0.00
+23时23分08秒  dev253-2  24879.03     12.90 199019.35      8.00    829.52     28.60      0.07    175.00
+23时23分08秒  dev253-3      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</code>
+
+vmstat 显示虚拟内存的状况。
+
+<code>[root@linuxbox ~]# vmstat 1
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0  77268  21360 1652176    0    0     4     6    4    5  0  0 100  0  0
+ 1  0      0  77260  21360 1652192    0    0     0     0   20   19  0  0 100  0  0
+ 0  0      0  77244  21368 1652200    0    0     0    72   43   48  0  0 100  0  0
+ 0  0      0  77244  21368 1652204    0    0     0     0   15   17  0  0 100  0  0
+ 0  0      0  77244  21368 1652208    0    0     0     0   14   21  0  0 100  0  0
+ 0  0      0  77244  21368 1652208    0    0     0     0   16   19  0  0 100  0  0
+ 0  0      0  77244  21368 1652208    0    0     0     0   14   23  0  0 100  0  0
+ 0  0      0  77244  21368 1652208    0    0     0     0   16   20  0  0 100  0  0</code>
+
+iostat 显示磁盘IO状况。
+<code>[root@linuxbox ~]# iostat 1
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00   28.04   10.14    0.00   61.82
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+scd0              0.00         0.00         0.00          0          0
+sdb               0.00         0.00         0.00          0          0
+sda               3.96         0.00        55.45          0         56
+sdc             121.78       182.18     51169.31        184      51681
+sde             122.77       150.50     49347.52        152      49841
+sdf               0.00         0.00         0.00          0          0
+sdd             116.83       332.67     51232.67        336      51745
+dm-0              6.93         0.00        55.45          0         56
+dm-1              0.00         0.00         0.00          0          0
+md0           12800.99        15.84    102392.08         16     103416
+dm-2              0.00         0.00         0.00          0          0
+dm-3          12801.98        15.84    102400.00         16     103424
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00   13.83   16.60    0.00   69.57
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+scd0              0.00         0.00         0.00          0          0
+sdb               0.00         0.00         0.00          0          0
+sda               0.00         0.00         0.00          0          0
+sdc              78.00        24.00     40680.00         24      40680
+sde              80.00        40.00     41680.00         40      41680
+sdf               0.00         0.00         0.00          0          0
+sdd              79.00       328.00     40680.00        328      40680
+dm-0              0.00         0.00         0.00          0          0
+dm-1              0.00         0.00         0.00          0          0
+md0           10136.00         0.00     81088.00          0      81088
+dm-2              0.00         0.00         0.00          0          0
+dm-3          10136.00         0.00     81088.00          0      81088</code>
+
+
+ps    显示进程
+<code>[root@linuxbox ~]# ps -ef    显示所有进程
+[root@linuxbox ~]# ps -aux    显示系统中所有进程的详细信息。</code>
+
+pstree     显示进程树
+<code>[root@linuxbox ~]# pstree
+init┬─NetworkManager
+     ├─abrtd
+     ├─acpid
+     ├─atd
+     ├─auditd───{auditd}
+     ├─automount───4*[{automount}]
+     ├─certmonger
+     ├─console-kit-dae───63*[{console-kit-da}]
+     ├─crond
+     ├─cupsd
+     ├─dbus-daemon
+     ├─hald─┬─hald-runner─┬─hald-addon-acpi
+     │        │               └─hald-addon-inpu
+     │        └─{hald}
+     ├─httpd───8*[httpd]
+     ├─irqbalance
+     ├─4*[login───bash]
+     ├─master─┬─pickup
+     │            └─qmgr
+     ├─mcelog
+     ├─2*[mingetty]
+     ├─modem-manager
+     ├─rpc.statd
+     ├─rpcbind
+     ├─rsyslogd───4*[{rsyslogd}]
+     ├─sshd───bash───pstree
+     ├─sshd
+     ├─udevd───2*[udevd]
+     ├─vsftpd
+     └─wpa_supplicant
+[root@linuxbox ~]#</code>
+
+
+显示系统运行的时间。
+<code>[root@linuxbox ~]# uptime
+ 23:43:23 up 23:51,  5 users,  load average: 0.03, 0.09, 0.10
+[root@linuxbox ~]# cat /proc/uptime
+85901.05 341926.67
+[root@linuxbox ~]#</code>
+
+显示内存的情况：
+<code>[root@linuxbox ~]# free -m
+             total       used       free     shared    buffers     cached
+Mem:          1869       1800         68          0         21       1636
+-/+ buffers/cache:        142       1727
+Swap:          815          0        815</code>
+
+真正的使用内存：142+21=163M    1800-1636-1=163M
+
+显示多核CPU的状况：mpstat
+
+<code>[root@linuxbox ~]# mpstat -P ALL 1
+23时49分44秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest   %idle
+
+23时49分45秒  all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+23时49分45秒    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+23时49分45秒    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+23时49分45秒    2    0.00    0.00    0.97    0.00    0.00    0.00    0.00    0.00   99.03
+23时49分45秒    3    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</code>
+
+第一列：时间
+第二列：CPU及CPU的核数
+第三列：用户占用CPU的百分比
+第四列：优先级调整时占用CPU的百分比
+第五列：系统
+第六列：iowait　IO等待
+第七列：硬中断
+第八列：软中断
+第九列：虚拟CPU中虚拟指令占用CPU的百分比（虚拟环境中使用）
+第十列：虚机占用CPU的百分比
+第十一列：CPU的空闲百分比
+
+显示进程的动态链接库文件及占用内存的大小。
+
+<code>[root@linuxbox ~]# pmap -x 7652
+7652:   /usr/sbin/sshd
+Address           Kbytes     RSS   Dirty Mode   Mapping
+00007f8ad1bf1000      48       0       0 r-x--  libnss_files-2.12.so
+00007f8ad1bfd000    2048       0       0 -----  libnss_files-2.12.so
+00007f8ad1dfd000       4       4       4 r----  libnss_files-2.12.so
+00007f8ad1dfe000       4       4       4 rw---  libnss_files-2.12.so
+00007f8ad1dff000      28       0       0 r-x--  librt-2.12.so
+00007f8ad1e06000    2044       0       0 -----  librt-2.12.so
+00007f8ad2005000       4       4       4 r----  librt-2.12.so
+00007f8ad2006000       4       4       4 rw---  librt-2.12.so
+00007f8ad2007000     228       0       0 r-x--  libnspr4.so
+00007f8ad2040000    2048       0       0 -----  libnspr4.so
+00007f8ad2240000       4       4       4 r----  libnspr4.so
+00007f8ad2241000       8       8       8 rw---  libnspr4.so</code>
+
+查看系统中进程的动态内存。
+<code>[root@linuxbox ~]# cat while.sh
+#!/bin/bash
+while true
+do
+pmap -d 7652|tail -1
+sleep 2
+done
+[root@linuxbox ~]# chmod +x while.sh
+[root@linuxbox ~]# sh while.sh
+mapped: 66616K    writeable/private: 808K    shared: 0K
+mapped: 66616K    writeable/private: 808K    shared: 0K
+mapped: 66616K    writeable/private: 808K    shared: 0K</code>
+
+
+进程的调试：strace
+<code>[root@linuxbox ~]# strace -c -p 6610
+Process 6610 attached - interrupt to quit
+Process 6610 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+  -nan    0.000000           0        39           select
+  -nan    0.000000           0        39           wait4
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000000                    78           total</code>
+
+显示当前系统所有进程的动态链接库。
+<code>[root@linuxbox ~]# lsof |grep vsftpd
+vsftpd    3788      root  cwd       DIR              253,0     4096          2 /
+vsftpd    3788      root  rtd       DIR              253,0     4096          2 /
+vsftpd    3788      root  txt       REG              253,0   159568     176841 /usr/sbin/vsftpd
+vsftpd    3788      root  mem       REG              253,0   124624     176040 /lib64/libselinux.so.1
+vsftpd    3788      root  mem       REG              253,0   472064     163188 /lib64/libfreebl3.so
+...后面已省略</code>
+
+找到动态链接库文件后，再到rpmfind.net或关盘网址查阅/lib64/libpthread-2.12.so
+
+查看本机监控的端口。
+<code>[root@linuxbox ~]# lsof -i
+COMMAND    PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+rpcbind   1330     rpc    6u  IPv4  10522      0t0  UDP *:sunrpc
+rpcbind   1330     rpc    7u  IPv4  10524      0t0  UDP *:rmc
+rpcbind   1330     rpc    8u  IPv4  10525      0t0  TCP *:sunrpc (LISTEN)
+rpcbind   1330     rpc    9u  IPv6  10527      0t0  UDP *:sunrpc
+rpcbind   1330     rpc   10u  IPv6  10529      0t0  UDP *:rmc
+rpcbind   1330     rpc   11u  IPv6  10530      0t0  TCP *:sunrpc (LISTEN)
+rpc.statd 1459 rpcuser    5u  IPv4  10808      0t0  UDP *:787
+rpc.statd 1459 rpcuser    8u  IPv4  10816      0t0  UDP *:37593
+rpc.statd 1459 rpcuser    9u  IPv4  10820      0t0  TCP *:58964 (LISTEN)
+rpc.statd 1459 rpcuser   10u  IPv6  10824      0t0  UDP *:59776
+rpc.statd 1459 rpcuser   11u  IPv6  10828      0t0  TCP *:39172 (LISTEN)
+cupsd     1494    root    6u  IPv6  11113      0t0  TCP localhost:ipp (LISTEN)
+cupsd     1494    root    7u  IPv4  11114      0t0  TCP localhost:ipp (LISTEN)
+cupsd     1494    root    9u  IPv4  11117      0t0  UDP *:ipp
+master    1753    root   12u  IPv4  12026      0t0  TCP localhost:smtp (LISTEN)
+master    1753    root   13u  IPv6  12028      0t0  TCP localhost:smtp (LISTEN)
+vsftpd    3788    root    3u  IPv4  17645      0t0  TCP *:ftp (LISTEN)
+sshd      5402    root    3u  IPv4  20693      0t0  TCP linuxbox:EtherNet/IP-1-&gt;192.168.232.1:ndsconnect (ESTABLISHED)
+rsyslogd  5880    root    3u  IPv4  22305      0t0  UDP *:syslog
+rsyslogd  5880    root    4u  IPv6  22306      0t0  UDP *:syslog
+httpd     6610    root    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6613  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6614  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6615  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6616  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6617  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6618  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6619  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+httpd     6620  apache    4u  IPv6  23365      0t0  TCP *:http (LISTEN)
+sshd      7652    root    3u  IPv4  26541      0t0  TCP *:ssh (LISTEN)
+sshd      7652    root    4u  IPv6  26543      0t0  TCP *:ssh (LISTEN)
+sshd      7654    root    3r  IPv4  26547      0t0  TCP linuxbox:ssh-&gt;192.168.232.1:solid-e-engine (ESTABLISHED)
+[root@linuxbox ~]#</code>
+
+<code>[root@linuxbox ~]# netstat -atnup
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+tcp        0      0 0.0.0.0:111                 0.0.0.0:*                   LISTEN      1330/rpcbind
+tcp        0      0 0.0.0.0:58964               0.0.0.0:*                   LISTEN      1459/rpc.statd
+tcp        0      0 0.0.0.0:21                  0.0.0.0:*                   LISTEN      3788/vsftpd
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      7652/sshd
+tcp        0      0 127.0.0.1:631               0.0.0.0:*                   LISTEN      1494/cupsd</code>
+
+查看远程主机开放的端口及操作系统。
+
+<code>[root@linuxbox ~]# nmap 10.6.65.181
+
+Starting Nmap 5.51 ( http://nmap.org ) at 2015-09-19 00:46 CST
+Nmap scan report for client (10.6.65.181)
+Host is up (0.00086s latency).
+Not shown: 997 filtered ports
+PORT    STATE  SERVICE
+21/tcp  closed ftp
+22/tcp  open   ssh
+443/tcp closed https
+MAC Address: 00:0C:29:8C:61:1F (VMware)
+
+Nmap done: 1 IP address (1 host up) scanned in 31.43 seconds
+
+[root@linuxbox ~]# nmap -O 10.6.65.181
+
+Starting Nmap 5.51 ( http://nmap.org ) at 2015-09-19 00:47 CST
+Nmap scan report for client (10.6.65.181)
+Host is up (0.00079s latency).
+Not shown: 997 filtered ports
+PORT    STATE  SERVICE
+21/tcp  closed ftp
+22/tcp  open   ssh
+443/tcp closed https
+MAC Address: 00:0C:29:8C:61:1F (VMware)
+Device type: general purpose|WAP|specialized
+Running (JUST GUESSING): Linux 2.6.X|2.4.X (89%), Netgear embedded (89%), Linksys Linux 2.4.X (87%), Asus Linux 2.6.X (87%), Crestron 2-Series (86%)
+Aggressive OS guesses: Linux 2.6.23 - 2.6.33 (89%), Linux 2.6.31 - 2.6.34 (89%), Linux 2.6.9 - 2.6.27 (89%), Netgear DG834G WAP (89%), Linux 2.6.27 (Ubuntu 8.10) (88%), Linux 2.6.22 (Fedora Core 6) (88%), Linux 2.6.32 (88%), Linux 2.6.34 (88%), OpenWrt White Russian 0.9 (Linux 2.4.30) (87%), OpenWrt 0.9 - 7.09 (Linux 2.4.30 - 2.4.34) (87%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 1 hop
+
+[root@linuxbox ~]# telnet 10.6.65.181 22
+Trying 10.6.65.181...
+Connected to 10.6.65.181.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_5.3
+
+Connection closed by foreign host.
+[root@linuxbox ~]#</code>
+
+查看主机的socket连接信息。ss和netstat命令相似
+<code>[root@linuxbox ~]# netstat -atnup|grep :21
+tcp        0      0 0.0.0.0:21                  0.0.0.0:*                   LISTEN      3788/vsftpd
+[root@linuxbox ~]# ss -antup|grep :21
+tcp    LISTEN     0      32                     *:21                    *:*      users:(("vsftpd",3788,3))
+[root@linuxbox ~]#</code>
+
+抓包工具：tcpdump
+抓取FTP服务器的用户名和密码。
+<code>[root@linuxbox ~]# tcpdump -i eth0 -nn -X 'port 21'</code>
+
+抓取ssh服务器的通信包。
+<code>[root@linuxbox ~]# tcpdump -i eth0 host 192.168.232.1 and port 22</code>
+
+监控网络流量iptraf
+<code>[root@linuxbox ~]# yum install iptraf -y
+[root@linuxbox ~]# unset LANG
+[root@linuxbox ~]# iptraf    查看网络流量</code></pre>
+    </div>
+
+</body>
+
+</html>
