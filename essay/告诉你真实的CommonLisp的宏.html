@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>告诉你真实的Common Lisp的宏</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.css">
+    <link rel="icon" href="../static/me.jpg">
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h3>Common Lisp总共有4种被称为“宏”（macro）的东西。</h3>
+        <h4 class="col-sm-offset-11">转自酋长</h4>
+    </div>
+    <p> 下面分别说说他们的作用(这里仅仅只说编译的事情,而且还很模糊没说是哪种编译器(一个Common Lisp实现必须要实现至少两个不同的编译器，分别对应不同的语义))。
+        总之,为了不把Common Lisp的复杂给显露出来吓跑人，先将就吧。</p>
+    <ul>
+        <li>
+            <h4>macro</h4>
+            <p>编译器在遇到一个宏调用的时候，把当前的环境(环境在标准里面只是一个玄乎的不明所以的存在,环境访问的API在标准化的过程中被去掉了)和调用时的代码作为参数传给这个函数以调用这个函数，
+                然后把这个函数返回的结果放到原来宏调用的位置，替换原有内容。</p>
+            <p> 实际上这货就是个“你的代码-&gt;Common Lisp代码”的编译器。</p>
+            <p>说好听这是C宏的“加强版”，因为可以执行复杂的逻辑，实际上它不可能像C的宏那样自由的传入和传出部分代码， 并且Common Lisp基本上不给这个功能提供任何便利，
+                基本上也只有一个hook接口了（你必须使用非常原始和复杂的方法去实现你的这个小型编译器）。</p>
+        </li>
+        <li>
+            <h4>reader macro</h4>
+            <p>Common Lisp的Reader（或者说是一个lexer也可以 ，反正这货就是读入一段文本，然后返回一个这段文本所表示的对象）的hook。
+                reader在扫描到reader macro所设置的对应的字符的时候， 就调用这个reader macro（实际上也一样对应个函数），让它去扫描和解析代码，然后返回对应的对象。</p>
+            <p> Common Lisp不给这种功能提供什么便利，并且要根据reader algorithm来编写，要小心编写以避免各种问题。</p>
+        </li>
+        <li>
+            <h4>compiler macro</h4>
+            <p>这个宏其实用于前端优化。</p>
+            <p>在编译的时候，遇到一段代码，如果这段代码对应的定义了相应的compiler macro，那么可以选择将这段代码传给这个对应的compiler macro（懒得说了，同样是函数），
+                然后把函数返回的结果替换掉原有的代码。</p>
+            <p>这基本上跟defmacro所定义的宏是一样的，就是对应的是不同的hook，并且这种可以控制是否要替换。</p>
+            <p> 同样的，不要期望Common Lisp为你这个东西提供一堆便利的工具，你只能自己使用最原始的手段来达成。</p>
+        </li>
+        <li>
+            <h4>symbol macro</h4>
+            <p>这是跟简单的C宏类似的东西。他的功能是，看到一个符号，就将这个符号替换成symbol macro对应的其它东西，就像#define AAA BBB一样。</p>
+        </li>
+    </ul>
+    <p>除了symbol macro，其它几个宏都是Common Lisp编译器的hook。那么既然是编译器(有哪个编译器不是这样？),
+        输入的数据肯定是代码（code as data，代码作为数据），输出的数据也肯定是代码了（code as data）（就算你恶搞随便乱输出，你输出的东西还是被认为是代码）。</p>
+    <p>这就是Common Lisp“神秘”的宏，也是那句神秘的“code as data”所说的东西。</p>
+    <p>这些宏基本上都是全局性的，你定义了一个，你的所有代码都会受影响（除了宏，Common Lisp还有不少的类似的东西，即使是编译器hook还有一些其它的，比方说eval-when），
+        所以基本上所有的代码（任何语言的代码，因为有了reader macro，你完全可以自己解析各种语言各种形式的源代码；</p>
+    <p>类似的，因为有了reader macro，即使是注释也没有一种到哪里都能用的必然会被认为是注释的注释）都可以认为是Common Lisp代码，
+        而基本上所有Common Lisp代码你都无法知道它究竟是什么意思，因为随时背后都有各种乱七八糟的东西来影响你的代码的真正意义。</p>
+    <p>如果你是被神化了的“宏”、“code as data”忽悠来的，那么这就是真相。接下来该怎么做，我相信你心里已经有答案了。</p>
+</div>
+</body>
+</html>
