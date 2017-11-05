@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Python链接MySQL数据库</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>Python链接MySQL数据库</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
-    <link rel="icon" href="../static/me.jpg">
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../static/me.jpg">
 
-    <script src="../static/js/jquery-3.2.1.min.js"></script>
-    <script src="../static/js/bootstrap.js"></script>
+  <script src="../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
-        <h3>Python链接MySQL数据库</h3>
-    </div>
-    <p>需要用到的东西有:</p>
-    <p>mysql数据库,和python的一个第三方库:pymysql</p>
-    <p>我们可以通过Pycharm自带的数据库图形界面:</p>
-    <p><img src="http://img.vim-cn.com/76/18da9cbe63f5da40baae4434b43a416cea575a.png" alt=""></p>
-    <p><img src="http://img.vim-cn.com/49/fe26357d6a798d3f79cc9cc60e16ea47537674.png" alt=""></p>
+  <div class="page-header">
+    <h3>Python链接MySQL数据库</h3>
+  </div>
+  <p>需要用到的东西有:</p>
+  <p>mysql数据库,和python的一个第三方库:pymysql</p>
+  <p>我们可以通过Pycharm自带的数据库图形界面:</p>
+  <p><img src="http://img.vim-cn.com/76/18da9cbe63f5da40baae4434b43a416cea575a.png" alt=""></p>
+  <p><img src="http://img.vim-cn.com/49/fe26357d6a798d3f79cc9cc60e16ea47537674.png" alt=""></p>
 
-    <pre><code>CREATE DATABASE test;
+  <pre><code>CREATE DATABASE test;
 
 CREATE TABLE test.users (
   id       INT(11) PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
@@ -34,24 +34,24 @@ CREATE TABLE test.users (
   password VARCHAR(64)         NOT NULL
 );</code></pre>
 
-    <p>执行这些SQL语句来创建数据库和表。简单点这个表的名字叫users,里面就三个字段:id, username, password.</p>
+  <p>执行这些SQL语句来创建数据库和表。简单点这个表的名字叫users,里面就三个字段:id, username, password.</p>
 
-    <p>可以看到右侧是有我们的表的信息的:</p>
-    <p><img src="http://img.vim-cn.com/c5/f85054abe0b9800b3fb834cc6b76bb747892b4.png" alt=""></p>
+  <p>可以看到右侧是有我们的表的信息的:</p>
+  <p><img src="http://img.vim-cn.com/c5/f85054abe0b9800b3fb834cc6b76bb747892b4.png" alt=""></p>
 
-    <p>先在数据库里面插入两条语句:</p>
-    <pre><code>INSERT INTO test.users (username, password) VALUE ('hello', 'world');
+  <p>先在数据库里面插入两条语句:</p>
+  <pre><code>INSERT INTO test.users (username, password) VALUE ('hello', 'world');
 INSERT INTO test.users (username, password) VALUE ('foo', 'bar');
 
 SELECT *
 FROM test.users;
 </code></pre>
 
-    <p><img src="http://img.vim-cn.com/26/1dc06e7b1e23076563eab6b8b6b4d6a74c0654.png" alt=""></p>
-    <p>效果还不错。</p>
+  <p><img src="http://img.vim-cn.com/26/1dc06e7b1e23076563eab6b8b6b4d6a74c0654.png" alt=""></p>
+  <p>效果还不错。</p>
 
-    <p>看一下如何通过python把这些数据提取出来:</p>
-    <pre><code>import pymysql
+  <p>看一下如何通过python把这些数据提取出来:</p>
+  <pre><code>import pymysql
 
 conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='hello')
 
@@ -64,48 +64,48 @@ finally:
     cur.close()
     conn.close()</code></pre>
 
-    <p>这段程序有两个对象:连接对象(conn)和光标对象(cur).</p>
+  <p>这段程序有两个对象:连接对象(conn)和光标对象(cur).</p>
 
-    <p>连接/光标模式是数据库编程中常用的模式.一个光标跟踪一种状态信息,比如跟踪数据库的使用状态。通过调用光标函数,比如cur.fetchall(),可以获取查询结果.</p>
-    <p>
-        用完光标和连接之后,千万记得把它们关闭.如果不关闭就会导致**连接泄漏**,造成一种未关闭连接现象,即连接已经不再使用,但是数据库却不能关闭,因为数据库不能确定你还要不要继续使用它,这种现象会一直耗费数据库的资源,所以用完数据库之后一定要关闭链接.</p>
+  <p>连接/光标模式是数据库编程中常用的模式.一个光标跟踪一种状态信息,比如跟踪数据库的使用状态。通过调用光标函数,比如cur.fetchall(),可以获取查询结果.</p>
+  <p>
+    用完光标和连接之后,千万记得把它们关闭.如果不关闭就会导致**连接泄漏**,造成一种未关闭连接现象,即连接已经不再使用,但是数据库却不能关闭,因为数据库不能确定你还要不要继续使用它,这种现象会一直耗费数据库的资源,所以用完数据库之后一定要关闭链接.</p>
 
-    <p><img src="http://img.vim-cn.com/67/17a3974a4314d5c2f83110db563448e2b493fc.png" alt=""></p>
+  <p><img src="http://img.vim-cn.com/67/17a3974a4314d5c2f83110db563448e2b493fc.png" alt=""></p>
 
-    <p>通过pycharm的自通补全可以看到,有三个类似的获取查询方法.通过这三个方法我简单说明光标的一个作用.</p>
+  <p>通过pycharm的自通补全可以看到,有三个类似的获取查询方法.通过这三个方法我简单说明光标的一个作用.</p>
 
-    <pre><code>def fetchone(self):
+  <pre><code>def fetchone(self):
     """Fetch the next row"""</code></pre>
-    <p>这是fetchone方法的源码中的代码.</p>
-    <p>数据库中的表，不就像一个excel表格那样子,光标就好像是一个箭头,最开始的时候指在表格的第一行.
-        fetchone(拿来一个数据),当执行这个方法之后,我们会获取数据库表中的一行结果(也就是第一行结果),这个时候,光标向下走一格,指在第二行那里,然后再执行fetchone,就会获得第二行的结果.
-    </p>
+  <p>这是fetchone方法的源码中的代码.</p>
+  <p>数据库中的表，不就像一个excel表格那样子,光标就好像是一个箭头,最开始的时候指在表格的第一行.
+    fetchone(拿来一个数据),当执行这个方法之后,我们会获取数据库表中的一行结果(也就是第一行结果),这个时候,光标向下走一格,指在第二行那里,然后再执行fetchone,就会获得第二行的结果.
+  </p>
 
-    <pre><code>def fetchmany(self, size=None):
+  <pre><code>def fetchmany(self, size=None):
     """Fetch several rows"""</code></pre>
-    <p>fetchmany(),它有一个参数,size,你可以通过指定size的大小,开获取size行的数据.当然获取的数据是从光标的位置开始的.</p>
+  <p>fetchmany(),它有一个参数,size,你可以通过指定size的大小,开获取size行的数据.当然获取的数据是从光标的位置开始的.</p>
 
-    <pre><code>def fetchall(self):
+  <pre><code>def fetchall(self):
     """Fetch all the rows"""</code></pre>
 
-    <p>fetchall(),这个方法是获得所有的数据,虽然是获得所有的数据,那也是从光标的那个位置开始,到最后的.</p>
-    <pre><code>cur.fetchon()
+  <p>fetchall(),这个方法是获得所有的数据,虽然是获得所有的数据,那也是从光标的那个位置开始,到最后的.</p>
+  <pre><code>cur.fetchon()
 print(cur.fetchall())</code></pre>
 
-    <p>比如执行这两行代码,你会发现,第一行的数据没有打印出来,因为cur.fetchon()让光标向下走了一格.</p>
-    <p>如果有人较真的话,看到注释的内容"""Fetch the next row"""，就要跟我说是返回的光标下一行的数据的话，其实主要是你能理解就好.</p>
+  <p>比如执行这两行代码,你会发现,第一行的数据没有打印出来,因为cur.fetchon()让光标向下走了一格.</p>
+  <p>如果有人较真的话,看到注释的内容"""Fetch the next row"""，就要跟我说是返回的光标下一行的数据的话，其实主要是你能理解就好.</p>
 
-    <p>数据库常用的无非就是增删改查了,只需要一条语句就足够了,cur.execute(sql),把那个你要做的sql语言放进去,然后就会执行了.就这么简单.</p>
+  <p>数据库常用的无非就是增删改查了,只需要一条语句就足够了,cur.execute(sql),把那个你要做的sql语言放进去,然后就会执行了.就这么简单.</p>
 
-    <p>最后说一下,我那个代码中</p>
-    <pre><code>cur.execute('SELECT * FROM test.users')</code></pre>
+  <p>最后说一下,我那个代码中</p>
+  <pre><code>cur.execute('SELECT * FROM test.users')</code></pre>
 
-    <p>我的表的名字是全的,就是说test(数据库名).users(表名),如果你不习惯的话.</p>
-    <pre><code>cur.execute('USE test')
+  <p>我的表的名字是全的,就是说test(数据库名).users(表名),如果你不习惯的话.</p>
+  <pre><code>cur.execute('USE test')
 cur.execute('SELECT * FROM users')</code></pre>
-    <p>换成这个样子就好了.</p>
-    <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
-                  alt="支付宝二维码"></p>
+  <p>换成这个样子就好了.</p>
+  <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
+                alt="支付宝二维码"></p>
 </div>
 </body>
 </html>

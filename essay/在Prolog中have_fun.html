@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>在Prolog中have fun</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>在Prolog中have fun</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
-    <link rel="icon" href="../static/me.jpg">
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../static/me.jpg">
 
-    <script src="../static/js/jquery-3.2.1.min.js"></script>
-    <script src="../static/js/bootstrap.js"></script>
+  <script src="../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
-        <h3>在Prolog中have fun</h3>
-    </div>
-    <p>
-        像Java和C之类称为命令式语言。就是需要精准地告诉计算机如何去完成一项工作而Prolog是一门声明式编程语言。你向Prolog提供一些事实，和推论，并让它为你推断。有了Prolog，你不需要知道如何做，计算机会为你作出推断。</p>
-    <h4>在Prolog中，数据以逻辑规则的形式存在，基本构造单元：</h4>
-    <ul>
-        <li>事实.事实是关于真实世界的基本断言</li>
-        <li>规则.规则是关于真实世界的一些事实的推论</li>
-        <li>查询.查询是关于真实世界的一个问题</li>
-    </ul>
-    <p>有趣的是,我们可以请求Prolog,找寻满足条件的值.</p>
-    <p>比如:向Prolog提供一个知识库:</p>
-    <small>/Prolog/food.pl</small>
-    <pre><code>food(apple, fruit).
+  <div class="page-header">
+    <h3>在Prolog中have fun</h3>
+  </div>
+  <p>
+    像Java和C之类称为命令式语言。就是需要精准地告诉计算机如何去完成一项工作而Prolog是一门声明式编程语言。你向Prolog提供一些事实，和推论，并让它为你推断。有了Prolog，你不需要知道如何做，计算机会为你作出推断。</p>
+  <h4>在Prolog中，数据以逻辑规则的形式存在，基本构造单元：</h4>
+  <ul>
+    <li>事实.事实是关于真实世界的基本断言</li>
+    <li>规则.规则是关于真实世界的一些事实的推论</li>
+    <li>查询.查询是关于真实世界的一个问题</li>
+  </ul>
+  <p>有趣的是,我们可以请求Prolog,找寻满足条件的值.</p>
+  <p>比如:向Prolog提供一个知识库:</p>
+  <small>/Prolog/food.pl</small>
+  <pre><code>food(apple, fruit).
 food(orange, fruit).
 food(banana, fruit).
 </code></pre>
-    <p>我们向Prolog提供了三个事实:</p>
-    <ul>
-        <li>apple是fruit</li>
-        <li>orange是fruit</li>
-        <li>banana是fruit</li>
-    </ul>
-    <p>当我们向Prolog提问,有哪些是fruit的时候:</p>
-    <pre><code>| ?- ['food.pl'].
+  <p>我们向Prolog提供了三个事实:</p>
+  <ul>
+    <li>apple是fruit</li>
+    <li>orange是fruit</li>
+    <li>banana是fruit</li>
+  </ul>
+  <p>当我们向Prolog提问,有哪些是fruit的时候:</p>
+  <pre><code>| ?- ['food.pl'].
 compiling /home/me/Desktop/Prolog/food.pl for byte code...
 /home/me/Desktop/Prolog/food.pl compiled, 18 lines read - 497 bytes written, 40 ms
 
@@ -58,13 +58,13 @@ What = banana
 yes
 | ?-
 </code></pre>
-    <p>这个样子,就告诉了我们,apple,orange,banana是fruit.</p>
+  <p>这个样子,就告诉了我们,apple,orange,banana是fruit.</p>
 
-    <p>再举一个经典的例子:给美国东南部(五个大州)的地图着色问题。
-    </p>
-    <small>/Prolog/map.pl</small>
-    <code> </code>
-    <pre><code>different(red, green).  different(green, red).
+  <p>再举一个经典的例子:给美国东南部(五个大州)的地图着色问题。
+  </p>
+  <small>/Prolog/map.pl</small>
+  <code> </code>
+  <pre><code>different(red, green).  different(green, red).
 different(red, blue).   different(blue, red).
 different(green, blue). different(blue, green).
 
@@ -77,8 +77,8 @@ coloring(Alabama, Mississippi, Georgia, Tennessee, Florida) :-
     different(Alabama, Florida),
     different(Georgia, Tennessee),
     different(Georgia, Florida).</code></pre>
-    测试一下：<code> </code>
-    <pre><code>| ?- ['map.pl']
+  测试一下：<code> </code>
+  <pre><code>| ?- ['map.pl']
 .
 compiling /home/me/Desktop/Prolog/map.pl for byte code...
 /home/me/Desktop/Prolog/map.pl compiled, 13 lines read - 1730 bytes written, 22 ms
@@ -95,12 +95,12 @@ Tennessee = green ?
 yes
 | ?-
 </code></pre>
-    <p>这个样子，Prolog就向我们展示了为五大州着色的一种方案。</p>
-    <p>可回头看看这个程序，我们没有使用算法，这算是约束-逻辑编程的一个优点吧。</p>
-    <p>如果用别的语言来解决这个问题可能会让你感到很头痛，可是Prolog让你通过事实和推论来表达逻辑，然后你直接向Prolog提问即可。</p>
-    <p>Prolog不是通过编写算法来解决逻辑问题，而是通过如实地描述真实世界，来呈现计算机可以设法解决的逻辑问题。</p>
-    <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
-                  alt="支付宝二维码"></p>
+  <p>这个样子，Prolog就向我们展示了为五大州着色的一种方案。</p>
+  <p>可回头看看这个程序，我们没有使用算法，这算是约束-逻辑编程的一个优点吧。</p>
+  <p>如果用别的语言来解决这个问题可能会让你感到很头痛，可是Prolog让你通过事实和推论来表达逻辑，然后你直接向Prolog提问即可。</p>
+  <p>Prolog不是通过编写算法来解决逻辑问题，而是通过如实地描述真实世界，来呈现计算机可以设法解决的逻辑问题。</p>
+  <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
+                alt="支付宝二维码"></p>
 </div>
 </body>
 </html>

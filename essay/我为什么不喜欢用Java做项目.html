@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>我为什么不喜欢用Java做项目</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>我为什么不喜欢用Java做项目</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
-    <link rel="icon" href="../static/me.jpg">
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../static/me.jpg">
 
-    <script src="../static/js/jquery-3.2.1.min.js"></script>
-    <script src="../static/js/bootstrap.js"></script>
+  <script src="../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
-        <h3>我为什么不喜欢用Java做项目</h3>
-    </div>
-    <p>我加了不少有关函数式编程的群，有些时候也会有人问学什么语言我，我会毫不犹豫的推荐Java。虽然结果就是那人一般回我一个：“滚。”</p>
-    <p>我并不像很多“愤青”那样，那么的逼视Java，那么的看不起Java程序员。恰恰相反，我倒是觉得Java确实是一个不错的语言，虽然也有不少设计的缺陷。</p>
-    <p>没有Java就没有今天智能的集成开发环境：Idea、eclipse。Java是典型的服务器端语言，没有Java估计也不会有今天网络的快速发展。</p>
-    <pre><code>public class HelloWorld {
+  <div class="page-header">
+    <h3>我为什么不喜欢用Java做项目</h3>
+  </div>
+  <p>我加了不少有关函数式编程的群，有些时候也会有人问学什么语言我，我会毫不犹豫的推荐Java。虽然结果就是那人一般回我一个：“滚。”</p>
+  <p>我并不像很多“愤青”那样，那么的逼视Java，那么的看不起Java程序员。恰恰相反，我倒是觉得Java确实是一个不错的语言，虽然也有不少设计的缺陷。</p>
+  <p>没有Java就没有今天智能的集成开发环境：Idea、eclipse。Java是典型的服务器端语言，没有Java估计也不会有今天网络的快速发展。</p>
+  <pre><code>public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
 }</code></pre>
-    <p>这是一个打印Hello World的程序，当然这也是自K&R以来学习一门语言你要是写的第一个程序的传统。</p>
-    <p>确实你会有所疑问：为什么我仅仅是打印语言，为什么要写这么多东西。不可避免的一个事实：Java中的语法糖实在太少了。</p>
-    <hr>
-    <p>当然有人会说，Java加一些糖就成了Scala。可是Scala却没有取代Java的地位呀。Java还是一直在TOIBE上排名第一呀。</p>
-    <p>回归正题。我讨厌复杂的事务。或许自从我学习Scheme来，我感受到了Scheme简洁、统一的美。我发自内心的觉得Scheme写出来的东西很优雅，很美。</p>
-    <p>在最初，我学习Java只不过是想知道什么是面向对象(不得不说虽然很多人天天在写Java，但是他们的程序一点都不面向对象，或者你问他你觉得什么是面向对象，
-        估计他们最多说一句一切都是对象)。一切皆是对象，Java的世界观有些太绝对。这就导致Java不能回调，没有回调函数。
-        为了实现一个简单的功能，就必须把这个函数嵌到一个类中。</p>
-    <p>总会想起Linux之父linus当年喷C++:"C++ is evil."和如今我对Java一样，因为确实IT行业的工资不低，我记得前几天看文章提到，我们码农已经超过
-        金融行业，成为最赚钱的行业。这也难免会有一些其他行业的人眼热，想转到我们码农这个行业。</p>
-    <p>这个样子，从事IT行业的人越来越多，这也不可避免的程序员平均code的水平在下降，也就是说有大量不合格或者低水平的人存在。这样的人越多，
-        其实就会慢慢影响到其他人呢。因为当你去阅读别人的烂代码的时候，你内心可是很冲动的，骂人都是轻的。</p>
-    <p>我在一些码农的交流群里，有些新手也发过一些他们做的项目的目录结构，我有时候真相问问他，你做这个项目的时候思考了吗，
-        为什么会有那么多的类。这些类真的有必要出现吗？还有，这一个层那一个层，做这些层真的有必要吗？他真的可以简化项目的业务逻辑以及利于日后的维护吗。</p>
-    <p>我之前帮同学改过他的代码(作业)，有些时候我疑惑：为什么咱俩都写了同一个类，实现相同的功能，为什么你写了快两百行代码，我不到五十行就解决了。</p>
-    <p>通常我对于有人来问我他们代码的问题，我第一种解决方法就是让他告诉我你这个类想要做什么，然我我自己来给他写一份。因为我自己帮他完成比读它代码要快。</p>
-    <p>讲这些，我不喜欢用Java去做项目，很大一个原因是我不想跟其他人合作，我不想去阅读其他人的烂代码(这不代表其他语言就没有烂代码，只不过就是写Java实在太多)。</p>
-    <hr>
-    <p>我内心还是挺喜欢Java的。因为Java照样可以很简洁的完成任务。不管别人，总之我可以做到。(窃喜</p>
-    <p>有人可能会说Python现在挺火的，而且你看Python多简洁啊。我想说说这话的人你们根本不懂Python，或者说你们不懂动态类型语言。
-        Java是静态类型语言，它需要显示的为变量标清类型，就像:</p>
-    <pre><code>public int sum(int a, int b) { return a + b }</code></pre>
-    <p>而Python就像这样:</p>
-    <pre><code>def sum(a, b): return a + b </code></pre>
-    <p>看上去Python语法上确实简单多了，的确动态语言不需要显示的指出变量的类型确实简洁了许多。但是真的是这个样子嘛！</p>
-    <p>其实不然。当你真正的去用Python做过大项目就会知道，动态语言的弊端，由于没有静态类型，它非常难debug。这无疑加大了编程的难度。</p>
-    <p>之前Google的一个人，把一个八万行Python用四万行Java重写了，这也说明了Java也可以简洁的完成工作。</p>
-    <p>总的来说，Java还是一个不错的语言。Java能一直保持在编程语言排行榜的第一的位置，也跟他能够与时俱进，不断的增加新特性有关系。</p>
-    <p>这篇写的文章我回避了开发效率和是否能快速招收开发人员的问题。</p>
-    <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
-                  alt="支付宝二维码"></p>
+  <p>这是一个打印Hello World的程序，当然这也是自K&R以来学习一门语言你要是写的第一个程序的传统。</p>
+  <p>确实你会有所疑问：为什么我仅仅是打印语言，为什么要写这么多东西。不可避免的一个事实：Java中的语法糖实在太少了。</p>
+  <hr>
+  <p>当然有人会说，Java加一些糖就成了Scala。可是Scala却没有取代Java的地位呀。Java还是一直在TOIBE上排名第一呀。</p>
+  <p>回归正题。我讨厌复杂的事务。或许自从我学习Scheme来，我感受到了Scheme简洁、统一的美。我发自内心的觉得Scheme写出来的东西很优雅，很美。</p>
+  <p>在最初，我学习Java只不过是想知道什么是面向对象(不得不说虽然很多人天天在写Java，但是他们的程序一点都不面向对象，或者你问他你觉得什么是面向对象，
+    估计他们最多说一句一切都是对象)。一切皆是对象，Java的世界观有些太绝对。这就导致Java不能回调，没有回调函数。
+    为了实现一个简单的功能，就必须把这个函数嵌到一个类中。</p>
+  <p>总会想起Linux之父linus当年喷C++:"C++ is evil."和如今我对Java一样，因为确实IT行业的工资不低，我记得前几天看文章提到，我们码农已经超过
+    金融行业，成为最赚钱的行业。这也难免会有一些其他行业的人眼热，想转到我们码农这个行业。</p>
+  <p>这个样子，从事IT行业的人越来越多，这也不可避免的程序员平均code的水平在下降，也就是说有大量不合格或者低水平的人存在。这样的人越多，
+    其实就会慢慢影响到其他人呢。因为当你去阅读别人的烂代码的时候，你内心可是很冲动的，骂人都是轻的。</p>
+  <p>我在一些码农的交流群里，有些新手也发过一些他们做的项目的目录结构，我有时候真相问问他，你做这个项目的时候思考了吗，
+    为什么会有那么多的类。这些类真的有必要出现吗？还有，这一个层那一个层，做这些层真的有必要吗？他真的可以简化项目的业务逻辑以及利于日后的维护吗。</p>
+  <p>我之前帮同学改过他的代码(作业)，有些时候我疑惑：为什么咱俩都写了同一个类，实现相同的功能，为什么你写了快两百行代码，我不到五十行就解决了。</p>
+  <p>通常我对于有人来问我他们代码的问题，我第一种解决方法就是让他告诉我你这个类想要做什么，然我我自己来给他写一份。因为我自己帮他完成比读它代码要快。</p>
+  <p>讲这些，我不喜欢用Java去做项目，很大一个原因是我不想跟其他人合作，我不想去阅读其他人的烂代码(这不代表其他语言就没有烂代码，只不过就是写Java实在太多)。</p>
+  <hr>
+  <p>我内心还是挺喜欢Java的。因为Java照样可以很简洁的完成任务。不管别人，总之我可以做到。(窃喜</p>
+  <p>有人可能会说Python现在挺火的，而且你看Python多简洁啊。我想说说这话的人你们根本不懂Python，或者说你们不懂动态类型语言。
+    Java是静态类型语言，它需要显示的为变量标清类型，就像:</p>
+  <pre><code>public int sum(int a, int b) { return a + b }</code></pre>
+  <p>而Python就像这样:</p>
+  <pre><code>def sum(a, b): return a + b </code></pre>
+  <p>看上去Python语法上确实简单多了，的确动态语言不需要显示的指出变量的类型确实简洁了许多。但是真的是这个样子嘛！</p>
+  <p>其实不然。当你真正的去用Python做过大项目就会知道，动态语言的弊端，由于没有静态类型，它非常难debug。这无疑加大了编程的难度。</p>
+  <p>之前Google的一个人，把一个八万行Python用四万行Java重写了，这也说明了Java也可以简洁的完成工作。</p>
+  <p>总的来说，Java还是一个不错的语言。Java能一直保持在编程语言排行榜的第一的位置，也跟他能够与时俱进，不断的增加新特性有关系。</p>
+  <p>这篇写的文章我回避了开发效率和是否能快速招收开发人员的问题。</p>
+  <p>价格随意. <img style="width: 30%" src="http://img.vim-cn.com/e4/613d5777df07d14a3214528a2b2eeeb74f603c.jpg "
+                alt="支付宝二维码"></p>
 </div>
 </body>
 </html>
