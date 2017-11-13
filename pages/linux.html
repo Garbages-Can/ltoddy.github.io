@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>我与Linux系统</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../static/me.jpg">
+
+  <script src="../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+  <h3>我与Linux系统</h3>
+  <p>我的linux系统:Ubuntu 16.04 xenial 以及 Gnome3 桌面.</p>
+  <p><img src="http://img.vim-cn.com/5d/ef5f1a46c7465606f105de4e946b54cbbc103e.png" alt=""></p>
+  <hr>
+  <p>电影中一个超级黑客坐在电脑面前，从不摸鼠标一下，几十秒就能入侵超级安全的军事系统。这是因为电影制片人意识到，作为人类，
+    我们应该本能的知道让计算机圆满完成工作的唯一途径：是用键盘来操纵计算机。</p>
+  <p>我从2016年10月，开始完全使用Linux系统(Ubuntu 16.04 & Gnome3)工作。</p>
+  <p>其实在此之前我已经在linux环境(用的虚拟机)下编程了，原因有两点:</p>
+  <p>命令行的技术是值得学习的(它可以很大程度的提高你的工作效率)。</p>
+  <p>另一个原因就是，我要参加的ACM/ICPC的编程环境就是Ubuntu，所以就算是提前适应环境了。</p>
+  <p>图形用户界面让简单的任务更加容易完成，而命令行界面使完成复杂的任务成为可能。</p>
+  <p>学习命令行会获益匪浅，不像其他一些计算机技能，一段时间之后可能就被淘汰了，命令行知识却不会落伍。
+    因为命令行接受住了时间的考验(最初的电脑就是命令行操作,现在也是用命令行操作最方便)。</p>
+
+  <p>到现在完全使用Linux系统已经一年多了,这一年多来还是感受很多的.</p>
+  <p>首先身为一名码农,我感受到了Linux所带来的前所未有的便利,比如你去安装MySQL软件,如果你是windows的话,你需要去官网下载安装包,然后一步一步的全装.
+    不过在Linux上,只需要一行命令就可以了: <code>sudo apt-get install mysql-server</code> 。这里说一下,Debian系列的软件包管理用的是apt,
+    RedHat系列用的软件包管理是yum, 软件包管理是什么? 类似于Python的pip, Ruby的gem, nodejs的npm. 它会帮助你管理你的软件,
+    这样你就不需要分心来管理这些软件.包括软件的更新,卸载，软件包管理器都会帮助你搞定(仅仅是需要一条命令而已).</p>
+  <p>安装依赖库也是很方便的,如果你喜欢一些小众语言,Linux是绝佳的选择,你会发现,在windows上安装的问题,都不会出现(这点还需要切身体会).</p>
+
+  <p>记得前不久我去面试,那家公司开发是使用的Linux系统(Ubuntu 12.04).命令行工具可以说帮了我一个很大的忙.</p>
+  <p>当时第一轮面试是上机,第一道题是你需要在电脑里面找得到一个压缩包,这个压缩包里面包含着后面的题目,解压它之后你才能做后面的题.</p>
+  <p>这不是手到擒来么, <code>locate filename | grep zip</code>。 这样一行命令就可以找到了. 简单介绍一下locate, windows下有注册表这个东西,
+    他就是windows系统的一个配置数据库。 而locate命令是Linux的一个数据库(第一天安装Linux的时候这个命令是无法使用的,第二天才可以使用),
+    它会很快的找到文件,然后通过 <code>|</code> (管道线，他会把数据从这边送到那边)， 交付给 grep 命令,这是一个过滤器,后面跟着一个正则表达式.</p>
+  <p>不过不要误以为Linux就是用命令行来做事,其实不是,Linux也有GUI,windows能做的Linux也能做,
+    并且可以做的更好(QQ就不要提了,腾讯在Linux发布了QQ2008之后也不知道什么原因,就没有再更新了……).</p>
+  <p>Linux照样可以很漂亮,最开始的那张图片(我的电脑),我就觉得挺好看的,很酷.</p>
+  <p>上网,你可以用Chrome,可以用FireFox等等, 听音乐,你可以用网易云音乐,办公,你可以使用open office, 编程开发就更不用说了,很轻松的安装各种依赖库,
+    而且Jetbrains公司也在Linux平台发布了他们的产品,安装数据库也非常方便.</p>
+  <hr>
+  <p>总的来说Linux还是不错的,如果你是一名developer的话,还是希望你能多了解一下Linux的,在你学习的过程中,会加深你对操作系统的理解,
+    况且我们的服务器所用的系统也是Linux,这样,如果你会Linux,这样也可以更快的解决问题.</p>
+
+  <p>当然,也得为windows说几句公道话,如果windows比Linux差很远,那微软公司又是怎样做IT行业的巨头呢.</p>
+  <p>说实话,我很欣赏微软公司,他们是真正为用户考虑的公司,他们为用户友好作出了很大的努力,让人们使用电脑更加方便，过去没用过电脑的人,也很轻松的就可以上手.
+    这难道不是促使人类文明进步的一大帮助么！</p>
+
+  <p>当然,如果你想要尝试去使用Linux,我会帮助你安装一个可爱的Ubuntu.</p>
+</div>
+</body>
+</html>
