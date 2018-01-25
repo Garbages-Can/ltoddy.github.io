@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>剖析底层原理</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+    <link rel="icon" href="../../static/me.jpg">
+
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+        alt="Fork me on GitHub"
+        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+    <div class="page-header">
+        <h3>剖析底层原理</h3>
+    </div>
+    <p>从进入大学开始的C语言课起,老师就会告诉我们,在for,if之类的块语句中定义的变量不能在其外部使用,在这个函数中定义的变量不可以在那个函数中使用,
+        也就是说局部变量是有生命周期的,这个生命周期与"栈"密切相关.而这个栈有两个重要的元素 - 栈顶和栈底, 其对应的硬件上的寄存器是: bp
+        (base pointer 栈基址指针)和sp (stack pointer 栈顶指针).</p>
+    <h3>为什么会有作用域</h3>
+    <pre><code>void foo()
+{
+    int a = 10;
+    int b = 20;
+    int c = a + b;
+}
+
+int main()
+{
+    foo();
+    a = 100;
+}</code></pre>
+    <p>编译这段C程序会有如下报错:</p>
+    <code>$ gcc main.c</code>
+    <pre><code>main.c: In function ‘main’:
+main.c:11:2: error: ‘a’ undeclared (first use in this function)
+  a = 100;
+  ^
+main.c:11:2: note: each undeclared identifier is reported only once for each function it appears in</code></pre>
+    <p>变量'a'没有声明,也就是说变量需要先声明(先有这个变量),然后才可以使用.</p>
+    <p>但是从上面这个例子中我在foo函数中声明了变量'a',但不可以在foo函数之外使用.</p>
+    <p>现在更改一下,去掉main函数中 <code>a = 100</code> 这一行代码.</p>
+    <pre><code>void foo()
+{
+	int a = 10;
+	int b = 20;
+	int c = a + b;
+}
+
+int main()
+{
+	foo();
+}</code></pre>
+    <p>使用gcc的-S参数来生成其对应的汇编代码: $ gcc -S main.c</p>
+    <p>经过整理过后的汇编代码如下:</p>
+    <pre><code>foo:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	movl	$10, -12(%rbp)
+	movl	$20, -8(%rbp)
+	movl	-12(%rbp), %edx
+	movl	-8(%rbp), %eax
+	addl	%edx, %eax
+	movl	%eax, -4(%rbp)
+	nop
+	popq	%rbp
+	ret
+main:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	movl	$0, %eax
+	call	foo
+	movl	$0, %eax
+	popq	%rbp
+	ret</code></pre>
+    <p>从main函数开始分析:</p>
+    <p><code>pushq %rbp</code> 把 rbp(有一个前缀r,是为了表示寄存器的位数 - 32位)指针中的内容压入栈中. 这里其实是两个过程,第一个过程,将rbp中的内容
+        压入栈中,然后栈顶指针rsp向上增长一格.</p>
+    <p><code>movq %rsp, %rbp</code> 把rsp指针中的内容赋值给rbp中,也就是说rbp指针的地址为rsp指针所指的地址,
+        效果为把栈底指针移动到栈顶指针那里.</p>
+    <p><code>movl $0, %eax</code> 这行汇编主要为了待会的函数调用传递形式参数做准备.</p>
+    <p><code>call foo</code> 调用函数foo,进入foo函数.</p>
+    <p><strong>以下是重点:</strong></p>
+    <p><code>pushq %rbp</code> 再次对rbp指针进行压栈.</p>
+    <p><code>movq %rsp, %rbp</code> 将rbp指针指到rsp指针上,此时栈顶与栈底指在同一个地方.</p>
+    <p>以上两行汇编,其目的是保存上一个栈的现场,然后创建一个新的栈(栈底与栈顶在指向同一个地方,栈中无元素,就算是栈初始化,此处不要较真).</p>
+</div>
+</body>
+</html>
