@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>关于Python的装饰器</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+    <link rel="icon" href="../../static/me.jpg">
+
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+        alt="Fork me on GitHub"
+        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+    <div class="page-header">
+        <h3>关于Python的装饰器</h3>
+    </div>
+    <p>有些时候,不得不承认,一些老代码(可能有些项目初期,为了加快进度,大量的从网上复制粘贴)设计不良,非常ugly,但是有些时候,需求有了变更,
+        需要在原来的基础上扩展新的功能,这时候你该怎么办.我的选择是对于过去的老代码,无论多么的ugly,我都尽量的不去碰它,
+        我的选择是,要么写新的模块来实现功能的扩展,要么写一些装饰器,以此来扩展老代码.</p>
+    <p>我目前想到的在不更改老代码的基础上做扩展的方法是利用Python的装饰器这一特性.当然也可以选择在单元测试的基础上去重构代码,
+        不过这个样子,就要看公司给不给这个时间让你重构代码了,感觉好累...</p>
+    <p>比如有一段老代码如:</p>
+    <pre><code>def oldcode(arg):
+    print('--------->', arg)
+    print('I am very ugly!')
+
+
+oldcode('some')
+</code></pre>
+    <p>这段代码确实很丑...</p>
+    <p>现在我想扩展这段代码,怎么办? -- Python装饰器是有力的武器.</p>
+    <pre><code>def wrapper(func):
+    def decorator(arg):
+        print('{}({}) will run'.format(func.__name__, arg))
+        func(arg)
+        print('{}({}) done.'.format(func.__name__, arg))
+        return func
+
+    return decorator
+
+
+@wrapper
+def oldcode(arg):
+    print('--------->', arg)
+    print('I am very ugly!')
+
+
+oldcode('some')
+</code></pre>
+    <p>运行结果:</p>
+    <pre><code>oldcode(some) will run
+---------> some
+I am very ugly!
+oldcode(some) done.</code></pre>
+    <p>我新增加了一段代码: 函数wrapper和函数decorator.</p>
+    <p>注意看这两个函数接受的参数,外层函数接收那个你要装饰的函数,内层函数接收你那个要装饰的函数的参数.</p>
+    <p>这样,你就可以在装饰器函数里面执行你要装饰的那个函数了.</p>
+    <p>当然有人会说:</p>
+    <pre><code>def foo():
+    print('old code')
+
+
+def bar():
+    print('new code -----')
+    foo()
+    print('----- new code')</code></pre>
+    <p>这个样子也可以扩展函数.</p>
+    <p>不过,我并不把他叫做扩展函数,或许我更喜欢叫这是在调用函数完成一系列的更能,当然也可以叫封装.</p>
+    <p>这个样子不好!为什么,假设你这么做了,那么你过去调用foo这个函数的地方,现在就需要把foo换成bar了.一般来说我们对于老代码的原则是,
+        尽量少的直接改动,能不改动则不改动.</p>
+    <p>如果我们使用装饰器,那么只需要写好需要扩展的功能,然后在那个需要装饰的函数上加上装饰器就ok了,这个样子,我们的改动很小.</p>
+    <hr>
+    <p>如果你想做一个带有参数的装饰器,这时你该怎么写这个装饰器.</p>
+    <pre><code>def foo(useless):
+    def wrapper(func):
+        def decorator(arg):
+            print('{}({}) will run'.format(func.__name__, arg))
+            func(arg)
+            print('{}({}) done.'.format(func.__name__, arg))
+            return func
+
+        return decorator
+
+    return wrapper
+
+
+@foo('----')
+def oldcode(arg):
+    print('--------->', arg)
+    print('I am very ugly!')
+
+
+oldcode('some')
+</code></pre>
+    <p>在外面再套一层函数. 现在潜逃了三层函数,从外到内 -> 装饰器的参数, 装饰的函数, 装饰的函数的参数.</p>
+    <p>但是有一点要注意的是,装饰器去装饰函数,它是在模块加载的时候运行的.</p>
+    <p>一个demo:</p>
+    <pre><code>def foo(useless):
+    print('1111111111111111111111')
+
+    def wrapper(func):
+        print('2222222222222222222222222')
+
+        def decorator(arg):
+            print('{}({}) will run'.format(func.__name__, arg))
+            func(arg)
+            print('{}({}) done.'.format(func.__name__, arg))
+            return func
+
+        return decorator
+
+    return wrapper
+
+
+@foo('----')
+def oldcode(arg):
+    print('--------->', arg)
+    print('I am very ugly!')
+
+
+print('')</code></pre>
+    <p>如果你运行这段代码,会发现111111111111111111和22222222222222222被打印出来了,但是我们并没有调用那个oldcode函数.</p>
+    <p>因为装饰器是在模块加载的时候运行的.</p>
+    <hr>
+    <p>一个题外话,本来以为import this所看到的The zen of Python是利用装饰器的特性来实现的,今天看了源码才知道,我是大错特错,
+        他只是print了一下...</p>
+</div>
+</body>
+</html>
