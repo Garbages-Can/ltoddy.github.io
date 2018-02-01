@@ -54,10 +54,10 @@ private void store() {
     // ...
 }
 
-public Theme getTheme(String selector) throws Exception {
+public Theme getTheme(String selector) throws NoThemeException {
     Theme theme = themes.get(selector);
     if (theme == null) {
-        throw new Exception(String.format("no this theme: ", selector));
+        throw new NoThemeException(selector);
     }
     return theme;
 }</code></pre>
