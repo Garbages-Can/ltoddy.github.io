@@ -24,3 +24,10 @@
     vertical-align: middle;
     line-height: 56px;
 }
+
+@media (max-width: 1025px) {
+    .post-card {
+        margin: 1.5%;
+        width: 30%;
+    }
+}
