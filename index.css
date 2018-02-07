@@ -1,0 +1,26 @@
+.container {
+    margin: 0 5%;
+}
+
+.about-me {
+    height: 200px;
+}
+
+.row-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.post-card {
+    margin: 2.5%;
+    height: 60px;
+    background-color: #b2dba1;
+    width: 20%;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 5px #abcdef;
+    /* left top transparent shadow-width color */
+    text-align: center;
+    vertical-align: middle;
+    line-height: 56px;
+}
