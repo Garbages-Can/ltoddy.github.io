@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Io_language体验原型语言</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3></h3>
+  </div>
+  <p> 用Io的时候，不必既操心类又操心对象。只需要和对象打交道，必要的时候把对象复制一下就行。这些被复制的对象就叫做原型。</p>
+  <p>在原型语言中，每个对象都不是类的复制品，而是一个实实在在的对象。此外Io还能无限接近面向对象的Lisp(我最爱的一个语言)。</p>
+  <p>在其他语言中，可对某个类调用new创建一个信对象。通过定义类，可以创建一个新的对象种类。</p>
+  <p>但是对于Io，它不区分类和对象。可以通过复制现有对象创建新的对象。现有对象就是原型：</p>
+  <pre><code>
+    $ io
+    Io 20110905
+    Io&gt; Demo := Object clone
+    ==&gt; Demo_0x11fca10:
+    type = "Demo"
+</code></pre>
+  <p>Object是根对象。我们发送clone消息过去，它会返回一个新的对象。把这个返回的新对象赋值给Demo。这里的Demo不是类，也不是用来创建对象的模板，它只是个对象。</p>
+  <p>在Java中，类是用来创建对象的模板。比如Apple apple = new Apple()这条语句从Apple类创建一个新的Apple对象。apple和Apple是完全不同的两个实体，一个是对象，一个是类。</p>
+  <p>在Io中却不是这样。apple := Apple
+    clone这条语句从lone这条型创建一个名为apple的复制品。apple和Apple都是对象。Apple还是类型，因为它有type槽。而在其他方面，Apple和apple完全相同。</p>
+
+  <h3>原型编程范式有几条基本原则：</h3>
+  <ul>
+    <li><strong>所有事物都是对象</strong></li>
+    <li><strong>所有与对象的交互都是消息</strong>
+
+      以最传统"hello world"为例
+      <pre><code>
+Io&gt; "hello world" print
+hello world==&gt; hello world
+        </code></pre>
+      通过发送print消息给字符串"hello world"，接收者在左边，消息在右边
+    </li>
+    <li><strong>你要做的不是实例化类，而是复制那些叫做原型的对象</strong></li>
+    <li><strong>对象会记住它的原型</strong>
+
+      以Human，Student这两个原型为例
+      <pre><code>
+Io&gt; Human := Object clone
+==&gt;  Human_0x218ea70:
+  type             = "Human"
+
+Io&gt; Student := Human
+==&gt;  Human_0x218ea70:
+  type             = "Human"
+
+Io&gt; me proto
+==&gt;  Object_0x1ef5a20:
+                   = Object_()
+  !=               = Object_!=()
+  -                = Object_-()
+...
+        </code></pre>
+    </li>
+    <li><strong>对象有槽</strong>
+
+      可以把一组槽想象成散列表，而对象就是槽的容器
+    </li>
+    <li><strong>槽包含对象(包括方法对象)</strong>
+      <pre><code>
+Io&gt; Student slotNames
+==&gt; list(type)
+        </code></pre>
+      目前它只有type槽。
+      <pre><code>
+Io&gt; Student speak := method("I'm a student." println)
+==&gt; method(
+    "I'm a student." println
+)
+Io&gt; Student speak
+I'm a student.
+==&gt; I'm a student.
+        </code></pre>
+      如果槽是某个方法，就会调用该方法
+    </li>
+    <li><strong>消息返回槽中的值，或调用槽中的方法</strong></li>
+    <li><strong>如果对象无法相应某消息，则它会把该消息发送给自己的原型</strong></li>
+  </ul>
+</div>
+
+</body>
+</html>

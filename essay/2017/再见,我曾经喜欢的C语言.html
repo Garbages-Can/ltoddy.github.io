@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>再见,我曾经喜欢的C语言</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>再见,我曾经喜欢的C语言</h3>
+  </div>
+  <h4>我发现我根本不会C语言</h4>
+  <p>其实本来半年前就应该跟C语言说再见的，但是因为今年上半年还需要参加比赛，需要用C/C++来搞算法，以及为自己编写一个操作系统。</p>
+  <p>虽然C语言不是我接触第一个编程语言，却是我使用最久的语言。曾经以为，自己理解了C语言的指针，能拿C语言轻松的搞搞算法，自己就算是会C语言了，其实我错了。</p>
+  <p>对于C语言，我可以这样秀：比如当创建一个数组arr[n]之后，一般我们去遍历数组的时候是<code>for (int i = 0; i < n; i++) { a[i]; }</code>但是我知道下表访问符[]是个语法糖,也就是说a[i]在编译器看来是*(a+
+    i)所以，遍历数组的时候可以这么写:<code>for (int i = 0; i < n; i++) { i[a]; }</code>我相信一般人没这么试过。</p>
+  <p>另一个,比如入门语言的第一个程序，打印hello world程序，在发明C语言的那个时代，没有异常处理(try-catch)，所以只能通过函数的返回值来判断函数执行的结果。所以我可以这么秀:</p>
+  <pre><code>
+#include &lt;stdio.h&gt;
+
+int main() {
+    return 0 * printf("hello world\n");
+}
+    </code></pre>
+  <p>但是，当我在读 Joe Armstrong先生的著作是，我看到了如下的代码。</p>
+  <div style="float: left; width: 45%"><pre><code>%% API
+-export([area/1]).
+
+area({rectangle, Width, Ht}) -> Width * Ht;
+area({square, X}) -> X * X;
+area({circle, R}) -> math:pi() * R * R.</code></pre>
+  </div>
+  <div style="float: left; width: 55%"><pre><code>enum ShapeType { Rectangle, Circle, Square };
+
+struct Shape {
+    enum ShapeType kind;
+    union {
+        struct { int width, height; } rectangleData;
+        struct { int radius; } circleData;
+        struct { int side } squareData
+    } shapeDate;
+};
+
+double area(struct Shape* s) {
+    if (s->kind == Rectangle) {
+        int width, height;
+        width = s->shapeDate.rectangleData.width;
+        height = s->shapeDate.rectangleData.height;
+        return width * height;
+    } else if (s->kind == Circle)
+        ...</code></pre>
+  </div>
+
+  <div class="div4">
+    <p>当时我看完之后，感触挺大的——握槽，代码可以写的这么优雅，自己C语言白写了。</p>
+    <p>我自己是看过一些C语言的API的，其中的代码对于基础类型的使用还是非常好的，比如有时候会使用上大家不常用的short。可以节省内存，也能满足需求。</p>
+    <p>对于C语言，我写的都是toy code，基本没写出什么有用的代码。</p>
+    <p>确实该跟C语言所再见了，等我未来两三个月解决完我编写操作系统的内核，就彻底的不再碰C语言了。或许像Java这样避免程序员犯错误的语言才更适合我。</p>
+  </div>
+</div>
+
+</body>
+</html>

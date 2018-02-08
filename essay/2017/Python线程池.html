@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Python线程池</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>Python线程池(concurrent.futures模块)</h3>
+  </div>
+  <p>一次运行一个任务:</p>
+  <pre><code>from concurrent.futures import ThreadPoolExecutor
+
+
+def foo(a, b):
+    print(a)
+    print(b)
+
+
+# executor = ThreadPoolExecutor(max_workers=1)
+# executor.submit(foo)
+# executor.shutdown()
+with ThreadPoolExecutor(max_workers=1) as executor:
+    executor.submit(foo, 'foo', 'bar')</code></pre>
+  <p>这里用了with语句,当然你也可以选择不用with,就是注释掉的代码,你需要手动关闭线程池.</p>
+  <p>这里说一下with语句,很多人都不了解其细节.</p>
+  <p>在进入with语句块的时候,会执行__entry__()函数,然后这个函数的返回值给as后面的那个变量,
+    当退出with语句块的时候,会执行__exit__()函数.</p>
+  <p>来看一下源代码:</p>
+  <pre><code>def __enter__(self):
+    return self
+
+def __exit__(self, exc_type, exc_val, exc_tb):
+    self.shutdown(wait=True)
+    return False
+    </code></pre>
+  <p>当你自己的class定义了__enter__和__exit__后,也就可以安心的使用with语句了.</p>
+  <p>一般来说,__enter__都是return self,而__exit__都是结束的时候你要做的事情.</p>
+  <p>用with语句的一个好处是,你不需要精力放在线程池的建立和关闭上, 你只需要关注你想要实现什么.</p>
+  <p>就像你写web,你不许要考虑con tent-type,这不应该是程序员应该考虑的,程序员更多的把精力放在业务上.</p>
+  <h4>如果你想一次执行多个任务怎么办?</h4>
+  <p>使用map函数.</p>
+  <pre><code>import os
+from concurrent.futures import ThreadPoolExecutor
+
+
+def foo(a, b):
+    print(a)
+    print(b)
+
+
+with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+    executor.map(foo, (1, 2, 3), (3, 2, 3))
+</code></pre>
+  <p>map函数的定义如下:</p>
+  <pre><code>def map(self, fn, *_iterables, timeout=None, chunksize=1):</code></pre>
+  <p>第一个参数是接受一个函数(函数名字,不要加后面的括号),第二个参数是一个可变参数,它需要一个多个迭代器.</p>
+  <p>因为,你的那个要执行任务的函数可能需要多个参数,那么迭代器的数量与参数的数量是一样的.</p>
+  <p>过去的时候,我不知道可以接受多个迭代器,所以用的模式匹配……</p>
+  <pre><code>import os
+from concurrent.futures import ThreadPoolExecutor
+
+
+def foo(data):
+    a, b = data
+    print(a)
+    print(b)
+
+
+iter1 = (1, 2, 3)
+iter2 = (3, 2, 3)
+with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+    executor.map(foo, zip(iter1, iter2))
+</code></pre>
+  <p>看上去好蠢.</p>
+  <hr>
+  <p>注意看这行的代码: <code>with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor</code></p>
+  <p><code>max_workers=os.cpu_count()</code>,这样做有什么好处呢?你的代码是可计算的,什么意思,你的电脑CPU是4核心,他的电脑是8核心CPU,
+    那么你的程序移植到他的电脑上去后,可以发挥最佳效果.</p>
+  <hr>
+  <p>额外说点东西, 为什么 with语句会与__entry__和__exit__这两个函数有联系,这个叫协议.</p>
+  <p>举个例子, <code>a == b</code> 等价于 <code>a.__eq__(b)</code>, 如果你是Clojure程序员会更清楚协议.</p>
+  <p>为了方便程序员,我们事先约定好了一系列的协议,Python会帮你实现这些协议,这一切都会让你的工作变得更轻松.</p>
+</div>
+</body>
+</html>
