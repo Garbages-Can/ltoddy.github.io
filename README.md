@@ -109,10 +109,6 @@
 - [每个程序员都应该了解的内存知识](http://www.oschina.net/translate/what-every-programmer-should-know-about-memory-part1?print)
 - [取悦的工序：如何理解游戏](http://read.douban.com/ebook/4972883)
 
-<h2 id=others_one)其他</h2)
-
-- [http://softwaredownload.gitbooks.io/openwrt-fanqiang]OpenWrt智能、自动、透明翻墙路由器教程
-
 #语言相关类
 ## AWK
 
