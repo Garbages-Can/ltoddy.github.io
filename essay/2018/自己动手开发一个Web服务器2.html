@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>自己动手开发一个 Web 服务器(二)</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+
+  <style>
+    .container {
+      padding-right: 150px;
+      padding-left: 150px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    div img {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div>
+    <h3>自己动手开发一个 Web 服务器(二)</h3>
+  </div>
+  <p>以前,你选择的Python网络框架将会限制所能够使用的 Web 服务器,反之亦然.如果框架和服务器在设计时就是可以相互匹配的,那你就不会面临这个问题：</p>
+  <hr>
+  <img src="https://img.vim-cn.com/73/a020566e9f2ec6ca651cbb21e10fd8fcdfd044.png" alt="">
+  <hr>
+  <p>但是如果你试图将设计不相匹配的服务器与框架相结合,那么你肯定就会碰到下面这张图所展示的这个问题：</p>
+  <hr>
+  <img src="https://img.vim-cn.com/ce/ec6050557791cf1dbefaed3fd1e1a4d49589a0.png" alt="">
+  <hr>
+  <p>这就意味着,你基本上只能使用能够正常运行的服务器与框架组合,而不能选择你希望使用的服务器或框架.</p>
+  <p>那么,你怎样确保可以在不修改 Web 服务器代码或网络框架代码的前提下,使用自己选择的服务器,并且匹配多个不同的网络框架呢？为了解决这个问题,
+    就出现了Python <code>Web 服务器网关接口</code>.</p>
+  <p><a href="https://www.python.org/dev/peps/pep-0333/">WSGI</a>的出现,让开发者可以将网络框架与 Web 服务器的选择分隔开来,不再相互限制.
+    现在,你可以真正地将不同的 Web 服务器与网络开发框架进行混合搭配,选择满足自己需求的组合.
+    例如,你可以使用Gunicorn或Nginx/uWSGI或Waitress服务器来运行Django、Flask或Pyramid应用.
+    正是由于服务器和框架均支持WSGI,才真正得以实现二者之间的自由混合搭配.</p>
+  <p>你的 Web 服务器必须实现一个服务器端的WSGI接口,而目前所有现代Python网络框架都已经实现了框架端的WSGI接口,这样开发者不需要修改服务器的代码,
+    就可以支持某个网络框架.</p>
+  <p>Web 服务器和网络框架支持WSGI协议,不仅让应用开发者选择符合自己需求的组合,同时也有利于服务器和框架的开发者,
+    因为他们可以将注意力集中在自己擅长的领域,而不是相互倾轧.其他编程语言也拥有类似的接口：例如Java的Servlet API和Ruby的Rack.</p>
+  <p>口说无凭,我猜你肯定在想：“无代码无真相！”既然如此,我就在这里给出一个非常简单的WSGI服务器实现：</p>
+  <pre><code># Tested with Python 2.7.14, Ubuntu 17.10 artful
+import socket
+import StringIO
+import sys
+
+
+class WSGIServer(object):
+
+    address_family = socket.AF_INET
+    socket_type = socket.SOCK_STREAM
+    request_queue_size = 1
+
+    def __init__(self, server_address):
+        # Create a listening socket
+        self.listen_socket = listen_socket = socket.socket(
+            self.address_family,
+            self.socket_type
+        )
+        # Allow to reuse the same address
+        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # Bind
+        listen_socket.bind(server_address)
+        # Activate
+        listen_socket.listen(self.request_queue_size)
+        # Get server host name and port
+        host, port = self.listen_socket.getsockname()[:2]
+        self.server_name = socket.getfqdn(host)
+        self.server_port = port
+        # Return headers set by Web framework/Web application
+        self.headers_set = []
+
+    def set_app(self, application):
+        self.application = application
+
+    def serve_forever(self):
+        listen_socket = self.listen_socket
+        while True:
+            # New client connection
+            self.client_connection, client_address = listen_socket.accept()
+            # Handle one request and close the client connection. Then
+            # loop over to wait for another client connection
+            self.handle_one_request()
+
+    def handle_one_request(self):
+        self.request_data = request_data = self.client_connection.recv(1024)
+        # Print formatted request data a la 'curl -v'
+        print(''.join(
+            '< {line}\n'.format(line=line)
+            for line in request_data.splitlines()
+        ))
+
+        self.parse_request(request_data)
+
+        # Construct environment dictionary using request data
+        env = self.get_environ()
+
+        # It's time to call our application callable and get
+        # back a result that will become HTTP response body
+        result = self.application(env, self.start_response)
+
+        # Construct a response and send it back to the client
+        self.finish_response(result)
+
+    def parse_request(self, text):
+        request_line = text.splitlines()[0]
+        request_line = request_line.rstrip('\r\n')
+        # Break down the request line into components
+        (self.request_method,  # GET
+         self.path,            # /hello
+         self.request_version  # HTTP/1.1
+         ) = request_line.split()
+
+    def get_environ(self):
+        env = {}
+        # The following code snippet does not follow PEP8 conventions
+        # but it's formatted the way it is for demonstration purposes
+        # to emphasize the required variables and their values
+        #
+        # Required WSGI variables
+        env['wsgi.version'] = (1, 0)
+        env['wsgi.url_scheme'] = 'http'
+        env['wsgi.input'] = StringIO.StringIO(self.request_data)
+        env['wsgi.errors'] = sys.stderr
+        env['wsgi.multithread'] = False
+        env['wsgi.multiprocess'] = False
+        env['wsgi.run_once'] = False
+        # Required CGI variables
+        env['REQUEST_METHOD'] = self.request_method    # GET
+        env['PATH_INFO'] = self.path              # /hello
+        env['SERVER_NAME'] = self.server_name       # localhost
+        env['SERVER_PORT'] = str(self.server_port)  # 8888
+        return env
+
+    def start_response(self, status, response_headers, exc_info=None):
+        # Add necessary server headers
+        server_headers = [
+            ('Date', 'Tue, 31 Mar 2015 12:54:48 GMT'),
+            ('Server', 'WSGIServer 0.2'),
+        ]
+        self.headers_set = [status, response_headers + server_headers]
+        # To adhere to WSGI specification the start_response must return
+        # a 'write' callable. We simplicity's sake we'll ignore that detail
+        # for now.
+        # return self.finish_response
+
+    def finish_response(self, result):
+        try:
+            status, response_headers = self.headers_set
+            response = 'HTTP/1.1 {status}\r\n'.format(status=status)
+            for header in response_headers:
+                response += '{0}: {1}\r\n'.format(*header)
+            response += '\r\n'
+            for data in result:
+                response += data
+            # Print formatted response data a la 'curl -v'
+            print(''.join(
+                '> {line}\n'.format(line=line)
+                for line in response.splitlines()
+            ))
+            self.client_connection.sendall(response)
+        finally:
+            self.client_connection.close()
+
+
+SERVER_ADDRESS = (HOST, PORT) = '', 8888
+
+
+def make_server(server_address, application):
+    server = WSGIServer(server_address)
+    server.set_app(application)
+    return server
+
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        sys.exit('Provide a WSGI application object as module:callable')
+    app_path = sys.argv[1]
+    module, application = app_path.split(':')
+    module = __import__(module)
+    application = getattr(module, application)
+    httpd = make_server(SERVER_ADDRESS, application)
+    print('WSGIServer: Serving HTTP on port {port} ...\n'.format(port=PORT))
+    httpd.serve_forever()
+</code></pre>
+  <p>上面的代码比第一部分的服务器实现代码要长的多,但是这些代码实际也不算太长,只有不到150行,大家理解起来并不会太困难.
+    上面这个服务器的功能也更多——它可以运行你使用自己喜欢的框架所写出来的网络应用,无论你选择Pyramid、Flask、Django或是其他支持WSGI协议的框架.</p>
+
+  <p>你不信？你可以自己测试一下,看看结果如何.将上述代码保存为 <code>webserver2.py</code>.</p>
+  <p>接下来,你需要创建一个网络应用.我们首先创建Flask应用.将下面的代码保存为flaskapp.py文件,放至webserver2.py所在的文件夹中</p>
+  <pre><code>from flask import Flask
+from flask import Response
+flask_app = Flask('flaskapp')
+
+
+@flask_app.route('/hello')
+def hello_world():
+    return Response(
+        'Hello world from Flask!\n',
+        mimetype='text/plain'
+    )
+
+
+app = flask_app.wsgi_app
+</code></pre>
+  <p>现在,你可以通过自己开发的 Web 服务器来启动上面的flask应用.</p>
+  <pre><code>$ python2 webserver2.py flaskapp:app
+WSGIServer: Serving HTTP on port 8888 ...</code></pre>
+  <p>在运行 <code>webserver2.py</code> 时,你告诉自己的服务器去加载 <code>flaskapp</code> 模块中的 <code>app</code> 可调用对象(callable).
+    你的服务器现在可以接收HTTP请求,并将请求中转至你的Pyramid应用.应用目前只能处理一个路由(route)：/hello.
+    在浏览器的地址栏输入 <code>http://localhost:8888/hello</code>,按下回车键,观察会出现什么情况.</p>
+  <p>你还可以在命令行使用curl命令,来测试服务器运行情况.</p>
+  <hr/>
+  <p>经过上面的介绍,你应该已经认识到了WSGI的强大之处：它可以让你自由混合搭配 Web 服务器和框架.
+    WSGI为Python Web 服务器与Python网络框架之间的交互提供了一个极简的接口,而且非常容易在服务器端和框架端实现.
+    下面的代码段分别展示了服务器端和框架端的WSGI接口：</p>
+  <pre><code>def run_application(application):
+    """Server code."""
+    # This is where an application/framework stores
+    # an HTTP status and HTTP response headers for the server
+    # to transmit to the client
+    headers_set = []
+    # Environment dictionary with WSGI/CGI variables
+    environ = {}
+    def start_response(status, response_headers, exc_info=None):
+        headers_set[:] = [status, response_headers]
+    # Server invokes the ‘application' callable and gets back the
+    # response body
+    result = application(environ, start_response)
+    # Server builds an HTTP response and transmits it to the client
+    …
+def app(environ, start_response):
+    """A barebones WSGI app."""
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    return ['Hello world!']
+run_application(app)</code></pre>
+  <hr>
+  <p>下面给大家解释一下上述代码的工作原理：</p>
+  <ol>
+    <li>网络框架提供一个命名为 <code>application</code> 的可调用对象(WSGI协议并没有指定如何实现这个对象).</li>
+    <li>服务器每次从HTTP客户端接收请求之后,调用 <code>application</code>.它会向可调用对象传递一个名叫 <code>environ</code> 的字典作为参数,
+      其中包含了WSGI/CGI的诸多变量,以及一个名为 <code>start_response</code> 的可调用对象.
+    </li>
+    <li>框架/应用生成HTTP状态码以及HTTP响应报头,然后将二者传递至 <code>start_response</code>,等待服务器保存.此外,框架/应用还将返回响应的正文.</li>
+    <li>服务器将状态码、响应报头和响应正文组合成HTTP响应,并返回给客户端(这一步并不属于WSGI协议).</li>
+  </ol>
+  <hr>
+  <p>下面这张图直观地说明了WSGI接口的情况：</p>
+  <img src="https://img.vim-cn.com/73/4f06f2f1b2eba1d369c383aeb79c7ee80a1f6c.png" alt="">
+  <hr>
+  <p>有一点要提醒大家,当你使用上述框架开发网络应用的时候,你处理的是更高层级的逻辑,并不会直接处理WSGI协议相关的要求.</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+</body>
+</html>
