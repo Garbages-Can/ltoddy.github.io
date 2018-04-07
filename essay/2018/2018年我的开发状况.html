@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>2018年,我的开发状况</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h2>2018年,我的开发状况</h2>
+  </div>
+  <p>2018年，我的变化挺大的，技术栈从Python慢慢转向Python+JavaScript，过去开发，后端用Python，然后基于Python的模板引擎渲染html页面.
+    现在，前端使用react框架和antd组建库，用fetch去跨域请求，后端或用sanic或用flask或用nodejs。</p>
+  <p>
+    <small>后端接受跨域请求的方法很简单:在response的headers的'Access-Control-Allow-Origin'设置为'*',
+      这里的'*'表示所有路由，你也可以选择你要实现跨域的路由。
+    </small>
+  </p>
+  <h4>另一个大变化是，我开始使用docker了。</h4>
+  <p>docker确实给我带来了很大的方便，我现在的数据库全部开在docker容器中，</p>
+  <pre><code>➜ ltoddy@linuxbox  ~  docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+python              3.6                 07d72c0beb99        2 weeks ago         689 MB
+redis               4.0.8               4760dc956b2d        3 weeks ago         107 MB
+mysql               5.7                 5195076672a7        3 weeks ago         371 MB
+mongo               3.6                 5b1317f8158f        3 weeks ago         366 MB
+ubuntu              16.04               f975c5035748        4 weeks ago         112 MB
+node                8.9                 672002a50a0b        6 weeks ago         676 MB
+</code></pre>
+  <p>这是我平常用的镜像.</p>
+  <p>我也写了个Makefile，用来记下镜像打开的方式。</p>
+  <pre><code>➜ ltoddy@linuxbox  ~  cat Makefile
+run:
+	docker run --name mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=hello  mysql:5.7
+	docker run --name mongo -d -p 27017:27017 mongo:3.6
+	docker run --name redis -d -p 6379:6379 redis:4.0.8
+	docker run --name rabbitmq -d -p 4369:4369 abbitmq:3.7</code></pre>
+  <p>倒不是我不知道怎么run镜像，而是写在这里，方便我复制粘贴，我的容器不是长时间开着的，我没有设置'--restart=always'字段，
+    我的容器基本上没一会就会被我销毁的，毕竟我目前还没做什么项目，仅是在练习。</p>
+  <p>docker容器化确实带来了很多好处,每个应用可以有自己的运行环境，也不会有什么端口被占用之类的问题。</p>
+  <p>总之docker的便利，你用了才会知道，反正我感觉是太好使了。</p>
+  <hr>
+  <p>这个学期,并没有像过去那样天天写代码了，我现在很少写代码了，更多的是看理论知识了，也许这算是比以前更加成长，有了过去打下的基础，
+    能够更容易的掌握知识。</p>
+  <hr>
+  <h4>下一步:</h4>
+  <p>kubernetes 是分布式的未来，kubernetes + docker 管理也是越来越流行，接下来，我会学习kubernetes提供的接口:kubectl命令，
+    我虽不走运维方向，但是会一点，多少对自己有好处。</p>
+  <p>学习日志系统，比如我要学会打日志，上报日志，日志收集，我也可能会用一些现有的日志报告工具比如：sentry。</p>
+  <p>最后，把我2018年todo-list中的awk学完，之前有些咸鱼，迟迟没看。</p>
+</div>
+</body>
+</html>
