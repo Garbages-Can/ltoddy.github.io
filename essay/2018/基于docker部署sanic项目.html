@@ -118,6 +118,9 @@ CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWor
   <blockquote>docker run -d --restart=always -p 5000:8080 sanic-demo:latest</blockquote>
   <img src="https://img.vim-cn.com/2f/56a720cd69019a7dde0fbc6022a0ed3819be74.png" alt="">
   <p>这时候打开浏览器输入: 116.85.42.182:5000 来看看效果吧.</p>
+  
+  <p>最后说明一点,去滴滴云那里的防火墙规则那里,添加5000端口的规则.</p>
+  <img src="https://img.vim-cn.com/00/b211cca5695de1c1c71ddf48faa4916cf441c6.png" alt="">
 </div>
 <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
     style="position: absolute; top: 0; right: 0; border: 0;"
