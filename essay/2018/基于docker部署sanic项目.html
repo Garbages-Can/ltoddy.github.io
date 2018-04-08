@@ -20,6 +20,8 @@
   <div class="page-header">
     <h3>基于docker部署sanic项目</h3>
   </div>
+  <p><a href="https://github.com/ltoddy/ltoddy.github.io/tree/master/app" target="_blank">源代码:
+    https://github.com/ltoddy/ltoddy.github.io/tree/master/app</a></p>
   <p><strong>我租的服务器公网ip是116.85.42.182,你自己部署的时候请换成自己的公网ip!!!</strong></p>
   <p>最近云服务提供商再打价格战,福利多多,前两天就在滴滴云上花了0.9元租了个服务器,还是SSD(超值)!</p>
   <p>去租云服务,然后他会让你选择你要安装的系统,我用的是ubuntu16.04,因为ubuntu我还是比较熟悉的.</p>
@@ -118,7 +120,7 @@ CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWor
   <blockquote>docker run -d --restart=always -p 5000:8080 sanic-demo:latest</blockquote>
   <img src="https://img.vim-cn.com/2f/56a720cd69019a7dde0fbc6022a0ed3819be74.png" alt="">
   <p>这时候打开浏览器输入: 116.85.42.182:5000 来看看效果吧.</p>
-  
+
   <p>最后说明一点,去滴滴云那里的防火墙规则那里,添加5000端口的规则.</p>
   <img src="https://img.vim-cn.com/00/b211cca5695de1c1c71ddf48faa4916cf441c6.png" alt="">
 </div>
