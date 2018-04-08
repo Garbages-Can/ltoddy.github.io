@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>基于docker部署sanic项目</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <h3>基于docker部署sanic项目</h3>
+  </div>
+  <p><strong>我租的服务器公网ip是116.85.42.182,你自己部署的时候请换成自己的公网ip!!!</strong></p>
+  <p>最近云服务提供商再打价格战,福利多多,前两天就在滴滴云上花了0.9元租了个服务器,还是SSD(超值)!</p>
+  <p>去租云服务,然后他会让你选择你要安装的系统,我用的是ubuntu16.04,因为ubuntu我还是比较熟悉的.</p>
+  <p>买完服务器之后,你会得到一个公网ip,你可以通过ssh命令连接上你的服务器.</p>
+  <blockquote>ssh dc2-user@116.85.42.182</blockquote>
+  <p>
+    <small>顺便提一句,滴滴云给你创建的账户叫"dc2-user",你需要自己设置root的密码.</small>
+  </p>
+  <img src="https://img.vim-cn.com/be/6285cd4ec8d5a5560d98a72edc36210ff2ec04.jpg" alt="">
+  <p>然后安装docker:</p>
+  <blockquote>sudo apt-get install docker.io</blockquote>
+  <h3>演示一个最小的sanic-demo,来部署一下.</h3>
+  <pre><code>.
+├── app.py
+├── Dockerfile
+└── templates
+    └── index.html
+
+1 directory, 3 files</code></pre>
+  <p>这是项目树.</p>
+  <p>
+    <small>app.py</small>
+  </p>
+  <pre><code>import os
+from sanic import Sanic
+from sanic.response import html
+from jinja2 import Environment, FileSystemLoader
+
+base_dir = os.path.dirname(os.path.abspath(__name__))
+templates_dir = os.path.join(base_dir, 'templates')
+jinja_env = Environment(loader=FileSystemLoader(templates_dir), autoescape=True)
+app = Sanic(__name__)
+
+
+def render_template(template_name, **context):
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+
+@app.route('/')
+async def index(request):
+    return html(render_template('index.html'))</code></pre>
+  <p>这里的python代码,用到了sanic框架和jinja2木板引擎,所以带会需要安装这两个依赖.</p>
+  <p>
+    <small>Dockerfile</small>
+  </p>
+  <pre><code>FROM taoliu/gunicorn3
+
+WORKDIR /app
+
+ADD . /app
+
+RUN pip install sanic \
+    && pip install jinja2
+
+EXPOSE 8080
+
+CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWorker</code></pre>
+  <p>第一行那里"FROM taoliu/gunicorn3",由于没找到合适的Python3的gunicorn的基础镜像,所以我自己做了一个,方便所有人使用.</p>
+  <p>RUN pip install sanic \
+    && pip install jinja2 这里,来安装那两个依赖.</p>
+  <p>CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWorker 这行,是镜像运行他所以执行的命令,
+    解释一下 <strong>app:app</strong>, 我们要运行的那个python文件叫app.py,其中app.py中的那个应用叫app(app = Sanic(__name__)),
+    比如,你过去是python manage.py 这样运行项目,那这里就改成manage:app, manage.py 中的 if __name__ == '__main__' 可以去掉了.</p>
+  <p>
+    <small>templates/index.html</small>
+  </p>
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;ltoddy's home&lt;/title&gt;
+  &lt;link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="container"&gt;
+  &lt;div class="page-header"&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+  <p>然后把这些文件传到服务器上:</p>
+  <blockquote>scp -r * dc2-user@116.85.42.182:~</blockquote>
+  <img src="https://img.vim-cn.com/8c/3f37bc03d1ce4ed5f94a9ee86014a243c88de0.jpg" alt="">
+  <hr>
+  <p>然后ssh连上我们的服务器,去构建我们的docker镜像(这个过程有些漫长,具体看网速.)</p>
+  <blockquote>docker build -t sanic-demo .</blockquote>
+  <img src="https://img.vim-cn.com/0b/ae962d52e59b801799e2a56561bf75a449be05.png" alt="">
+  然后
+  <blockquote>docker images</blockquote>
+  来查看一下当前拥有的镜像
+  <img src="https://img.vim-cn.com/9d/68e29376d6b5e3de39008f3d6011595c80b602.jpg" alt="">
+  然后后台运行docker镜像:
+  <blockquote>docker run -d --restart=always -p 5000:8080 sanic-demo:latest</blockquote>
+  <img src="https://img.vim-cn.com/2f/56a720cd69019a7dde0fbc6022a0ed3819be74.png" alt="">
+  <p>这时候打开浏览器输入: 116.85.42.182:5000 来看看效果吧.</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+</body>
+</html>
