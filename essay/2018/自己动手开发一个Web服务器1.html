@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>自己动手开发一个 Web 服务器（一）</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+
+  <style>
+    .container {
+      padding-right: 150px;
+      padding-left: 150px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    div img {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div>
+    <h3>自己动手开发一个 Web 服务器（一）</h3>
+  </div>
+  <p>有一天，一位女士散步时经过一个工地，看见有三个工人在干活。她问第一个人，“你在做什么？”第一个人有点不高兴，吼道“难道你看不出来我在砌砖吗？”
+    女士对这个答案并不满意，接着问第二个人他在做什么。第二个人回答道，“我正在建造一堵砖墙。”
+    然后，他转向第一个人，说道：“嘿，你砌的砖已经超过墙高了。你得把最后一块砖拿下来。”女士对这个答案还是不满意，她接着问第三个人他在做什么。
+    第三个人抬头看着天空，对她说：“我在建造这个世界上有史以来最大的教堂”。就在他望着天空出神的时候，另外两个人已经开始争吵多出的那块砖。
+    他慢慢转向前两个人，说道：“兄弟们，别管那块砖了。这是一堵内墙,之后还会被刷上石灰的，没人会注意到这块砖。接着砌下层吧。”</p>
+  <p>这个故事的寓意在于，当你掌握了整个系统的设计，明白不同的组件是以何种方式组合在一起的（砖块，墙，教堂）时候，
+    你就能够更快地发现并解决问题（多出的砖块）。</p>
+  <p>但是，这个故事与从头开发一个 Web 服务器有什么关系呢？</p>
+  <p>在我看来，要成为一名更优秀的程序员，你必须更好地理解自己日常使用的软件系统，而这就包括了编程语言、编译器、解释器、数据库与操作系统、 Web
+    服务器和网络开发框架。而要想更好、更深刻地理解这些系统，你必须从头重新开发这些系统，一步一个脚印地重来一遍。</p>
+  <p>孔子曰：不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。</p>
+
+  <hr>
+  <small>不闻不若闻之</small>
+  <img src="http://img.vim-cn.com/09/aef1ba553ac08651ba664d4e4a277982f2bc4d.png" alt="">
+  <hr>
+  <small>闻之不若见之</small>
+  <img src="http://img.vim-cn.com/6f/b8bbfb084f736077ed6aeb8fdd69b81bbb3399.png" alt="">
+  <hr>
+  <small>见之不若知之，知之不若行之。</small>
+  <img src="http://img.vim-cn.com/f9/ff5b4d19b3467dfcceb82994f19c3380a42ae8.png" alt="">
+  <hr>
+
+  <p>首先，到底什么是 Web 服务器？</p>
+  <img src="http://img.vim-cn.com/be/7cb62dd299115053575a160d3ad65afacff1f3.png" alt="">
+
+  <p>简而言之，它是在物理服务器上搭建的一个网络连接服务器（networking server），永久地等待客户端发送请求。
+    当服务器收到请求之后，它会生成响应并将其返回至客户端。
+    客户端与服务器之间的通信，是以HTTP协议进行的。客户端可以是浏览器，也可以是任何支持HTTP协议的软件。</p>
+
+  <p>么， Web 服务器的简单实现形式会是怎样的呢？下面是我对此的理解。
+    示例代码使用Python语言实现，不过即使你不懂Python语言，你应该也可以从代码和下面的解释中理解相关的概念：</p>
+
+  <pre><code>import socket
+
+HOST, PORT = '', 8888
+
+listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+listen_socket.bind((HOST, PORT), )
+listen_socket.listen(1)
+
+print('Serving HTTP on port {} ...'.format(PORT))
+
+while True:
+    client_connection, client_address = listen_socket.accept()
+    request = client_connection.recv(1024)
+    print(request)
+
+    http_response = """\
+HTTP/1.1 200 OK
+
+Hello, World!
+"""
+    client_connection.sendall(http_response.encode())
+    client_connection.close()</code></pre>
+  <p>将上面的代码保存为webserver1.py，然后通过命令行运行该文件：</p>
+
+  <pre><code>$ python webserver1.py
+Serving HTTP on port 8888 …</code></pre>
+  <p>接下来，在浏览器的地址栏输入这个链接：http://localhost:8888/hello，然后按下回车键，你就会看见神奇的一幕。
+    在浏览器中，应该会出现“Hello, World!”这句话：</p>
+
+  <img src="http://img.vim-cn.com/f3/4ed6815df9af310f4df4a6ec81ba8c69964ed1.png" alt="">
+
+  <p>是不是很神奇？接下来，我们来分析背后的实现原理。</p>
+  <p>首先，我们来看你所输入的网络地址。它的名字叫URL（统一资源定位符Uniform Resource Locator），其基本结构如下：</p>
+  <img src="http://img.vim-cn.com/c0/8845257423208d7d6b8483ae7edd2e15bfdc25.png" alt="">
+
+  <p>通过URL，你告诉了浏览器它所需要发现并连接的 Web 服务器地址，以及获取服务器上的页面路径。
+    不过在浏览器发送HTTP请求之前，它首先要与目标 Web 服务器建立TCP连接。
+    然后，浏览器再通过TCP连接发送HTTP请求至服务器，并等待服务器返回HTTP响应。
+    当浏览器收到响应的时候，就会在页面上显示响应的内容，而在上面的例子中,浏览器显示的就是“Hello, World!”这句话。</p>
+
+  <p>那么，在客户端发送请求、服务器返回响应之前，二者究竟是如何建立起TCP连接的呢？要建立起TCP连接，服务器和客户端都使用了所谓的套接字（socket）。
+    接下来，我们不直接使用浏览器，而是在命令行使用 <code>telnet</code> 手动模拟浏览器。</p>
+
+  在运行 Web 服务器的同一台电脑商，通过命令行开启一次 <code>telnet</code> 会话，
+  将需要连接的主机设置为 <code>localhost</code>，主机的连接端口设置为 <code>8888</code>，然后按回车键：
+
+  <pre><code>$ telnet localhost 8888
+Trying 127.0.0.1 …
+Connected to localhost.</code></pre>
+
+  <p>完成这些操作之后，你其实已经与本地运行的 Web 服务器建立了TCP连接，随时可以发送和接收HTTP信息。
+    在下面这张图片里，展示的是服务器接受新TCP连接所需要完成的标准流程。</p>
+
+  <img src="http://img.vim-cn.com/a0/7b075018aa6cc602394cae6b351135dc69189d.png" alt="">
+
+  <p>在上面那个 <code>telnet</code> 会话中，我们输入 <code>GET /hello HTTP/1.1</code> ，然后按下回车：</p>
+
+  <pre><code>$ telnet localhost 8888
+Trying 127.0.0.1 …
+Connected to localhost.
+GET /hello HTTP/1.1
+
+HTTP/1.1 200 OK
+Hello, World!</code></pre>
+  <p>你成功地手动模拟了浏览器！你手动发送了一条HTTP请求，然后收到了HTTP响应。下面这幅图展示的是HTTP请求的基本结构：</p>
+
+  <img src="http://img.vim-cn.com/7f/5a00ff8a92befb9a904e558253c1424a2497e9.png" alt="">
+
+  <p>HTTP请求行包括了HTTP方法（这里使用的是 <code>GET</code> 方法，因为我们希望从服务器获取内容），
+    服务器页面路径（ <code>/hello</code> ）以及HTTP协议的版本。</p>
+
+  <p>为了尽量简化，我们目前实现的 Web 服务器并不会解析上面的请求，你完全可以输入一些没有任何意义的代码，也一样可以收到"Hello, World!"响应。</p>
+  <p>在你输入请求代码并按下回车键之后，客户端就将该请求发送至服务器了，服务器则会解析你发送的请求，并返回相应的HTTP响应。</p>
+  <p>下面这张图显示的是服务器返回至客户端的HTTP响应详情：</p>
+  <img src="http://img.vim-cn.com/63/68863abba6e6e030fd0377a77cb710283e2630.png" alt="">
+
+  <p>我们来分析一下。响应中包含了状态行 <code>HTTP/1.1 200 OK</code>，之后是必须的空行，然后是HTTP响应的正文。</p>
+  <p> 响应的状态行 <code>HTTP/1.1 200 OK</code> 中，包含了HTTP版本、
+    HTTP状态码以及与状态码相对应的原因短语（Reason Phrase）。
+    浏览器收到响应之后，会显示响应的正文，这就是为什么你会在浏览器中看到“Hello, World!”这句话。</p>
+
+  <p>这就是 Web 服务器基本的工作原理了。简单回顾一下： Web 服务器首先创建一个侦听套接字（listening socket），
+    并开启一个永续循环接收新连接；客户端启动一个与服务器的TCP连接，成功建立连接之后，向服务器发送HTTP请求，之后服务器返回HTTP响应。
+    要建立TCP连接，客户端和服务器都使用了套接字。</p>
+
+  <p>现在，你已经拥有了一个基本可用的简易 Web 服务器，你可以使用浏览器或其他HTTP客户端进行测试。
+    正如上文所展示的，通过 <code>telnet</code> 命令并手动输入HTTP请求，你自己也可以成为一个HTTP客户端。</p>
+
+
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+</body>
+</html>

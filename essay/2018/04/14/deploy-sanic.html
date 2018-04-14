@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>deploy-sanic</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+  <link rel="icon" href="/static/me.jpg">
+
+  <script src="/static/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>基于docker+gunicorn部署sanic项目</h1>
+  <p>源代码: <a href="https://github.com/ltoddy/Python-useful/tree/master/sanic-app">https://github.com/ltoddy/Python-useful/tree/master/sanic-app</a>
+  </p>
+  <p>最近云服务提供商在打价格战,我在滴滴云上花了很少的钱租了一个月的云服务器:
+    公网ip是： 116.85.42.182, 以下我以116.85.42.182这个ip为演示,当你自己在部署的时候请换乘自己的ip地址.</p>
+  <p>买完服务器之后,你会得到一个公网ip,你可以通过ssh命令连接上你的服务器.</p>
+  <blockquote>
+    <p>ssh dc2-user@116.85.42.182</p>
+  </blockquote>
+  <p><em>顺便提一句,滴滴云给你创建的账户叫"dc2-user",你需要自己设置root的密码.</em></p>
+  <p><img alt="" src="https://img.vim-cn.com/be/6285cd4ec8d5a5560d98a72edc36210ff2ec04.jpg"/></p>
+  <p>然后安装docker:</p>
+  <blockquote>
+    <p>sudo apt-get install docker.io</p>
+  </blockquote>
+  <h1>演示一个最小的sanic-app,来部署一下.</h1>
+  <p>这是项目树(目录).</p>
+  <p>```
+    .
+    ├── app.py
+    ├── Dockerfile
+    └── templates
+    └── index.html</p>
+  <p>1 directory, 3 files
+    ```</p>
+  <p>app.py</p>
+  <p>```python
+    import os</p>
+  <p>from sanic import Sanic
+    from sanic.response import html
+    from sanic.response import HTTPResponse
+    from jinja2 import Environment, FileSystemLoader</p>
+  <p>app = Sanic(<strong>name</strong>)
+    base_dir = os.path.abspath(os.path.dirname(<strong>file</strong>))
+    templates_dir = os.path.join(base_dir, 'templates')
+    jinja_env = Environment(loader=FileSystemLoader(templates_dir), autoescape=True)</p>
+  <p>def render_template(template_name: str, <strong>context) -&gt; str:
+    template = jinja_env.get_template(template_name)
+    return template.render(</strong>context)</p>
+  <p>@app.route('/')
+    async def index(request) -&gt; HTTPResponse:
+    return html(render_template('index.html'))
+    ```
+    这里的python代码,用到了sanic框架和jinja2木板引擎,所以带会需要安装这两个依赖.</p>
+  <p>Dockerfile</p>
+  <p>```
+    FROM taoliu/gunicorn3</p>
+  <p>WORKDIR /code</p>
+  <p>ADD . /code</p>
+  <p>RUN pip install sanic \
+    &amp;&amp; pip install jinja2</p>
+  <p>EXPOSE 8080</p>
+  <p>CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWorker
+    ```</p>
+  <p>第一行那里"FROM taoliu/gunicorn3",由于没找到合适的Python3的gunicorn的基础镜像,所以我自己做了一个,方便所有人使用.</p>
+  <p>RUN pip install sanic \ &amp;&amp; pip install jinja2 这里,来安装那两个依赖.</p>
+  <p>CMD gunicorn app:app --bind 0.0.0.0:8080 --worker-class sanic.worker.GunicornWorker 这行,是镜像运行他所以执行的命令.</p>
+  <p>templates/index.html</p>
+  <p><code>html
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang="en"&gt;
+    &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;ltoddy's home&lt;/title&gt;
+    &lt;link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;div class="container"&gt;
+    &lt;div class="page-header"&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></p>
+  <p>然后把这些文件传到服务器上:</p>
+  <blockquote>
+    <p>scp -r * dc2-user@116.85.42.182:~</p>
+  </blockquote>
+  <p><img alt="" src="https://img.vim-cn.com/8c/3f37bc03d1ce4ed5f94a9ee86014a243c88de0.jpg"/></p>
+  <p>然后ssh连上我们的服务器,去构建我们的docker镜像(这个过程有些漫长,具体看网速.)</p>
+  <blockquote>
+    <p>docker build -t sanic-demo .</p>
+  </blockquote>
+  <p><img alt="" src="https://img.vim-cn.com/0b/ae962d52e59b801799e2a56561bf75a449be05.png"/></p>
+  <blockquote>
+    <p>docker images</p>
+  </blockquote>
+  <p>来查看一下当前拥有的镜像</p>
+  <p><img alt="" src="https://img.vim-cn.com/9d/68e29376d6b5e3de39008f3d6011595c80b602.jpg"/></p>
+  <p>然后后台运行docker镜像:</p>
+  <blockquote>
+    <p>docker run -d --restart=always -p 5000:8080 sanic-demo:latest</p>
+  </blockquote>
+  <p><img alt="" src="https://img.vim-cn.com/2f/56a720cd69019a7dde0fbc6022a0ed3819be74.png"/></p>
+  <p>这时候打开浏览器输入: 116.85.42.182:5000 来看看效果吧.</p>
+  <p>最后说明一点,去滴滴云那里的防火墙规则那里,添加5000端口的规则.</p>
+  <p><img alt="https://img.vim-cn.com/00/b211cca5695de1c1c71ddf48faa4916cf441c6.png"
+          src="https://img.vim-cn.com/00/b211cca5695de1c1c71ddf48faa4916cf441c6.png"/></p>
+</div>
+
+</body>
+</html>

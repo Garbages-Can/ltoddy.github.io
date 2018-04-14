@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>浅析Python原型特性</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>浅析Python原型特性</h3>
+  </div>
+  <p>在原型语言中有这么一个原则：对象是槽(slot)的容器。可以把一组槽想象成散列表,而对象就是槽的容器.</p>
+  <p><b>举个例子：</b></p>
+  <pre>
+class Student:
+    pass
+
+
+s = Student()
+print(dir(s))
+
+s.name = "hello"
+print(dir(s))
+
+其输出结果为：
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__']
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'name']
+</pre>
+  <p>一开始定义了一个Student类，里面除了默认从object类中继承的东西外，其他什么都没有。而s.name = "hello"之后，我们通过dir函数看到s中多了name这个属性.</p>
+  <p>也就是说可以动态的存取属性.</p>
+  <pre>
+class Student:
+    pass
+
+
+s = Student()
+print(dir(s))
+Student.name = 'hello'
+print(dir(s))
+</pre>
+  <p>试试运行这段代码，你会发现，如果Student.name = 'hello'，这样子，给类添加上属性，那么这个类的实例对象也都会添加上这个属性。</p>
+  <p>那么Python怎么做到的这件事呢？</p>
+  <p>在Python的原型协议中需要这么两个方法:__setattr__(self, key, value)和__getattr__(self, item)，来负责存取属性.</p>
+  <p>举个例子，比如我们需要一个任意维度的向量,如何做？</p>
+  <pre>
+from array import array
+import reprlib
+
+
+class Vector:
+    typecode = 'd'
+
+    def __init__(self, components):
+        self._components = array(self.typecode, components)
+
+    def __iter__(self):
+        return iter(self._components)
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        components = reprlib.repr(self._components)
+        components = components[components.find('['):-1]
+        return '{}({})'.format(class_name, components)
+
+    shortcut_name = 'xyzt'
+
+    def __getattr__(self, name):
+        cls = type(self)  # 获取Vector,待会用到
+        if len(name) == 1:  # 如果属性名只有一个字母,可能是 shortcut_name 中的一个
+            pos = cls.shortcut_name.find(name)  # 查找到那个字母
+            if 0 <= pos < len(self._components):
+                return self._components[pos]
+        msg = '{cls.__name__!r} object has no attribute {!r}'  # 如果测试豆失败了,抛出一个异常
+        raise AttributeError(msg.format(cls, name))
+
+
+v = Vector(range(5))
+print(v)
+print(v.x)
+v.x = 10
+print(v) # 你会发现向量的分量没有变
+</pre>
+  <p>为什么呢？因为我们没有对__setattr__方法重写,也就是说我们虽然v.x = 10这样了，可是这样的做法是为v对象添加了x这个属性，可是并不是去改变分量_components</p>
+
+  <pre>from array import array
+import reprlib
+
+
+class Vector:
+    typecode = 'd'
+
+    def __init__(self, components):
+        self._components = array(self.typecode, components)
+
+    def __iter__(self):
+        return iter(self._components)
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        components = reprlib.repr(self._components)
+        components = components[components.find('['):-1]
+        return '{}({})'.format(class_name, components)
+
+    shortcut_name = 'xyzt'
+
+    def __getattr__(self, name):
+        cls = type(self)  # 获取Vector,待会用到
+        if len(name) == 1:  # 如果属性名只有一个字母,可能是 shortcut_name 中的一个
+            pos = cls.shortcut_name.find(name)  # 查找到那个字母
+            if 0 <= pos < len(self._components):
+                return self._components[pos]
+        msg = '{cls.__name__!r} object has no attribute {!r}'  # 如果测试豆失败了,抛出一个异常
+        raise AttributeError(msg.format(cls, name))
+
+    def __setattr__(self, key: str, value):
+        cls = type(self)
+        if len(key) == 1 and key in cls.shortcut_name:  # 如果属性长度为1且在 shortcut_name 中
+            self._components[ord(key) - ord(self.shortcut_name[0])] = value # 那么改变分量的值
+        super().__setattr__(key, value)
+
+
+v = Vector(range(5))
+print(v)
+print(v.x)
+v.x = 10
+print(v)  # 你会发现向量的分量变了
+</pre>
+
+  <h3>Python的一个特殊的类属性: __slots__</h3>
+  <p>默认情况下,python在各个实例中名为__dict__的字典里存实例属性,为了使用底层的散列表提升访问速度,字典会消耗大量内存.</p>
+  <p>如果要处理数百万个属性不多的实例,通过__slots__类属性,能节省大量内存,方法是让解释器在元祖中存储实例属性,而不是字典.</p>
+  <p>
+    <small>继承自超类的__slots__属性没有效果,Python只会使用各个类中定义的__slots__属性.</small>
+  </p>
+  <p>定义__slots__的方式是,创建一个类属性,使用__slots__这个名字,并把它的值设为一个字符串构成的可迭代的对象,其中各个元素表示各个实例属性.</p>
+  <pre>class User:
+    __slots__ = ('username', 'password')
+</pre>
+  <p>在类中定义__slots__属性的目的就是告诉解释器：“这个类中所有的实例属性都在这了.”这样Python会在各个实例中使用类似元祖的结构存储实例变量，
+    从而避免使用消耗内存的__dict__属性。</p>
+</div>
+</body>
+</html>
