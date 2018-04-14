@@ -1,0 +1,5 @@
+.header {
+  background-size: cover;
+  background: url('../assets/bg.png') no-repeat;
+  height: 360px;
+}
