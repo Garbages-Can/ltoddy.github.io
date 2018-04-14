@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>写给想要入门python或者正在入门python的小朋友们</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>写给想要入门python或者正在入门python的小朋友们</h3>
+  </div>
+  <p>写在前面:</p>
+  <p>最近好像python挺火，虽然我也在天天写python，但是python毕竟是动态语言，就拿常被人吐槽的java来说，python绝大不多数地方是不如java的。python只能是你的一个爱好。</p>
+  <p>正文:</p>
+  <p>市面上也有不少python语言的入门书，不过我下载pdf版本之后浏览几眼就知道，基本上毫无用处，原因如下:</p>
+  <p>
+    有些书讲解python是通过python的解释器来讲的，这是学习语言的一个大忌，这个样子你是绝对入不了门的。
+    为什么，很简单，你见过那个python的项目是在解释器一行一行写出来的？而且，就算有人说先回基本语法，然后在慢慢转到去通过写py文件，
+    这无疑就给你增添了很多弯路，你为什么不一开始就从py文件开始呢。
+  </p>
+  <p>而且py的解释器最大的用途，我觉得不是靠他来教学语法，而是来调试，比如你在程序中有一个类或者函数不是很清楚，你可以在解释器里面import一下，然后看一下它的格式。如比：</p>
+  <pre><code>>>> from urllib.request import urlparse
+>>> foo = urlparse('https://www.baidu.com')
+>>> foo
+ParseResult(scheme='https', netloc='www.baidu.com', path='', params='', query='', fragment='')</code></pre>
+  <p>
+    <img
+        src="http://upload-images.jianshu.io/upload_images/3308539-4eb362e700afbd22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+        alt="" style="float: left">其次，那些入门书都忘记了一点：程序设计，因为语法这东西，一下午就可以搞定的事情，是不需要专门出书的。而程序设计不是，它是一种所谓“思想”。（具体下面会提到）
+    我推荐的入门教材是：《python语言程序设计》，作者：梁勇 </p>
+  <p>
+    为什么，首先这本书中的代码都是让你去编写py文件，然后去运行的。书中有大量的练习题，而且难度不小，我作为曾经的acmer，其中有些题也花了一些时间。
+  </p>
+  <p>这的的确确是一个入门书，千万不要打退堂鼓，如果你能完全做完，你肯定会受益匪浅，编程能力肯定会提高好几个档次。 </p>
+  <p>而且书中也会随着讲解程序，也讲了tkinter图形化设计。
+  </p>
+  <p>举个例子，如果你是个大学生程序员，现在大二、大三、大四了，比如我给你一个二位数组，里面是个数独表，你是否能写个程序来解决呢，以及编写对应的gui，我相信绝大多数人是不行的. </p>
+  <p>但是你认真认真看完书，是绝对可以做到的。</p>
+</div>
+</body>
+</html>

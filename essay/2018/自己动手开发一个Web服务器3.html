@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>自己动手开发一个 Web 服务器(三)</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+
+  <style>
+    .container {
+      padding-right: 150px;
+      padding-left: 150px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    div img {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div>
+    <h3>自己动手开发一个 Web 服务器(三)</h3>
+  </div>
+  <p>首先，我们简单回忆一下简易网络服务器是如何实现的，服务器要处理客户端的请求需要哪些条件。你在前面两部分文章中开发的服务器，
+    是一个迭代式服务器iterative server，还只能一次处理一个客户端请求。
+    只有在处理完当前客户端请求之后，它才能接收新的客户端连接。
+    这样，有些客户端就必须要等待自己的请求被处理了，而对于流量大的服务器来说， 等待的时间就会特别长。</p>
+  <img src="https://img.vim-cn.com/37/34a7ceb1617439aff063ea9eabc3f6de636595.png" alt="">
+  <hr>
+  <p>下面是迭代式服务器 <code>webserver3a.py</code> 的代码：</p>
+  <pre><code>#####################################################################
+# Iterative server - webserver3a.py                                 #
+#                                                                   #
+# Tested with Python 3.6.3 on Ubuntu 17.10                          #
+#####################################################################
+import socket
+
+SERVER_ADDRESS = (HOST, PORT) = '', 8000
+REQUEST_QUEUE_SIZE = 5
+
+
+def handle_request(client_connection):
+    request = client_connection.recv(1024)
+    print(request.decode())
+    http_response = b'''
+HTTP/1.1 200 OK
+
+Hello World!'''
+
+    client_connection.sendall(http_response)
+
+
+def serve_forever():
+    listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 0)
+    listen_socket.bind(SERVER_ADDRESS)
+    listen_socket.listen(REQUEST_QUEUE_SIZE)
+    print('Serving HTTP on port {port} ...'.format(port=PORT))
+
+    while True:
+        client_connection, client_address = listen_socket.accept()
+        handle_request(client_connection)
+        client_connection.close()
+
+
+if __name__ == '__main__':
+    serve_forever()</code></pre>
+  <p>接下来，我们简单谈谈客户端与服务器之间的通信。为了让两个程序通过网络进行通信，二者均必须使用套接字。你在前两章中也看到过套接字，但到底什么是套接字？</p>
+  <img src="https://img.vim-cn.com/86/f641937a5c4291753ca6865bda011502ecfc9c.png" alt="">
+  <p>套接字是通信端点communication endpoint的抽象形式，可以让一个程序通过文件描述符file descriptor与另一个程序进行通信。
+    在本文中，我只讨论类Unix平台上的TCP/IP套接字。其中，尤为重要的一个概念就是TCP套接字对socket pair。</p>
+  <p><strong>TCP连接所使用的套接字对是一个4元组4-tuple，包括本地IP地址、本地端口、外部IP地址和外部端口。
+    一个网络中的每一个TCP连接，都拥有独特的套接字对。IP地址和端口号通常被称为一个套接字，二者一起标识了一个网络端点。</strong></p>
+  <p>服务器创建套接字并开始接受客户端连接的标准流程如下：</p>
+  <img src="https://img.vim-cn.com/29/2c4a13fc00a652965930fc302ea2a9322829f3.png" alt="">
+
+  <ol>
+    <li>
+      <p>服务器创建一个TCP/IP套接字。通过下面的Python语句实现：</p>
+      <code>listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</code>
+    </li>
+    <li>
+      <p>服务器可以设置部分套接字选项（这是可选项，但你会发现上面那行服务器代码就可以确保你重启服务器之后，服务器会继续使用相同的地址）。</p>
+      <code>listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)</code>
+    </li>
+    <li>
+      <p>然后，服务器绑定地址。绑定函数为套接字指定一个本地协议地址。调用绑定函数时，你可以单独指定端口号或IP地址，也可以同时指定两个参数，甚至不提供任何参数也没问题。</p>
+      <code>listen_socket.bind(SERVER_ADDRESS)</code>
+    </li>
+    <li>
+      <p>接着，服务器将该套接字变成一个侦听套接字：</p>
+      <code>listen_socket.listen(REQUEST_QUEUE_SIZE)</code>
+    </li>
+  </ol>
+  <p><code>listen</code>方法只能由服务器调用，执行后会告知服务器应该接收针对该套接字的连接请求。</p>
+  <p>完成上面四步之后，服务器会开启一个循环，开始接收客户端连接，不过一次只接收一个连接。当有连接请求时， <code>accept</code>方法会返回已连接的客户端套接字。
+    然后，服务器从客户端套接字读取请求数据，在标准输出中打印数据，并向客户端返回消息。最后，服务器会关闭当前的客户端连接，这时服务器又可以接收新的客户端连接了。</p>
+
+  <p>要通过TCP/IP协议与服务器进行通信，客户端需要作如下操作：</p>
+  <img src="https://img.vim-cn.com/f8/39ccc0056bdf61b7c4c8dae1124b5194b2fdea.png" alt="">
+
+  <p>客户端只需要提供远程IP地址或主机名，以及服务器的远程连接端口号即可。</p>
+  <p>客户端不会调用 <code>bind</code> 和 <code>accept</code> 方法。
+    不需要调用bind方法，是因为客户端不关心本地IP地址和本地端口号。客户端调用connect方法时，系统内核中的TCP/IP栈会自动指定本地IP地址和本地端口。
+    本地端口也被称为临时端口。</p>
+  <p>服务器端有部分端口用于连接熟知的服务，这种端口被叫做“熟知端口，例如，80用于HTTP传输服务，22用于SSH协议传输。</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+</body>
+</html>

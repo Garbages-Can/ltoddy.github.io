@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>白话并发</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>白话并发</h3>
+  </div>
+  <p>办公室只有一个卫生间，一次只能容纳一个人方便，这个卫生间就是<b>竞争条件（Race Condition）</b>。</p>
+  <p>当一个人进去后就在门口牌子上标识为“有人”，这个就相当于是<b>线程的加锁</b>，告诉其它同时间想要上厕所的人，这个资源已被我占位，其他人就需要等待，这叫wait。</p>
+  <p>只有当前面的人出来后，并把牌子置为“无人”时，其它人才有机会使用。当只有一个蹲位时，一次只能进一个人，翻动一块牌子加一把锁，这个就叫<b>互斥锁（Mutex）</b>。</p>
+  <p>如果卫生间里有多个蹲位，再简单地用一块牌子来标识就不行了，需要做一个电子公告牌，进去一个人电子公告牌就把可用数量减1，出来一个人数量加1，</p>
+  <p>数量不为0时，有人来直接进去就行了不用等待，这个叫<b>信号量（Semaphores）</b>。</p>
+  <p>如果出来的人是随机通知等待的某一个人，这叫notify，如果他是对着所有等待的人喊一嗓子，就是notifyAll。</p>
+  <p>如果使用notify，有些倒霉的家伙可能永远也不会被通知到，这太不人性了，而如果使用nofityAll就意味着所有等待的人需要竞争资源，还是会在倒霉蛋永远轮不到。</p>
+  <p>解决的办法一是按时间顺序先到先得，顺序进入，火车站的厕所经常会看到这种情况，总是有机会轮到自己，这叫<b>公平锁（FairLock）</b>。</p>
+  <p>还有一种情况，就是大老板也在排队，一般情况下大老板时间宝贵，可以优先考虑让他先上，这叫<b>线程优先级</b>，一共有10个级别。</p>
+  <p>优先级只能保证级别高的优先被调度到，但不能保证一定会被调度到。</p>
+  <p>两个好基友一起在蹲坑，只有一卷手纸，一个人去取时另一个就不能同时去取，这叫<b>基于共享内存的线程间通信</b>。</p>
+  <p>或者：两个人都是烟鬼，但只带了一个打火机，一个人用完之后递给另外一个人.</p>
+  <p>进程和线程的区别：一个办公区有多个卫生间，每个卫生间的资源是独立的，不会相互依赖，相当于是进程。</p>
+  <p>每个卫生间有多个蹲位，每个蹲位相当于是一个线程，蹲位越多并发处理能力越强。但多个同一个卫生间的多个蹲位共用一个洗手台，如果蹲位过多，洗手台的资源会成为瓶颈。</p>
+  <div class="page-header">
+    <h3>一本正经</h3>
+  </div>
+  <blockquote>
+    <p>并发是指一次处理多件事。</p>
+    <p>并行是指一次做多件事。</p>
+    <p>二者不同，但是有联系。</p>
+    <p>一个关于结构，一个关于执行。</p>
+    <p>并发用于制定方案，用来解决可能（但未必）并行的问题。</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -- Rob Pike Go语言的创造者之一</p>
+  </blockquote>
+  <p>真正的并行需要多个核心。现代的笔记本电脑有4个CPU核心，但是通常不经意间就有超过100个进程同时运行。</p>
+  <p>因此，实际上大多数过程都是并发处理的，而不是并行处理。</p>
+  <p>计算机始终运行着100多个进程，确保每个进程都有机会取得进展，不过CPU本身同时做的事情不能超过四件。</p>
+  <p>十年前使用的设备也能并发处理100个进程，不过都在同一个核心里。</p>
+</div>
+</body>
+</html>
