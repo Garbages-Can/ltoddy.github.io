@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './Header.css';
 import ReactTooltip from 'react-tooltip'
+import me from '../assets/me.jpg'
 
 const Header = (props) => (
   <div className={css.container}>
@@ -10,7 +11,7 @@ const Header = (props) => (
     <div className={css.introduce}>
       <div>
         <a href="https://github.com/ltoddy" target="_blank" data-tip data-for='github'>
-          <img src="../assets/me.jpg" alt="" className={css.logo}/>
+          <img src={me} alt="" className={css.logo}/>
         </a>
         <ReactTooltip id='github'>Go to Github</ReactTooltip>
       </div>
