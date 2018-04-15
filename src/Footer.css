@@ -1,11 +1,16 @@
 .container {
   display: flex;
-  justify-content: center;
-  margin: 10px 0;
+  justify-content: space-around;
+  margin: 10px 0 0;
   background-color: transparent;
+  align-items: center;
 }
 
 .logo {
   color: black;
   font-size: 40px;
+}
+
+.logo:hover {
+  transform: scale(1.10);
 }

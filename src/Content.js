@@ -1,5 +1,6 @@
 import React from 'react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
+import ReactTooltip from 'react-tooltip'
 import css from './Content.css';
 
 const Essay = (props) => (
@@ -8,8 +9,9 @@ const Essay = (props) => (
                  icon={<i className="material-icons md-18"/>}
   >
     <div className={css.preview}>
-      <a href={props.link}>{props.previews}</a>
+      <a href={props.link} target="_blank" data-tip data-for={props.title}>{props.previews}</a>
     </div>
+    <ReactTooltip id={props.title}>Go to {props.link.split('/').slice(-1)}</ReactTooltip>
   </TimelineEvent>
 );
 
