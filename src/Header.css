@@ -1,5 +1,31 @@
-.header {
+.container {
+  color: white;
   background-size: cover;
-  background: url('../assets/bg.png') no-repeat;
+  background-image: url("../assets/bg.jpg");
   height: 360px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.introduce {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.logo {
+  height: 200px;
+}
+
+.content {
+}
+
+.contact {
 }
