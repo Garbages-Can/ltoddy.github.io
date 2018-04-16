@@ -20,9 +20,12 @@
   },
   "homepage": "https://github.com/ltoddy/ltoddy.github.io#readme",
   "dependencies": {
+    "radium": "^0.24.0",
     "react": "^16.3.1",
+    "react-animations": "^1.0.0",
     "react-dom": "^16.3.1",
     "react-event-timeline": "^1.5.1",
+    "react-lazyload": "^2.3.0",
     "react-markdown": "^3.3.0",
     "react-tooltip": "^3.5.0",
     "react-vertical-timeline-component": "^2.0.6"
