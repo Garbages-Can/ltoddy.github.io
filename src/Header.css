@@ -17,15 +17,14 @@
 
 .introduce {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .logo {
   height: 200px;
+  margin: 0 20px;
 }
 
 .content {
-}
-
-.contact {
+  margin: 0 20px;
 }

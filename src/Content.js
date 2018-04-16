@@ -1,6 +1,10 @@
 import React from 'react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import ReactTooltip from 'react-tooltip'
+import LazyLoad from 'react-lazyload';
+import Radium, { StyleRoot } from 'radium';
+import { rotateInDownLeft } from './animation-config';
+
 import css from './Content.css';
 
 const Essay = (props) => (
@@ -23,11 +27,18 @@ class Content extends React.Component {
 
   content() {
     return this.props.essays.map((essay, index) =>
-      <Essay key={index}
-             title={essay.title}
-             createdAt={essay.createdAt}
-             link={essay.link} previews={essay.previews}
-      />);
+      <LazyLoad height={150}>
+        <StyleRoot>
+          <div style={rotateInDownLeft}>
+            <Essay key={index}
+                   title={essay.title}
+                   createdAt={essay.createdAt}
+                   link={essay.link} previews={essay.previews}
+            />
+          </div>
+        </StyleRoot>
+      </LazyLoad>
+    );
   };
 
   render() {
