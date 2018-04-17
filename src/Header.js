@@ -6,7 +6,7 @@ import me from '../assets/me.jpg'
 
 import { slideInDown } from './animation-config';
 
-const Header = (props) => (
+const Header = () => (
   <div className={css.container}>
     <div className={css.title}>
       <div>The computer science actually has a lot in common with magic.</div>
@@ -14,8 +14,8 @@ const Header = (props) => (
     <div className={css.introduce}>
       <StyleRoot>
         <div style={slideInDown}>
-          <a href="https://github.com/ltoddy" target="_blank" data-tip data-for='github'>
-            <img src={me} alt="" className={css.logo}/>
+          <a href='https://github.com/ltoddy' target='_blank' data-tip data-for='github'>
+            <img src={me} alt='me logo' className={css.logo}/>
           </a>
           <ReactTooltip id='github'>Go to Github</ReactTooltip>
         </div>
