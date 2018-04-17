@@ -1,21 +1,21 @@
 import Radium from 'radium';
-import { fadeIn, slideInDown, rubberBand, rotateInDownLeft } from 'react-animations';
+import { slideInDown, rubberBand, rotateInDownLeft, bounceInRight } from 'react-animations';
 
 module.exports = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  },
-  slideInDown: {
+  slideInDown: { // me logo
     animation: 'x 1s',
     animationName: Radium.keyframes(slideInDown, 'slideInDown')
   },
-  rubberBand: {
-    animation: 'x 3s',
+  rubberBand: { // github logo
+    animation: 'x 2s',
     animationName: Radium.keyframes(rubberBand, 'rubberBand')
   },
-  rotateInDownLeft: {
+  rotateInDownLeft: { // content -> essay preview card
     animation: 'x 1s',
     animationName: Radium.keyframes(rotateInDownLeft, 'rotateInDownLeft')
+  },
+  bounceInRight: { // content -> project card
+    animation: 'x 1s',
+    animationName: Radium.keyframes(bounceInRight, 'bounceInRight')
   }
 };
