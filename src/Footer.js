@@ -15,8 +15,8 @@ const Footer = () => (
         <LazyLoad height={200}>
           <StyleRoot>
             <div style={rubberBand}>
-              <a href="https://github.com/ltoddy/resume" target="_blank" data-tip data-for='src'>
-                <i className="fab fa-github"/>
+              <a href='https://github.com/ltoddy/resume' target='_blank' data-tip data-for='src'>
+                <i className='fab fa-github'/>
               </a>
             </div>
             <ReactTooltip id='src'>源代码</ReactTooltip>
