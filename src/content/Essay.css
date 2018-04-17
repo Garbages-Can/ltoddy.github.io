@@ -1,0 +1,7 @@
+.preview {
+  padding: 5px;
+}
+
+.preview:hover {
+  transform: scale(1.02);
+}

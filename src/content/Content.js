@@ -2,16 +2,35 @@ import React from 'react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import LazyLoad from 'react-lazyload';
 import { StyleRoot } from 'radium';
-import { rotateInDownLeft } from './animation-config';
+import { rotateInDownLeft, bounceInRight } from '../animation-config';
 import Project from './Project';
 import Essay from './Essay';
 
-import css from './content/Content.css';
+import css from './Content.css';
 
 class Content extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.content = this.content.bind(this);
+    this.project = this.project.bind(this);
+  }
+
+  project() {
+    return this.props.projects.map((project, index) =>
+      <LazyLoad height={200} key={index}>
+        <StyleRoot>
+          <div style={bounceInRight}>
+            <Project title={project.title}
+                     description={project.description}
+                     link={project.link}
+                     language={project.language}
+                     star={project.star}
+                     fork={project.fork}
+            />
+          </div>
+        </StyleRoot>
+      </LazyLoad>
+    );
   }
 
   content() {
@@ -32,9 +51,14 @@ class Content extends React.Component {
   render() {
     return (
       <div className={css.container}>
-        <Timeline>
-          {this.content()}
-        </Timeline>
+        <div className={css.content}>
+          <Timeline>
+            {this.content()}
+          </Timeline>
+        </div>
+        <div className={css.project}>
+          {this.project()}
+        </div>
       </div>
     );
   }
