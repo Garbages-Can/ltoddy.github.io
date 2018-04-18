@@ -8,10 +8,9 @@
 .container {
   display: flex;
   justify-content: space-around;
-  /*margin: 10px 0 0;*/
   background-color: transparent;
   align-items: center;
-  height: 10%;
+  height: 100%;
 }
 
 .logo {

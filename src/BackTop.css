@@ -13,10 +13,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.4;
 }
 
 .container:hover {
   transform: scale(1.1);
+  opacity: 1;
 }
 
 .container:hover {
