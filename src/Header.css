@@ -1,7 +1,7 @@
 .container {
   color: white;
   background-size: cover;
-  background-image: url("../assets/bg.jpg");
+  background: #2a3038 url("../assets/bg.jpg");
   height: 360px;
   display: flex;
   justify-content: space-evenly;
