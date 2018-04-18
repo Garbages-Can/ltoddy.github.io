@@ -1,10 +1,10 @@
 import React from 'react';
-import css from './Header.css';
 import ReactTooltip from 'react-tooltip'
 import { StyleRoot } from 'radium';
-import me from '../assets/me.jpg'
-
 import { slideInDown } from './animation-config';
+
+import me from '../assets/me.jpg'
+import css from './Header.css';
 
 const Header = () => (
   <div className={css.container}>

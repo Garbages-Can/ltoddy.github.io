@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
+
 import css from './BackTop.css';
 
 class BackTop extends React.Component {
