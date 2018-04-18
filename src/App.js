@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import Content from './content/Content';
 import Footer from './Footer';
+import BackTop from './BackTop';
 
 import css from './App.css';
 
@@ -11,6 +12,12 @@ class App extends React.Component {
     super();
     this.state = {
       essays: [
+        {
+          title: 'React框架构建的blog新主题',
+          createdAt: '2018-04-17',
+          link: '../essay/2018/04/17/new-theme.html',
+          preview: '最近一时脑热,用react做了一个单页面应用,来替换过去那个bootstrap做的blog首页.不过依旧是以简约风格为主制作的.'
+        },
         {
           title: '基于docker+gunicorn部署sanic项目',
           createdAt: '2018-04-14',
@@ -88,6 +95,7 @@ class App extends React.Component {
                  projects={this.state.projects}
         />
         <Footer/>
+        <BackTop/>
       </div>
     );
   }
