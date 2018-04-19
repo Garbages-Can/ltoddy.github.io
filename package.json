@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ltoddy/ltoddy.github.io#readme",
   "dependencies": {
+    "prop-types": "^15.6.1",
     "radium": "^0.24.0",
     "react": "^16.3.1",
     "react-animations": "^1.0.0",

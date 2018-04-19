@@ -2,6 +2,7 @@ import React from 'react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import LazyLoad from 'react-lazyload';
 import { StyleRoot } from 'radium';
+import PropTypes from 'prop-types';
 import { flipInX, rollIn } from '../animation-config';
 import Project from './Project';
 import Essay from './Essay';
@@ -48,6 +49,10 @@ class Content extends React.Component {
     );
   };
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return (
       <div className={css.container}>
@@ -63,5 +68,10 @@ class Content extends React.Component {
     );
   }
 }
+
+Content.propTypes = {
+  projects: PropTypes.array,
+  essays: PropTypes.array
+};
 
 module.exports = Content;
