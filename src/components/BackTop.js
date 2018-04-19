@@ -13,7 +13,7 @@ class BackTop extends React.Component {
     event.preventDefault();
     const id = setInterval(() => {
       const top = document.documentElement.scrollTop; // 到达顶部的距离
-      const speed = top / 15 + 3;
+      const speed = top / 50 + 1;
       if (top > 1) {
         document.documentElement.scrollTop -= speed;
       }
@@ -21,7 +21,11 @@ class BackTop extends React.Component {
       if (top < 3) {
         window.clearInterval(id);
       }
-    }, 20);
+    }, 10);
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {

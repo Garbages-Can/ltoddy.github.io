@@ -3,7 +3,7 @@ import React from 'react';
 import Header from './Header';
 import Content from './content/Content';
 import Footer from './Footer';
-import BackTop from './BackTop';
+import BackTop from './components/BackTop';
 import essays from '../essays';
 import projects from '../projects';
 
