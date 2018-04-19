@@ -21,15 +21,23 @@
     "link": "https://github.com/ltoddy/Python-useful",
     "language": "Python",
     "star": 2,
-    "fork": 1
+    "fork": 0
   },
   {
     "title": "beautiful-code",
     "description": "Some more beautiful code",
     "link": "https://github.com/ltoddy/beautiful-code",
     "language": "Scheme",
-    "star": 0,
-    "fork": 1
+    "star": 1,
+    "fork": 0
+  },
+  {
+    "title": "ltoddy.github.io",
+    "description": "ltoddy's blog， 目前正在为暑假寻找一份Python web工作(南京)",
+    "link": "https://github.com/ltoddy/ltoddy.github.io",
+    "language": "Html",
+    "star": 1,
+    "fork": 0
   },
   {
     "title": "ubuntu-beautification-scripts",
