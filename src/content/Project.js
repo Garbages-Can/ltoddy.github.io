@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
+import PropTypes from 'prop-types';
 import css from './Project.css';
 
 const languageColor = {
@@ -35,6 +36,10 @@ class Project extends React.Component {
     );
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return (
       <a href={this.props.link} target="_blank" data-tip data-for={this.props.title}>
@@ -59,5 +64,14 @@ class Project extends React.Component {
     )
   }
 }
+
+Project.propTypes = {
+  star: PropTypes.number,
+  fork: PropTypes.number,
+  link: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  language: PropTypes.string
+};
 
 module.exports = Project;
