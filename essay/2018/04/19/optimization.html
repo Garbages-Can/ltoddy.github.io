@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>optimization</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+  <link rel="icon" href="/static/me.jpg">
+
+  <script src="/static/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>浅谈前端优化的几个思路</h1>
+  <h3>雪碧图</h3>
+  <p>页面中如果有很多图片、icon(小图标),这样会有很多HTTP请求,一个图就是一个HTTP请求,建立TCP连接进行三次握手,这些都是耗费时间的.如果页面icon很多,可以考虑用css
+    spirit(精灵,汽水雪碧也是这个单词)技术做一张雪碧图,将请求多个icon变成一次HTTP请求.(可以用webpack来配置实现)</p>
+  <h3>lazy load (懒加载)</h3>
+  <p>如果页面内容多,页面长度长的话,可以考虑懒加载,先加载页面最上面的内容,然后滑动到哪加载到哪.</p>
+  <h3>CDN</h3>
+  <p>这个是一个很大的关键,在公司静态资源肯定是走CDN服务的,什么是CDN呢,比如,你去网络请求一个资源,你在北京,而资源在南京,
+    中途很远,要经过很多个路由器(转发请求),这样会占用很多时间.所以可以用CDN服务,简单来说CDN就是在各个地区布置节点,
+    缓存你的资源,这样你就可以就近的拿到你要的资源了.</p>
+  <h3>webpack配置</h3>
+  <p>听说大公司都有专门写webpack配置文件的岗位,webpack如果配置的好,也可以提高很多速度(比如可以把你的js文件压缩的更小).</p>
+  <h3>前端拦截</h3>
+  <p>前端也是可以做数据娇艳以及重定向这样的事情,能前端决策的一定要决策,因为比如重定向在前端做了,这样就不需要访问后端,也可以减小服务器的压力.</p>
+  <h3>最后一点,代码质量</h3>
+  <p>我前端框架用的是react,要多多关注react生命周期,等等很多方面.</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+
+</body>
+</html>
