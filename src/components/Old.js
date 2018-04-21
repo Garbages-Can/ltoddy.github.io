@@ -22,6 +22,7 @@ class Old extends React.Component {
           </a>
         </div>
         <ReactTooltip id="old">
+          <span>旧blog</span>
           <div className={css.old}>
             <img src={old} alt=""/>
           </div>
