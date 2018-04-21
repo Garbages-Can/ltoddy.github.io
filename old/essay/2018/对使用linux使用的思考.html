@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>对使用linux使用的思考</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>对使用linux使用的思考</h3>
+  </div>
+  <p>当你学看关于Unix(Linux)方面的书的时候,你可能看到的第一句话是在Unix中一切都是文件,没错,在Unix系统眼里,的确一切都是文件,你插到电脑上的U盘也是一个文件.</p>
+  <p>这样做是好的,它是一种抽象.</p>
+  <p>而且,Unix系统中伴随这大量的命令行工具,也可以使得复杂的任务变得简单.你可能会看到你个Linux老手,在命令后中出现大量的管道线和IO重定向这样的东西,
+    没错,这个样子更灵活,更简便.Linux上一个个小工具,通过管道线就拼装成了一个实用"大工具".</p>
+  <p>无疑,使用linux系统做开发是最方便的.</p>
+  <hr>
+  <p>我经常向人推荐使用linux系统做开发,可是它们还是没有抛弃Windows,GUI确实让简单的事情变得更简单(它对用户屏蔽了底层细节),
+    可是面对复杂的事情呢.比如你想要按年月创建文件夹,来保存每个月的东西,或许你就得手动创建十二个文件夹.可是换到linux上呢,一行命令( <code>mkdir 2018-{1..12}
+    </code> )就搞定了.</p>
+  <hr>
+  <p>可是我错了,虽然是使用mkdir这条命令,但当你真正的轻松自如的把这条命令写好的时候,这个过程又有多久呢. </p>
+  <p>linux中命令行,大部分都是/bin目录下的shell脚本,换句话说,你也可以制作自己的命令行.</p>
+  <p>但是对于当代大学生来说,一般都是上了大学,学个C语言,就当是编程入个门,然后学习Java,等等这样的.谁会有人去学shell,awk,perl这样的东西呢.</p>
+  <p>学生都在windows下编程,最起码windows所带的批处理,也没人会吧.</p>
+  <p>然后想把linux玩溜,却需要额外学不少东西,要改变很多习惯.要知道这可是不容易的.</p>
+  <p>可能也有人会说,当你又不会的命令的时候你可以man(这个命令是manual单词的缩写),"男人"一下.可是当你去使用man命令去查看使用手册的时候,对于一个初学者来说,真的能看懂么.</p>
+  <hr>
+  <p>一切皆是文件,换句话说,也就是可编辑的.</p>
+  <p>大量的文本文件,如果你去修改,你能保证不修改坏么.况且,约定俗称的东西也多,就单纯那棵目录树,知道每个文件夹下该放什么,你就得花上一段时间.</p>
+  <p>所以说,如果你年轻,一定要用linux,趁着有时间折腾折腾.毕竟linux系统就是用来把它搞坏的(嘻嘻.</p>
+  <hr>
+  <p>不过普遍的一个现象就是"懒"!!!或许是没有明确的目标,没有动力吧.</p>
+  <p>你说你用C语言编程,你连编译链接都不懂,更别说写Makefile这样自动化的编译工具了.所以说,现在的好多人真的没法说……</p>
+</div>
+
+</body>
+</html>

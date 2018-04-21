@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 35px 0 8%;
+}
+
+.content {
+  width: 500px;
+  margin-right: 10px;
+}
+
+.project {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}

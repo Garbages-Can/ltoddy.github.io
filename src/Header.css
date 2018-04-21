@@ -1,0 +1,30 @@
+.container {
+  color: white;
+  background-size: cover;
+  background: #2a3038 url("../assets/bg.jpg");
+  height: 360px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.introduce {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 200px;
+  margin: 0 20px;
+}
+
+.content {
+  margin: 0 20px;
+}

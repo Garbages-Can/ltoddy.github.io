@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>转:CPS</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="../../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
+  <link rel="icon" href="../../static/me.jpg">
+
+  <script src="../../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+<div class="container">
+  <div class="page-header">
+    <h3>转:CPS</h3>
+  </div>
+  <h3>什么是持续传送风格？</h3>
+  <p>如果一种语言支持后续（continuation）的话，编程者就可以添加诸如异常、回溯、线程以及构造函数一类的控制构造。</p>
+  <p>后续传递风格是那么的基础。后续传递风格赋予了后续在代码方面的意义。
+    更妙的是，编程者可以自我发掘出后续传递风格来，如果其受限于下面这样的一个约束的话：</p>
+  <p>没有过程被允许返回到它的调用者中——永远如此。</p>
+  <p>存在的一个启示使得以这种风格编程成为可能：</p>
+  <p>过程可以在它们返回值时调用一个回调方法。</p>
+  <p>当一个过程（procedure）准备要“返回”到它的调用者中时， 它在返回值时调用“当前后续（current continuation）”
+    这一回调方法（由它的调用者提供）一个后续是一个初始类型（first-class）返回点。</p>
+  <h3>例子：标识函数</h3>
+  <p>考虑这个正常写法的标识函数：</p>
+  <pre><code>function id(x) {
+  return x;
+}</code></pre>
+  <p>然后是后续传递风格的：</p>
+  <pre><code>function id(x, cc) {
+  cc(x);
+}</code></pre>
+  <p>有时候，把当前后续参数命名为ret会使得其目的更为明显一些：</p>
+  <pre><code>function id(x, ret) {
+  ret(x);
+}</code></pre>
+  <h3>例子：朴素阶乘</h3>
+  <p>下面是标准的朴素阶乘：</p>
+  <pre><code>function fact(n) {
+  if (n === 0)
+    return 1;
+  else
+    return n * fact(n - 1);
+}</code></pre>
+  <p>下面是CPS风格实现的：</p>
+  <pre><code>function fact(n, ret) {
+  if (n === 0) {
+    ret(1);
+  }
+  else {
+    fact(n - 1, function (t0) {
+      ret(n * t0)
+    });
+  }
+}</code></pre>
+  <p>接下来，为了“使用”这一函数，我们把一个回调方法传给它：</p>
+  <pre><code>fact(5, function (n) {
+  console.log(n);
+});</code></pre>
+  <h3>例子：尾递归阶乘</h3>
+  <p>下面是尾递归阶乘：</p>
+  <pre><code>function fact(n) {
+  return tail_fact(n, 1);
+}
+
+function tail_fact(n, a) {
+  if (n === 0)
+    return a;
+  else
+    return tail_fact(n - 1, n * a);
+}</code></pre>
+  <p>然后，是CPS实现方式的：</p>
+  <pre><code>function fact(n, ret) {
+  tail_fact(n, 1, ret);
+}
+
+function tail_fact(n, a, ret) {
+  if (n === 0)
+    ret(a);
+  else
+    tail_fact(n - 1, n * a, ret);
+}</code></pre>
+  <hr>
+  <h2>实现fetch</h2>
+  <p>实现fetch过程并不难，至于其以非阻塞模式或是阻塞模式操作则取决于编程者是否提供回调方法：</p>
+  <pre><code>/*
+ 对于客户端—>服务器端的请求来说，
+ fetch是一个可选阻塞的过程。
+ 只有在给出url的情况下，过程才会阻塞并返回该url上的内容。
+ 如果提供了onSuccess回调方法，
+ 则过程是非阻塞的，并使用文件的
+ 内容来调用回调方法。
+ 如果onFail回调方法也提供了的话，
+ 则过程在失败事件出现时调用onFail。
+*/
+
+function fetch(url, onSuccess, onFail) {
+  // 只有在定义回调方法的情况下才是异步的
+  var async = onSuccess ? true : false;   // （别抱怨此行代码的效率低下，
+  // 否则你就是不明白关键所在。)
+  var req; // XMLHttpRequest对象.
+
+// XMLHttpRequest的回调方法:
+  function processReqChange() {
+    if (req.readyState === 4) {
+      if (req.status === 200) {
+        if (onSuccess)
+          onSuccess(req.responseText, url, req);
+      } else {
+        if (onFail)
+          onFail(url, req);
+      }
+    }
+  }
+
+// 创建XMLHttpRequest对象:
+  if (window.XMLHttpRequest)
+    req = new XMLHttpRequest();
+  else if (window.ActiveXObject)
+    req = new ActiveXObject("Microsoft.XMLHTTP");
+
+// 如果是异步的话，设定回调方法:
+  if (async)
+    req.onreadystatechange = processReqChange;
+
+// 发起请求:
+  req.open("GET", url, async);
+  req.send(null);
+
+// 如果是异步的话,
+// 返回请求对象，否则
+//  返回响应.
+  if (async)
+    return req;
+  else
+    return req.responseText;
+}</code></pre>
+  <h3>例子：提取数据</h3>
+  <p>考虑一个程序，该程序需要从UID中抓取一个名字.</p>
+  <p>下面的两种做法都要用到fetch：</p>
+  <pre><code>// 阻塞直到请求完成:
+var someName = fetch("./1031/name");
+
+document.write("someName: " + someName);
+
+//不做阻塞的:
+fetch("./1030/name", function (name) {
+  document.getElementById("name").innerHTML = name;
+});</code></pre>
+  <hr>
+  <h2>CPS和非阻塞式编程</h2>
+  <p>node.js是一个高性能的JavaScript服务器端平台，在该平台上阻塞式过程是不允许的。</p>
+  <p>巧妙的是，通常会阻塞的过程（比如网络或是文件I/O）利用了通过结果来调用的回调方法。</p>
+  <p>对程序做部分CPS转换促成了自然而然的node.js编程。</p>
+  <h3>例子：简单的web服务器</h3>
+  <p>node.js中的一个简单的web服务器把一个后续传递给文件读取过程。
+    相比于非阻塞式IO的基于select的方法，CPS使非阻塞I/O变得更加的简单明了。</p>
+  <pre><code>var sys = require('sys');
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+// Web服务器的根目录:
+var DocRoot = "./www/";
+
+// 使用一个处理程序回调来创建web服务器:
+var httpd = http.createServer(function (req, res) {
+  sys.puts(" request: " + req.url);
+
+  // 解析url:
+  var u = url.parse(req.url, true);
+  var path = u.pathname.split("/");
+
+  // 去掉路径中的..:
+  var localPath = u.pathname;
+  //  "
+  /.." => ""
+  var localPath =
+    localPath.replace(/[^/]+\/+[.][.]/g, "");
+  //  ".." => "."
+  var localPath = DocRoot +
+    localPath.replace(/[.][.]/g, ".");
+
+  // 读入被请求的文件，并把它发送回去.
+  // 注：readFile用到了当前后续（current continuation）:
+  fs.readFile(localPath, function (err, data) {
+    var headers = {};
+
+    if (err) {
+      headers["Content-Type"] = "text/plain";
+      res.writeHead(404, headers);
+      res.write("404 File Not Found\n");
+      res.end();
+    } else {
+      var mimetype = MIMEType(u.pathname);
+
+      // 如果没有找出内容类型的话,
+      // 就由客户来猜测.
+      if (mimetype)
+        headers["Content-Type"] = mimetype;
+      res.writeHead(200, headers);
+
+      res.write(data);
+      res.end();
+    }
+  });
+});
+
+// 映射后缀名和MIME类型:
+var MIMETypes = {
+  "html": "text/html",
+  "js": "text/javascript",
+  "css": "text/css",
+  "txt": "text/plain"
+};
+
+function MIMEType(filename) {
+  var parsed = filename.match(/[.](.*)$/);
+  if (!parsed)
+    return false;
+  var ext = parsed[1];
+  return MIMEType[ext];
+}
+
+// 启动服务器，监听端口8000:
+httpd.listen(8000);</code></pre>
+  <hr>
+  <h2>CPS用于分布式计算</h2>
+  <p>CPS简化了把计算分解成本地部分和分布部分的做法。</p>
+  <p>假设你编写了一个组合的choose函数；开始是一种正常的方式：</p>
+  <pre><code>function choose(n, k) {
+  return fact(n) /
+    (fact(k) * fact(n - k));
+}</code></pre>
+  <p>现在，假设你想要在服务器端而不是本地计算阶乘。</p>
+  <p>你可以重新把fact写成阻塞的并等待服务器端的响应。那样的做法很糟糕。</p>
+  <p>相反，假设你使用CPS来写choose的话：</p>
+  <pre><code>function choose(n, k, ret) {
+  fact(n, function (factn) {
+    fact(n - k, function (factnk) {
+      fact(k, function (factk) {
+        ret(factn / (factnk * factk))
+      })
+    })
+  })
+}</code></pre>
+  <p>现在，重新把fact定义成在服务器端的异步计算阶乘就是一件很简单的事情了。</p>
+  <hr>
+  <h2>CPS用于编译</h2>
+  <p>三十年以来，CPS已经成为了功能性编程语言的编译器的一种强大的中间表达形式。</p>
+  <p>CPS脱糖处理了函数的返回、异常和初始类型后续；函数调用变成了单条的跳转指令。</p>
+  <p>换句话说，CPS在编译方面做了许多繁重的提升工作。</p>
+  <h3>把lambda演算转写成CPS</h3>
+  <p>lambda演算是Lisp的一个缩影，只需足够的表达式（应用程序、匿名函数和变量引用）来使得其对于计算是通用的。</p>
+  <pre><code>exp ::= (exp exp)           ; 函数应用
+    |  (lambda (var) exp)   ; 匿名函数
+    |  var                  ; 变量引用</code></pre>
+  <p>下面的Racket代码把这一语言转换成CPS：</p>
+  <pre><code>(define (cps-convert term cont)
+  (match term
+    [`(,f ,e)
+     (let (($f (gensym 'f))
+           ($e (gensym 'e)))
+       (cps-convert f `(lambda (,$f)
+         ,(cps-convert e `(lambda (,$e)
+             (,$f ,$e ,cont))))))]
+
+    [`(lambda (,v) ,e)
+     (let (($k (gensym 'k)))
+       `(,cont (lambda (,v ,$k)
+                 ,(cps-convert e $k))))]
+
+    [(? symbol?)
+     `(,cont ,term)]))
+
+(define (cps-convert-program term)
+  (cps-convert term '(lambda (ans) ans)))
+</code></pre>
+  <hr>
+  <h2>使用Lisp实现call/cc</h2>
+  <p>原语call-with-current-continuation（通常称作call/cc）是现代编程中最强大的控制流结构。</p>
+  <p>CPS使得call/cc的实现成为了小菜一碟；这是一种语法上的脱糖：</p>
+  <p>call/cc => (lambda (f cc) (f (lambda (x k) (cc x)) cc))</p>
+  <p>这一脱糖处理（与CPS转换相结合）是准确理解call/cc所做工作的最好方式。 </p>
+  <p>其所实现的正是其名称所说明的：其使用一个已经捕捉了当前后续的过程来调用被作为参数指定的过程。 </p>
+  <p>当捕捉了后续的过程被调用时，其把计算“返回”给计算创建点。</p>
+  <h3>使用JavaScript实现call/cc</h3>
+  <p>如果有人要把JavaScript中的代码转写成后续传递风格的话，call/cc有一个很简单的定义：</p>
+  <pre><code>function callcc(f, cc) {
+  f(function (x, k) {
+    cc(x)
+  }, cc)
+}</code></pre>
+</div>
+</body>
+</html>

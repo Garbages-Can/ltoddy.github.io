@@ -1,0 +1,33 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  background-color: transparent;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  color: black;
+  font-size: 40px;
+}
+
+.logo:hover {
+  transform: scale(1.10);
+}
+
+.contact {
+}
+
+.contact > div {
+}
+
+.qq {
+  width: 200px;
+}
