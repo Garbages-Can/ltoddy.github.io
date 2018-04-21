@@ -30,8 +30,8 @@ class BackTop extends React.Component {
 
   render() {
     return (
-      <div className={css.position} onClick={this.toTop} data-tip data-for='top'>
-        <div className={css.container}>
+      <div>
+        <div className={css.container} onClick={this.toTop} data-tip data-for='top'>
           <i className="fas fa-arrow-up"/>
         </div>
         <ReactTooltip id='top'>back to top</ReactTooltip>
