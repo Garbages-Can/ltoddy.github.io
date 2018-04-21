@@ -3,7 +3,7 @@ import React from 'react';
 import Header from './Header';
 import Content from './content/Content';
 import Footer from './Footer';
-import BackTop from './components/BackTop';
+import Corner from './components/Corner';
 import essays from '../essays';
 import projects from '../projects';
 
@@ -16,7 +16,8 @@ const App = () => (
              projects={projects}
     />
     <Footer/>
-    <BackTop/>
+    {/*<BackTop/>*/}
+    <Corner/>
   </div>
 );
 
