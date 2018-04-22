@@ -16,6 +16,14 @@
     "fork": 1
   },
   {
+    "title": "ltoddy.github.io",
+    "description": "ltoddy's blog， 目前正在为暑假寻找一份Python web工作(南京)",
+    "link": "https://github.com/ltoddy/ltoddy.github.io",
+    "language": "HTML",
+    "star": 3,
+    "fork": 0
+  },
+  {
     "title": "Python-useful",
     "description": "收集和编写一些Python有用的小程序",
     "link": "https://github.com/ltoddy/Python-useful",
@@ -28,14 +36,6 @@
     "description": "Some more beautiful code",
     "link": "https://github.com/ltoddy/beautiful-code",
     "language": "Scheme",
-    "star": 1,
-    "fork": 0
-  },
-  {
-    "title": "ltoddy.github.io",
-    "description": "ltoddy's blog， 目前正在为暑假寻找一份Python web工作(南京)",
-    "link": "https://github.com/ltoddy/ltoddy.github.io",
-    "language": "HTML",
     "star": 1,
     "fork": 0
   },

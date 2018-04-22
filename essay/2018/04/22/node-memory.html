@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>node-memory</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+  <link rel="icon" href="/static/me.jpg">
+
+  <script src="/static/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>node 垃圾回收机制</h1>
+  <p>变量,对象都在堆中.(Buffer有C++来接管分配)</p>
+  <h3>V8的垃圾回收机制主要基于分代式垃圾回收机制.</h3>
+  <p>在V8中,主要将内存分为新生代和老生代两代.新生代中的对象为存活时间较短的对象,老生代中的对象
+    为存活时间较长或常驻内存的对象.</p>
+  <pre><code>```
+---------------------------------------------
+|        |                                   |
+| 新生代的 |      老生代的内存空间                |
+| 内存空间 |                                   |
+|        |                                   |
+---------------------------------------------
+```
+</code></pre>
+  <p>V8堆的整体大小就是新生代所有内存空间+老生代的内存空间.</p>
+  <p>在默认情况下,如果一直分配内存,在64位系统和32位系统下会分别只能使用约1.4G(1464MB)和约0.7G(732MB)的大小.</p>
+  <p>不过可以在node启动的时候更改</p>
+  <ul>
+    <li>--max-old-space-size 命令行参数可以用于设置老生代内存空间</li>
+    <li>--max-new-space-size 命令参数数可以用于设置新生代内存空间</li>
+  </ul>
+  <hr/>
+
+  <h2>Scavenge 算法</h2>
+  <p>在分代的基础上,新生代中的对象主要通过Scavenge算法进行垃圾回收.在Scavenge算法的具体实现中,主要采用Cheney算法.</p>
+  <p>Cheney算法是一种采用复制方式实现的垃圾回收.它将堆内存一分为二,每一部分空间称为semispace.
+    在这两个semispace空间中,只有一个处于使用中,另一个处于闲置状态.处于使用状态的semispace空间称为From空间,
+    处于闲置状态的空间称为To空间.当我们分配对象时,先在From空间中进行分配.当开始进行垃圾回收时,会检查From空间中的存活
+    对象,这些存活对象被复制到To空间,而非存活空间对象占用的空间将被释放.完成复制后,From空间和To空间的角色发生互换.</p>
+  <p>简而言之,在垃圾回收的过程中,就是通过将存活对象在两个semispace空间之间进行复制.</p>
+  <p>由于Scavenge算法是典型的牺牲空间换取时间的算法,所以无法大规模的应用到所有垃圾回收中.
+    但是Scavenge算法非常适合在新生代中,因为新生代中对象的生命周期较短,恰恰适合这个算法.</p>
+  <pre><code>```
+---------------------------------------------------------------
+|        |        |                                           |
+| semi   | semi   |                                           |
+| space  | space  |          老生代空间                         |
+| (From) | (From) |                                           |
+|        |        |                                           |
+---------------------------------------------------------------
+```
+</code></pre>
+  <p>对象晋升的条件主要有两个,一个是对象是否经历过Scavenge回收,一个是To空间的内存占用比超过限制.</p>
+  <p>在默认情况下,V8的对象分配主要集中在From空间中.对象从From空间中复制到To空间时,会检查它
+    的内存地址来判断这个对象是否已经经历过一次Scavenge回收.如果经历过了,会将该对象从From空间复制
+    到老生代空间中.如果没有,则复制到To空间中.</p>
+  <p>另一个判断条件是To空间的内存占比.当要从From空间复制一个对象到To空间时,如果To空间已经使用超过了25%,
+    则这个对象直接晋升到老生代中.</p>
+  <p>设置25%这个限制值的原因是当次Scavenge回收完成后,这个To空间将变成From空间,
+    接下来的内存分配将在这个空间进行.如果占比过高会影响后来的内存分配.</p>
+  <p>对象晋升后,将会在老生代空间作为存活周期较长的对象对待,接受新的回收算法处理.</p>
+  <h3>Mark-Sweep &amp; Mark-Compact</h3>
+  <p>V8在老生代中主要采用Mark-Sweep和Mark-Compact相结合的方式进行垃圾回收.</p>
+  <p>Mark-Sweep是标记清除的意思,它分为标记和清除两个阶段.与Scavenge相比,Mark-Sweep并不将内存空间
+    划分为两半,所以不存在浪费一半空间的行为.与Scavenge复制活得对象不同,Mark-Sweep在标记阶段遍历堆中所有对象.
+    并标记活着的对象,在随后的清除阶段中,之清除没有被标记的对象.
+    可以看出,Scavenge中之复制活着的对象,而Mark-Sweep只清理死亡对象.
+    活对象在新生代中只占较小部分,死对象在老生代中只占较小部分,这是两种回收方式能高效处理的原因.</p>
+  <p>但是Mark-Sweep最大问题是进行一次标记清除回收后,内存空间会出现不连续的状态.这种内存碎片会对后续的内存分配造成问题.
+    Mark-Compact是标记整理的意思,是在Mark-Sweep基础上演变而来.它们的差别在于对象标记死亡后,在整理的过程中,将活着
+    的对象往一端移动,移动完成后,直接清理掉边界外的内存.</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+
+</body>
+</html>
