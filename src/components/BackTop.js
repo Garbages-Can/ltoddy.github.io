@@ -9,6 +9,10 @@ class BackTop extends React.Component {
     this.toTop = this.toTop.bind(this);
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   toTop(event) {
     event.preventDefault();
     const id = setInterval(() => {
@@ -22,10 +26,6 @@ class BackTop extends React.Component {
         window.clearInterval(id);
       }
     }, 10);
-  }
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   render() {

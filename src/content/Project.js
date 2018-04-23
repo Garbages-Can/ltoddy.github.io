@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import css from './Project.css';
 
 const languageColor = {
-  Python: "#3572A5",
-  Scheme: "#1e4aec",
-  HTML: "#e34c26",
-  Shell: "#89e051",
-  JavaScript: "#f1e05a"
+  Python: '#3572A5',
+  Scheme: '#1e4aec',
+  HTML: '#e34c26',
+  Shell: '#89e051',
+  JavaScript: '#f1e05a'
 };
 
 class Project extends React.Component {
@@ -16,6 +16,10 @@ class Project extends React.Component {
     super();
     this.stars = this.stars.bind(this);
     this.forks = this.forks.bind(this);
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   stars() {
@@ -36,9 +40,6 @@ class Project extends React.Component {
     );
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
 
   render() {
     return (
