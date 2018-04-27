@@ -4,7 +4,7 @@
     "description": "A minimal web framework by Python.",
     "link": "https://github.com/ltoddy/sugar",
     "language": "Python",
-    "star": 29,
+    "star": 30,
     "fork": 1
   },
   {
@@ -12,8 +12,8 @@
     "description": "技术交流群:630398887  基于Python-Flask框架搭建的简易博客  希望非程序员也可以看懂  这套教程不会讲的多么深入 只是为了大体了解一下Flask和其扩展库",
     "link": "https://github.com/ltoddy/flask-tutorial",
     "language": "HTML",
-    "star": 6,
-    "fork": 1
+    "star": 18,
+    "fork": 2
   },
   {
     "title": "ltoddy.github.io",
@@ -21,7 +21,7 @@
     "link": "https://github.com/ltoddy/ltoddy.github.io",
     "language": "HTML",
     "star": 3,
-    "fork": 0
+    "fork": 1
   },
   {
     "title": "Python-useful",

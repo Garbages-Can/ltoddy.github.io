@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>shadowsocks</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+  <link rel="icon" href="/static/me.jpg">
+
+  <script src="/static/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>基于ubuntu16.04+使用shadowsocks(客户端)</h1>
+  <p>先确保电脑有pip.</p>
+  <blockquote>
+    <p>sudo apt-get install python-pip
+      或者
+      sudo apt-get install python3-pip</p>
+  </blockquote>
+  <p>然后下载shadowsocks库</p>
+  <blockquote>
+    <p>sudo pip install shadowsocks</p>
+  </blockquote>
+  <p>然后制作配置文件:</p>
+  <blockquote>
+    <p>vim /etc/shadowsocks/config.json</p>
+  </blockquote>
+  <p>文件内容为:</p>
+  <pre><code>```
+{
+    "server":"你vps的ip",
+    "server_port":你vps的端口,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"你vps的密码",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": true,
+    "workers": 1,
+    "prefer_ipv6": false
+}
+```
+</code></pre>
+  <h3>启动shadowsocks客户端</h3>
+  <blockquote>
+    <p>sudo sslocal -c /etc/shadowsocks/config.json</p>
+  </blockquote>
+  <p>当然,这样你还不能"翻墙",因为shadowsocks使用的协议是socks5.</p>
+  <h3>转换为HTTP协议</h3>
+  <blockquote>
+    <p>sudo apt-get install polipo</p>
+  </blockquote>
+  <p>然后更改polipo的配置文件:</p>
+  <pre><code>```
+# This file only needs to list configuration variables that deviate
+# from the default values.  See /usr/share/doc/polipo/examples/config.sample
+# and "polipo -v" for variables you can tweak and further information.
+
+logSyslog = false
+logFile = /var/log/polipo/polipo.log
+
+proxyAddress = "0.0.0.0"
+proxyPort = 8123
+
+socksParentProxy = "127.0.0.1:1080"
+socksProxyType = socks5
+
+chunkHighMark = 50331648
+objectHighMark = 16384
+
+serverMaxSlots = 64
+serverSlots = 16
+serverSlots1 = 32
+```
+</code></pre>
+  <p>然后重启polipo服务</p>
+  <blockquote>
+    <p>/etc/init.d/polipo restart</p>
+  </blockquote>
+  <p><em>不行就重启电脑</em></p>
+  <p>检查是否正常工作:</p>
+  <blockquote>
+    <p>export http_proxy="http://127.0.0.1:8123/"
+      curl www.google.com</p>
+  </blockquote>
+  <p>如果正常使用了就会返回页面的代码.</p>
+  <p><em>http://127.0.0.1:8123</em> (在浏览器中打开)这个是polipo的配置说明.</p>
+  <h3>配置浏览器:</h3>
+  <p>打开Chrome:</p>
+  <p>然后使用SwitchyOmega(去百度下载,都有的)</p>
+  <p>然后如下配置:</p>
+  <p><img alt="" src="https://img.vim-cn.com/5e/83adec8a54897ca99e3735fc77c251d70a71ff.png"/></p>
+  <p>如果你翻墙失败,请联系我
+    - qq: 1205446803
+    - e-mail: taoliu14@acm.org</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+
+</body>
+</html>
