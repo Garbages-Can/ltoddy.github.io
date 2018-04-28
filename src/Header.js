@@ -21,7 +21,6 @@ const Header = () => (
         </div>
       </StyleRoot>
       <div className={css.content}>
-        <div>我是一名web工程师,目前正在为暑假寻找一份Python或node工作(南京).</div>
         <ul>
           <li>自己已经完全使用Linux(Ubuntu)工作快两年了,熟练的使用命令行.</li>
           <li>目前已经使用docker进行容器化开发.</li>

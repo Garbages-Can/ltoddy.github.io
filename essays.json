@@ -1,5 +1,11 @@
 [
   {
+    "title": "基于ubuntu16.04+使用shadowsocks(客户端)",
+    "createdAt": "2018-04-26",
+    "link": "../essay/2018/04/26/shadowsocks.html",
+    "preview": "先确保电脑有pip. > sudo apt-get install python-pip或者 > sudo apt-get install python3-pip 然后下载shadowsocks库"
+  },
+  {
     "title": "node 垃圾回收机制",
     "createdAt": "2018-04-22",
     "link": "../essay/2018/04/22/node-memory.html",
