@@ -8,7 +8,8 @@ const languageColor = {
   Scheme: '#1e4aec',
   HTML: '#e34c26',
   Shell: '#89e051',
-  JavaScript: '#f1e05a'
+  JavaScript: '#f1e05a',
+  C: '#555555'
 };
 
 class Project extends React.Component {
