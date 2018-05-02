@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
-import css from './Project.css';
+import css from './Repository.css';
 
 const languageColor = {
   Python: '#3572A5',
@@ -12,31 +12,27 @@ const languageColor = {
   C: '#555555'
 };
 
-class Project extends React.Component {
+class Repository extends React.Component {
   constructor() {
     super();
     this.stars = this.stars.bind(this);
     this.forks = this.forks.bind(this);
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   stars() {
-    return this.props.star === 0 ? <div/> : (
+    return this.props.stargazers_count === 0 ? <div/> : (
       <span className={css.star}>
         <i className="fas fa-star"/>
-        <span>&nbsp;{this.props.star}</span>
+        <span>&nbsp;{this.props.stargazers_count}</span>
       </span>
     );
   }
 
   forks() {
-    return this.props.fork === 0 ? <div/> : (
-      <span className={css.fork}>
+    return this.props.forks === 0 ? <div/> : (
+      <span className={css.forks}>
         <i className="fas fa-code-branch"/>
-        <span>&nbsp;{this.props.fork}</span>
+        <span>&nbsp;{this.props.forks}</span>
       </span>
     );
   }
@@ -44,15 +40,15 @@ class Project extends React.Component {
 
   render() {
     return (
-      <a href={this.props.link} target="_blank" data-tip data-for={this.props.title}>
+      <a href={this.props.html_url} target="_blank" data-tip data-for={this.props.full_name}>
         <div className={css.container}>
-          <div className={css.title}>{this.props.title}</div>
+          <div className={css.full_name}>{this.props.full_name}</div>
 
           <div className={css.description}>{this.props.description}</div>
 
           <div className={css.repo}>
             <span className={css.language}>
-              <i className="fas fa-circle" style={{ "color": `${languageColor[this.props.language]}` }}/>
+              <i className="fas fa-circle" style={{ 'color': `${languageColor[this.props.language]}` }}/>
               <span>&nbsp;{this.props.language}</span>
             </span>
 
@@ -61,19 +57,19 @@ class Project extends React.Component {
             {this.forks()}
           </div>
         </div>
-        <ReactTooltip id={this.props.title}>Go to {this.props.link.split('/').slice(-1)}</ReactTooltip>
+        <ReactTooltip id={this.props.full_name}>Go to {this.props.html_url.split('/').slice(-1)}</ReactTooltip>
       </a>
     )
   }
 }
 
-Project.propTypes = {
-  star: PropTypes.number,
-  fork: PropTypes.number,
-  link: PropTypes.string,
-  title: PropTypes.string,
+Repository.propTypes = {
+  stargazers_count: PropTypes.number,
+  forks: PropTypes.number,
+  html_url: PropTypes.string,
+  full_name: PropTypes.string,
   description: PropTypes.string,
   language: PropTypes.string
 };
 
-module.exports = Project;
+module.exports = Repository;

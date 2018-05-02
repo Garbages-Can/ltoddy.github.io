@@ -6,7 +6,6 @@
   box-shadow: 0 0 14px gainsboro;
   margin-bottom: 30px;
   width: 325px;
-  /*height: 155px;*/
   height: 121px;
 }
 
@@ -14,7 +13,7 @@
   transform: translate(0, -1px);
 }
 
-.title {
+.full_name {
   font-size: 14px;
   color: #0366d6;
 }
@@ -44,12 +43,12 @@
   align-items: center;
 }
 
-.star {
+.stargazers_count {
   display: flex;
   align-items: center;
 }
 
-.fork {
+.forks {
   display: flex;
   align-items: center;
 }

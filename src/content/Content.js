@@ -1,33 +1,28 @@
 import React from 'react';
-import { Timeline, TimelineEvent } from 'react-event-timeline';
+
+import { Timeline } from 'react-event-timeline';
 import LazyLoad from 'react-lazyload';
 import { StyleRoot } from 'radium';
 import PropTypes from 'prop-types';
 import { flipInX, rollIn } from '../animation-config';
-import Project from './Project';
+import Repository from './Repository';
 import Essay from './Essay';
 
 import css from './Content.css';
 
 class Content extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.content = this.content.bind(this);
-    this.project = this.project.bind(this);
+    this.repository = this.repository.bind(this);
   }
 
-  project() {
-    return this.props.projects.map((project, index) =>
+  repository() {
+    return this.props.repos.map((repo, index) =>
       <LazyLoad height={200} key={index}>
         <StyleRoot>
           <div style={flipInX}>
-            <Project title={project.title}
-                     description={project.description}
-                     link={project.link}
-                     language={project.language}
-                     star={project.star}
-                     fork={project.fork}
-            />
+            <Repository {...repo}/>
           </div>
         </StyleRoot>
       </LazyLoad>
@@ -39,18 +34,11 @@ class Content extends React.Component {
       <LazyLoad height={150} key={index}>
         <StyleRoot>
           <div style={rollIn}>
-            <Essay title={essay.title}
-                   createdAt={essay.createdAt}
-                   link={essay.link} preview={essay.preview}
-            />
+            <Essay {...essay}/>
           </div>
         </StyleRoot>
       </LazyLoad>
     );
-  };
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   render() {
@@ -61,8 +49,9 @@ class Content extends React.Component {
             {this.content()}
           </Timeline>
         </div>
-        <div className={css.project}>
-          {this.project()}
+
+        <div className={css.repository}>
+          {this.repository()}
         </div>
       </div>
     );
@@ -70,7 +59,7 @@ class Content extends React.Component {
 }
 
 Content.propTypes = {
-  projects: PropTypes.array,
+  repos: PropTypes.array,
   essays: PropTypes.array
 };
 
