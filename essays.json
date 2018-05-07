@@ -1,5 +1,11 @@
 [
   {
+    "title": "彻底告别atom",
+    "createdAt": "2018-05-07",
+    "link": "../essay/2018/05/07/leave-atom.html",
+    "preview": "我从windows转到ubuntu做开发之后,选择的编辑器就是atom,在我的ubuntu上用atom一直到今天.不过,我要跟atom彻底说拜拜了."
+  },
+  {
     "title": "基于ubuntu16.04+使用shadowsocks(客户端)",
     "createdAt": "2018-04-26",
     "link": "../essay/2018/04/26/shadowsocks.html",
