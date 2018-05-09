@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>es6-async-sync</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+  <link rel="icon" href="/static/me.jpg">
+
+  <script src="/static/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>通过es6的Promise和async/await语法糖将异步变成同步.</h1>
+  <p>在过去的时候,如果代码设计的不好,很容易就出现'回调地狱',因为的所设计的程序,后面的步骤依赖于前面的数据.</p>
+  <p>例如,一层一层的嵌套:</p>
+  <pre><code>```javascript
+fs.readdir(source, function (err, files) {
+    if (err) {
+    console.log('Error finding files: ' + err)
+    } else {
+    files.forEach(function (filename, fileIndex) {
+        console.log(filename)
+        gm(source + filename).size(function (err, values) {
+        if (err) {
+            console.log('Error identifying file size: ' + err)
+        } else {
+            console.log(filename + ' : ' + values)
+            aspect = (values.width / values.height)
+            widths.forEach(function (width, widthIndex) {
+            height = Math.round(width / aspect)
+            console.log('resizing ' + filename + 'to ' + height + 'x' + height)
+            this.resize(width, height).write(dest + 'w' + width + '_' + filename, function(err) {
+                if (err) console.log('Error writing file: ' + err)
+            })
+            }.bind(this))
+        }
+        })
+    })
+    }
+})
+```
+</code></pre>
+  <p>举一个简单的异步例子:</p>
+  <pre><code>```javascript
+const fs = require('fs');
+
+fs.readFile('index.js', (err, data) =&gt; console.log(data.toString()));
+console.log('start read file')
+```
+</code></pre>
+  <p>你可以看到 "start read file" 被先打印出来,</p>
+  <p>有人可能不明白什么异步,简单说一下异步,异步调用就是那个函数被立即返回,然后执行后面的程序.
+    如上面这个程序readFile运行后,然后他立即"返回",然后后面的那行console.log被执行.</p>
+  <p>其他语言的话:</p>
+  <pre><code>```python
+fp = open('index.js')
+data = fp.read()
+print(data)
+```
+</code></pre>
+  <p>注意看差异,同样的读取文件的函数,读取到数据后,异步是把数据交给callback(回调函数来处理),
+    而同步代码是定义了一个新变量,把read文件中的内容作为返回值给新变量(data).</p>
+  <p>为什么会这样,因为是异步操作,在未来的某个时刻(这个时间你服务掌握)才拿到.所以就通过回调的方式来处理结果了.</p>
+  <p>如今es6中有了Promise这个东西,可以把回调变得好看一些:</p>
+  <pre><code>```javascript
+const fs = require('fs');
+
+function readSync() {
+    return new Promise((resolve, reject) =&gt; {
+        fs.readFile('index.js', (err, data) =&gt; {
+            if (!err) {
+                resolve(data);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+readSync()
+    .then(data =&gt; data.toString())
+    .then(data =&gt; console.log(data))
+    .catch(reason =&gt; console.error(reason));
+console.log('start read file')
+```
+</code></pre>
+  <p>这里新构建了一个函数readSync包装了一下,让它返回一个Promise.
+    (如果你没了解过Promise,<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">请去阅读MDN的文档</a>)
+  </p>
+  <p>最后借助es6给出的async/await语法糖,将让异步等待,变成同步.</p>
+  <pre><code>```javascript
+const fs = require('fs');
+
+function readSync() {
+    return new Promise((resolve, reject) =&gt; {
+        fs.readFile('index.js', (err, data) =&gt; {
+            if (!err) {
+                resolve(data);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+async function readAsync() {
+    const data = await readSync();
+    console.log(data.toString());
+}
+
+readAsync();
+console.log('end ...');
+```
+</code></pre>
+  <p>这里,有新增加了一个函数:readAsync,借助async/await语法糖,这样就变成同步代码了.</p>
+  <p>.then()方法中的数据变成了返回值.</p>
+  <p>不过Prmoise中他的prototype中有一个all方法:</p>
+  <blockquote>
+    <p>Promise.all(iter)</p>
+  </blockquote>
+  <p>如果你在一个函数中有多个await,这个样子线程阻塞,很耗费时间,Promise.all方法,可以将多个await变成并行的去await.</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+
+</body>
+</html>

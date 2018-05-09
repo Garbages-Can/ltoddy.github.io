@@ -1,5 +1,11 @@
 [
   {
+    "title": "通过es6的Promise和async/await语法糖将异步变成同步.",
+    "createdAt": "2018-05-10",
+    "link": "../essay/2018/05/10/es6-async-sync.html",
+    "preview": "在过去的时候,如果代码设计的不好,很容易就出现'回调地狱',因为的所设计的程序,后面的步骤依赖于前面的数据. 例如,一层一层的嵌套:"
+  },
+  {
     "title": "彻底告别atom",
     "createdAt": "2018-05-07",
     "link": "../essay/2018/05/07/leave-atom.html",
