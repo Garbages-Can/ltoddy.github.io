@@ -1,51 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>善用数据结构</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>善用数据结构</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <link rel="stylesheet" href="../../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
-    <link rel="icon" href="../../static/me.jpg">
+  <link rel="icon" href="../../static/me.jpg">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <script src="../../static/js/jquery-3.2.1.min.js"></script>
-    <script src="../../static/js/bootstrap.js"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
-<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
 <div class="container">
-    <div class="page-header">
-        <h3>善用数据结构</h3>
-    </div>
-    <p>总是看到有人问,有没有关于数据结构和算法的资料,该怎么学;也有人说,在平常编程的时候根本就用不到.</p>
-    <p>什么是算法:简而言之就是解决问题的方法,这个方法需要是可行的,完备准确的.因为执行的是计算机.</p>
-    <p>举个例子,计算1+2+3...+100.这个问题就很简单了,可以用一个循环,来计算1加到100的(时间复杂度为O(n)),可这样不好;1到100这是一个差为1的等差数列,
-        如果你利用等差数列的求和公式: (n1 + n2) * n_num / 2, 那么这个样子,可以更快的得出结果(时间复杂度为O(1)).</p>
-    <p>什么是数据结构:简而言之就是容器,就是放东西的东西.这个东西是什么 -- 数据.计算机中的数据是多样化的,可以是number,symbol,string,甚至是一个objetc.</p>
-    <hr>
-    <p>曾经看到过这样的代码:程序中有非常多的if,else的判断.我想说,这个样子的设计是不好的,或者说是不利于日后的维护和扩展的.</p>
-    <p>举一个例子,有人贴过一段代码,是他写的一个方法,这个方法写的好几十行,里面有大量的if,else判断.</p>
-    <p>这个方法的功能是这样的,他在做一个desktop app,可以给这个app选择主题,这个方法就是通过一个参数选择对应的主题.</p>
-    <pre><code>public Theme getTheme(String selector) throws Exception {
+  <div class="page-header">
+    <h3>善用数据结构</h3>
+  </div>
+  <p>总是看到有人问,有没有关于数据结构和算法的资料,该怎么学;也有人说,在平常编程的时候根本就用不到.</p>
+  <p>什么是算法:简而言之就是解决问题的方法,这个方法需要是可行的,完备准确的.因为执行的是计算机.</p>
+  <p>举个例子,计算1+2+3...+100.这个问题就很简单了,可以用一个循环,来计算1加到100的(时间复杂度为O(n)),可这样不好;1到100这是一个差为1的等差数列,
+    如果你利用等差数列的求和公式: (n1 + n2) * n_num / 2, 那么这个样子,可以更快的得出结果(时间复杂度为O(1)).</p>
+  <p>什么是数据结构:简而言之就是容器,就是放东西的东西.这个东西是什么 -- 数据.计算机中的数据是多样化的,可以是number,symbol,string,甚至是一个objetc.</p>
+  <hr>
+  <p>曾经看到过这样的代码:程序中有非常多的if,else的判断.我想说,这个样子的设计是不好的,或者说是不利于日后的维护和扩展的.</p>
+  <p>举一个例子,有人贴过一段代码,是他写的一个方法,这个方法写的好几十行,里面有大量的if,else判断.</p>
+  <p>这个方法的功能是这样的,他在做一个desktop app,可以给这个app选择主题,这个方法就是通过一个参数选择对应的主题.</p>
+  <pre><code>public Theme getTheme(String selector) throws Exception {
         ...
     if (selector == 'selector1') {
         return theme1;
     } else if {
         ...
 }</code></pre>
-    <p>部分代码差不多这样,但比这个还要复杂.</p>
-    <p>代码这个样子写不好!</p>
-    <p>不过,我们可以利用一下数据结构.思路:我们可以创建一个容器(HashMap),把已经有的主题put进去,然后通过一个选择器再get出来.</p>
-    <pre><code>private HashMap&lt;String, Theme&gt; themes = new HashMap&lt;String, Theme&gt;();
+  <p>部分代码差不多这样,但比这个还要复杂.</p>
+  <p>代码这个样子写不好!</p>
+  <p>不过,我们可以利用一下数据结构.思路:我们可以创建一个容器(HashMap),把已经有的主题put进去,然后通过一个选择器再get出来.</p>
+  <pre><code>private HashMap&lt;String, Theme&gt; themes = new HashMap&lt;String, Theme&gt;();
 
 private void store() {
     // 这个方法最好在构造对象时运行.
@@ -61,17 +60,24 @@ public Theme getTheme(String selector) throws NoThemeException {
     }
     return theme;
 }</code></pre>
-    <p>需求有了变更,当日后有了更多的主题你怎么办,很简单,把新主题做好,然后put进容器中,那个getTheme方法根本不需要去改写,这个样子维护的成本就小多了.</p>
-    <p>但是为什么说之前的那段代码不好,当新增了主题之后,那个getTheme方法是需要为了适应新需求而改变的(添加新的else if).这个样子成本就多了一些.</p>
-    <p>学数据结构,当然你能会这个数据结构是怎么实现的这是最好的了,但是你最起码要知道这个数据结构的特性,比如栈先进后出(FILO),队列先进先出(FIFO)等等.</p>
-    <p>java.util包中提供了大量的集合类:BitSet,PriorityQueue,Vector等等(举点你不常用的只是想说明避免重复造轮子,因为你所遇到的问题,肯定前人也遇到过类似的).</p>
-    <p>学会使用数据结构,并了解这些数据结构的特性然后灵活的使用,这是最正确的.</p>
-    <hr>
-    <p>说点额外话,似乎出现了一种不健康的状态:正在学Java的人张嘴闭嘴分布式高并发之类的,这种锁那种锁的.也不知道这些人的写出来的代码质量怎么样.</p>
-    <p>有些时候不要用线程或者线程池去执行任务,在执行IO相关方面的工作时,IO特别慢,你可以用多线程之类的,但是其他时候,你要考虑到new一个线程的成本.</p>
-    <p>当你new一个额外的线程去执行工作的时候,你的进程需要额外的资源,这是操作系统向这个系统分配资源,然后进程拿到资源之后,创建线程并分配给其资源,然后线程
-        才可以执行任务,要考虑到这个时间.</p>
-    <p>所以说不要好高鹜远,踏踏实实学好基础,为未来能够更快的学习适应新东西(你不会的东西)做好准备.</p>
+  <p>需求有了变更,当日后有了更多的主题你怎么办,很简单,把新主题做好,然后put进容器中,那个getTheme方法根本不需要去改写,这个样子维护的成本就小多了.</p>
+  <p>但是为什么说之前的那段代码不好,当新增了主题之后,那个getTheme方法是需要为了适应新需求而改变的(添加新的else if).这个样子成本就多了一些.</p>
+  <p>学数据结构,当然你能会这个数据结构是怎么实现的这是最好的了,但是你最起码要知道这个数据结构的特性,比如栈先进后出(FILO),队列先进先出(FIFO)等等.</p>
+  <p>java.util包中提供了大量的集合类:BitSet,PriorityQueue,Vector等等(举点你不常用的只是想说明避免重复造轮子,因为你所遇到的问题,肯定前人也遇到过类似的).</p>
+  <p>学会使用数据结构,并了解这些数据结构的特性然后灵活的使用,这是最正确的.</p>
+  <hr>
+  <p>说点额外话,似乎出现了一种不健康的状态:正在学Java的人张嘴闭嘴分布式高并发之类的,这种锁那种锁的.也不知道这些人的写出来的代码质量怎么样.</p>
+  <p>有些时候不要用线程或者线程池去执行任务,在执行IO相关方面的工作时,IO特别慢,你可以用多线程之类的,但是其他时候,你要考虑到new一个线程的成本.</p>
+  <p>当你new一个额外的线程去执行工作的时候,你的进程需要额外的资源,这是操作系统向这个系统分配资源,然后进程拿到资源之后,创建线程并分配给其资源,然后线程
+    才可以执行任务,要考虑到这个时间.</p>
+  <p>所以说不要好高鹜远,踏踏实实学好基础,为未来能够更快的学习适应新东西(你不会的东西)做好准备.</p>
+
+  <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+      style="position: absolute; top: 0; right: 0; border: 0;"
+      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+      alt="Fork me on GitHub"
+      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
 </div>
 </body>
 </html>

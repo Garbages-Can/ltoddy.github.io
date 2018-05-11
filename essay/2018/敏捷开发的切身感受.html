@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>真实的敏捷开发</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>真实的敏捷开发</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <link rel="stylesheet" href="../../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../../static/css/bootstrap-theme.css">
-    <link rel="icon" href="../../static/me.jpg">
+  <link rel="icon" href="../../static/me.jpg">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <script src="../../static/js/jquery-3.2.1.min.js"></script>
-    <script src="../../static/js/bootstrap.js"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
-<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
 <div class="container">
-    <div class="page-header">
-        <h3>真实的敏捷开发</h3>
-    </div>
-    <img src="http://img.vim-cn.com/97/5a32dc9b1fc87ef5238b135b4a99fbedc3f2c7.png" alt="">
-    <hr>
-    <p>这是一张描绘敏捷开发流程的图(两周一个sprint).</p>
-    <p>owner提供想法(需求),交给开发人员,然后开发人员每天都会统计自己的完成进度(dadaily scrum),以此来评判开发效率是否是健康的,然后review代码,
-        两周后,交付给客户(不是最终交付,而是间接连续不断的交付.).当然,我在的公司过去是两周一个sprint,现在是一周一个sprint.</p>
-    <hr>
-    <img src="http://img.vim-cn.com/c3/5c7f92b55d07bcb2fec93111786407f23554cf.jpg" alt="">
-    <hr>
-    <p>这张图还是挺有意思的,一个开发人员站在高处,用命希望不要更改需求.</p>
-    <p>也就是说,我们开发人员超级讨厌需求的更改(我也超级讨厌).</p>
-    <p>其实需求改变不可恨,可恨的是需求发生了变化,你先前的努力可能就白费了,就需要重新来过,这是很气人的.但是有没有方法把这个成本降低,敏捷开发确实可以做到.</p>
-    <strong>需求改变是正常的,没有人能完全的掌握未来变化的趋势,都是走一步看一步的.走一步看一步这就是敏捷开发.</strong>
-    <p>敏捷开发大概是什么样子的:大部分公司是每两周算作一个sprint,我司一周一个sprint(任务紧...).sprint,可以简单的理解是项目成长的一小步.
-        循序渐进,不断的完善自己的开发产品.</p>
-    <h3>小步快跑:</h3>
-    <p>罗马不是一天建成的.公司开发的产品也是这样,往往很久才会真正的交付到客户手上.在这期间难免有不符合的老需求,比如当初没考虑好数据库的设计之类的.</p>
-    <p>敏捷开发注重小步快跑,他的需求不是像瀑布模型那样在开发前期做好完备的需求文档,而是每个sprint,owner为developer一个近期的需求,让开发人员去实现.</p>
-    <p>这里的需求是每个sprint的需求,是你要完成的一小步的需求.</p>
-    <p>我们在每周四下午的时候,开发人员,测试,ui,等等都会在一起开个会,说明下周的story(任务需求),这个需求必须是明确的,比如要做什么,要达到什么样的效果.
-        这些都必须是清楚的,不然我们开发是不开工的.</p>
-    <p>当每一周结束(一个sprint的完成),这就算是迈出了一小步,也算一次迭代.这一小步是可以交付的,因为客户可以看到有一些变化,这时,客户可以参与进来,
-        向我们提出意见,帮助我们更好的明确下一步的需求,让我们的产品客户满意度更高.</p>
-    <hr>
-    <h3>开发流程:</h3>
-    <p>跟大多公司一样,过着朝九晚六的生活.每天早上来到之后,差不多人齐了,小组内就先开个小会,汇报一下自己昨天完成了哪些,今天准备完成哪些任务.
-        然后小组长再向大boss汇报.然后到晚上六点下班.</p>
-    <p>周四下午,开发,测试等一起开会,说明本周情况和下周要完成的任务.周五我们会一起拆分task,将大的任务拆成小的任务,
-        其实这也是一个开发人员明确需求的一个过程.然后我们会对这些小任务打分,评判开发成本.有些任务可能太难或者时间太紧来不及做,
-        就不进build而是以hot fix的形式发布,或者就是pending,等到下周在做.</p>
-    <p>周五的时候要向boss(boss过去是搞技术的...)汇报本周工作,boss提出意见等.</p>
-    <p><strong>开发人员的任务是什么 : 努力认真的完成每一个sprint!!!</strong></p>
-    <h3>代码是如何一步一步的到线上的?</h3>
-    <p>代码写好之后,找测试人员测试(不仅仅测试人员测试,我们开发也要写单元测试,这也是方便日后的重构),然后代码提交到gitlab上,
-        然后你去提一个merge request, 然后会有人给你review代码,没什么问题,
-        就会把你的代码合并到master分支上(当然,这个过程需要跑pipeline,自动化).这个时候算你的代码从本地环境进入了开发环境.</p>
-    <p>至于代码怎么从开发环境到测试环境的,我真不知道谁来做这件事.</p>
-    <p>随后,到了测试环境之后,测试人员还有测试,以及还有相应的e2e(端到端)测试.</p>
-    <p>最后测试人员把代码从测试环境到线上环境.</p>
-    <h3>开发工具:</h3>
-    <p>很庆幸,我在的公司还是比较追求技术的,版本管理的工具是git而不是svn.我们主要是nodejs做后端的开发,开发用的工具是webstorm,为了方便重构代码.</p>
-    <p>用的操作系统: Ubuntu 14.04(命令行操作真的是非常方便啊!!!), 除了ui用MAC,其他人都是ubuntu,即使你不是写代码的...
-        我们线上集群的操作系统也是ubuntu(有一次在运维那边悄悄瞥见了,也可能看错了).都是同样的系统好处是很大的,方便代码部署.</p>
-    <p>集群管理工具,好像大部分公司都是用的zookeeper(老牌集群管理工具),而我们用的kubernets(简称k8s),go语言做的集群管理工具,还是比较新的.</p>
-    <p>总的来说,我们用的技术还是比较新的,有点geek的感觉.</p>
-    <hr>
-    <p>敏捷开发,现在也越来越多的团队使用这种开发模式.其实敏捷开发这种小步快跑的方式,是为了更加的适应新需求的变化(我的产品经理一直强调把开发成本降下来...).
-        当然,敏捷开发需要注重一些先进的技术,自动化的程度要搞一些(据说我们的服务更新是白天更新,更新的时候,新服务和老服务同时存在,
-        新服务完全就绪后,新服务无缝衔接的替代旧服务,据说这个过程用户发觉不到,其实就是感受不到...).
-        我相信,未来敏捷开发更加的流行,而且做出的产品用户的体验度也会更高.</p>
+  <div class="page-header">
+    <h3>真实的敏捷开发</h3>
+  </div>
+  <img src="http://img.vim-cn.com/97/5a32dc9b1fc87ef5238b135b4a99fbedc3f2c7.png" alt="">
+  <hr>
+  <p>这是一张描绘敏捷开发流程的图(两周一个sprint).</p>
+  <p>owner提供想法(需求),交给开发人员,然后开发人员每天都会统计自己的完成进度(dadaily scrum),以此来评判开发效率是否是健康的,然后review代码,
+    两周后,交付给客户(不是最终交付,而是间接连续不断的交付.).当然,我在的公司过去是两周一个sprint,现在是一周一个sprint.</p>
+  <hr>
+  <img src="http://img.vim-cn.com/c3/5c7f92b55d07bcb2fec93111786407f23554cf.jpg" alt="">
+  <hr>
+  <p>这张图还是挺有意思的,一个开发人员站在高处,用命希望不要更改需求.</p>
+  <p>也就是说,我们开发人员超级讨厌需求的更改(我也超级讨厌).</p>
+  <p>其实需求改变不可恨,可恨的是需求发生了变化,你先前的努力可能就白费了,就需要重新来过,这是很气人的.但是有没有方法把这个成本降低,敏捷开发确实可以做到.</p>
+  <strong>需求改变是正常的,没有人能完全的掌握未来变化的趋势,都是走一步看一步的.走一步看一步这就是敏捷开发.</strong>
+  <p>敏捷开发大概是什么样子的:大部分公司是每两周算作一个sprint,我司一周一个sprint(任务紧...).sprint,可以简单的理解是项目成长的一小步.
+    循序渐进,不断的完善自己的开发产品.</p>
+  <h3>小步快跑:</h3>
+  <p>罗马不是一天建成的.公司开发的产品也是这样,往往很久才会真正的交付到客户手上.在这期间难免有不符合的老需求,比如当初没考虑好数据库的设计之类的.</p>
+  <p>敏捷开发注重小步快跑,他的需求不是像瀑布模型那样在开发前期做好完备的需求文档,而是每个sprint,owner为developer一个近期的需求,让开发人员去实现.</p>
+  <p>这里的需求是每个sprint的需求,是你要完成的一小步的需求.</p>
+  <p>我们在每周四下午的时候,开发人员,测试,ui,等等都会在一起开个会,说明下周的story(任务需求),这个需求必须是明确的,比如要做什么,要达到什么样的效果.
+    这些都必须是清楚的,不然我们开发是不开工的.</p>
+  <p>当每一周结束(一个sprint的完成),这就算是迈出了一小步,也算一次迭代.这一小步是可以交付的,因为客户可以看到有一些变化,这时,客户可以参与进来,
+    向我们提出意见,帮助我们更好的明确下一步的需求,让我们的产品客户满意度更高.</p>
+  <hr>
+  <h3>开发流程:</h3>
+  <p>跟大多公司一样,过着朝九晚六的生活.每天早上来到之后,差不多人齐了,小组内就先开个小会,汇报一下自己昨天完成了哪些,今天准备完成哪些任务.
+    然后小组长再向大boss汇报.然后到晚上六点下班.</p>
+  <p>周四下午,开发,测试等一起开会,说明本周情况和下周要完成的任务.周五我们会一起拆分task,将大的任务拆成小的任务,
+    其实这也是一个开发人员明确需求的一个过程.然后我们会对这些小任务打分,评判开发成本.有些任务可能太难或者时间太紧来不及做,
+    就不进build而是以hot fix的形式发布,或者就是pending,等到下周在做.</p>
+  <p>周五的时候要向boss(boss过去是搞技术的...)汇报本周工作,boss提出意见等.</p>
+  <p><strong>开发人员的任务是什么 : 努力认真的完成每一个sprint!!!</strong></p>
+  <h3>代码是如何一步一步的到线上的?</h3>
+  <p>代码写好之后,找测试人员测试(不仅仅测试人员测试,我们开发也要写单元测试,这也是方便日后的重构),然后代码提交到gitlab上,
+    然后你去提一个merge request, 然后会有人给你review代码,没什么问题,
+    就会把你的代码合并到master分支上(当然,这个过程需要跑pipeline,自动化).这个时候算你的代码从本地环境进入了开发环境.</p>
+  <p>至于代码怎么从开发环境到测试环境的,我真不知道谁来做这件事.</p>
+  <p>随后,到了测试环境之后,测试人员还有测试,以及还有相应的e2e(端到端)测试.</p>
+  <p>最后测试人员把代码从测试环境到线上环境.</p>
+  <h3>开发工具:</h3>
+  <p>很庆幸,我在的公司还是比较追求技术的,版本管理的工具是git而不是svn.我们主要是nodejs做后端的开发,开发用的工具是webstorm,为了方便重构代码.</p>
+  <p>用的操作系统: Ubuntu 14.04(命令行操作真的是非常方便啊!!!), 除了ui用MAC,其他人都是ubuntu,即使你不是写代码的...
+    我们线上集群的操作系统也是ubuntu(有一次在运维那边悄悄瞥见了,也可能看错了).都是同样的系统好处是很大的,方便代码部署.</p>
+  <p>集群管理工具,好像大部分公司都是用的zookeeper(老牌集群管理工具),而我们用的kubernets(简称k8s),go语言做的集群管理工具,还是比较新的.</p>
+  <p>总的来说,我们用的技术还是比较新的,有点geek的感觉.</p>
+  <hr>
+  <p>敏捷开发,现在也越来越多的团队使用这种开发模式.其实敏捷开发这种小步快跑的方式,是为了更加的适应新需求的变化(我的产品经理一直强调把开发成本降下来...).
+    当然,敏捷开发需要注重一些先进的技术,自动化的程度要搞一些(据说我们的服务更新是白天更新,更新的时候,新服务和老服务同时存在,
+    新服务完全就绪后,新服务无缝衔接的替代旧服务,据说这个过程用户发觉不到,其实就是感受不到...).
+    我相信,未来敏捷开发更加的流行,而且做出的产品用户的体验度也会更高.</p>
 </div>
+
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
 </body>
 </html>
