@@ -3,7 +3,7 @@
     "title": "The Node.js Event Loop, Timers, and process.nextTick()",
     "createdAt": "2018-05-12",
     "link": "../essay/2018/05/12/event-loop-timers-and-nexttick.html",
-    "preview": "事件循环允许Node.js执行非阻塞I/O操作, 尽管,JavaScript是单线程.由于现代大多数系统内核是多线程的,他们可以在后台执行多个操作.当某一个操作完成时,系统内核告诉Node.js,以便可以将适当的回调(callback)添加到轮询(poll)队列中去执行."
+    "preview": "事件循环允许Node.js通过尽可能地分流对系统内核的操作, 来执行 非阻塞 的I/O操作, 即使JavaScript是单线程的.大多数现代的系统内核都是多线程的, 他们在后台可以处理多个同时执行的操作. 当其中一个操作完成时, 系统内核会通知Node.js,然后与之相关的回调函数会被加入到 poll队列 并且最终被执行."
   },
   {
     "title": "通过es6的Promise和async/await语法糖将异步变成同步.",
