@@ -1,5 +1,11 @@
 [
   {
+    "title": "Overview of Blocking vs Non-Blocking",
+    "createdAt": "2018-05-13",
+    "link": "../essay/2018/05/13/blocking-vs-non-blocking.html",
+    "preview": "阻塞是指当Node.js想执行其他JavaScript时,进程必须等待一个非JavaScript操作的完成.这种现象的发生是因为当一个阻塞操作出现时,事件循环无法继续执行JavaScript."
+  },
+  {
     "title": "The Node.js Event Loop, Timers, and process.nextTick()",
     "createdAt": "2018-05-12",
     "link": "../essay/2018/05/12/event-loop-timers-and-nexttick.html",
