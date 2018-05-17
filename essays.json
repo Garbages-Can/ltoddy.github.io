@@ -1,5 +1,11 @@
 [
   {
+    "title": "Timers in Node.js and beyond",
+    "createdAt": "2018-05-14",
+    "link": "../essay/2018/05/14/timers-in-node.html",
+    "preview": "Node.js的定时器模块中含有这样的方法,它们可以设定在指定时间之后执行某些代码.定时器函数不需要通过 require() 导入,它们是全局可访问的,这是为了和浏览器中的JavaScript API保持一致."
+  },
+  {
     "title": "Overview of Blocking vs Non-Blocking",
     "createdAt": "2018-05-13",
     "link": "../essay/2018/05/13/blocking-vs-non-blocking.html",
