@@ -34,7 +34,7 @@
 |得到一个属性|`x.my_property`|`x.__getattribute__('my_property')`|
 |获得一个属性|`x.my_property`|`x.__getattr__('my_property')`|
 |设置一个属性|`x.my_property = value`|`x.__setattr__('my_property', value)`|
-|阐述一个属性|`del x.my_property`|`x.__delattr__('my_property')`|
+|删除一个属性|`del x.my_property`|`x.__delattr__('my_property')`|
 |列出所有属性和方法|`dir(x)`|`x.__dir__()`|
 
 
