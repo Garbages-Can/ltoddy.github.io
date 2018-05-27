@@ -1,5 +1,11 @@
 [
   {
+    "title": "Python magic methods",
+    "createdAt": "2018-05-27",
+    "link": "/essay/2018/05/27/python-magic-methods.html",
+    "preview": "Python正确调用`__del__()`特殊方法时非常复杂.为了完全理解它,你需要知道Python如何跟踪内存中的对象.这里有一篇关于Python垃圾收集和类析构函数的好文章.你还应该阅读关于弱引用,weakref模块,以及可能的gc模块以获得更好的度量."
+  },
+  {
     "title": "Timers in Node.js and beyond",
     "createdAt": "2018-05-14",
     "link": "../essay/2018/05/14/timers-in-node.html",
