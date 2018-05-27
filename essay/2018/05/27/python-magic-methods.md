@@ -86,7 +86,7 @@ __*`__getattr__()`和`__getattribute__()`方法之间的区别很微妙但很重
 |整除与取余|`divmod(x, y)`|`x.__divmod__(y)`|
 |平方|`x ** y`|`x.__pow__(y)`|
 |左移|`x << y`|`x.__lshift__(y)`|
-|友移|`x >> y`|`x.__rshift__(y)`|
+|右移|`x >> y`|`x.__rshift__(y)`|
 |按位and运算|`x & y`|`x.__and__(y)`|
 |按位xor或运算|`x ^ y`|`x.__xor__(y)`|
 |按位or运算|`x | y`|`x.__or__(y)`|
@@ -104,7 +104,7 @@ __*`__getattr__()`和`__getattribute__()`方法之间的区别很微妙但很重
 |整除与取余|`divmod(x, y)`|`x.__rdivmod__(y)`|
 |平方|`x ** y`|`x.__rpow__(y)`|
 |左移|`x << y`|`x.__rlshift__(y)`|
-|友移|`x >> y`|`x.__rrshift__(y)`|
+|右移|`x >> y`|`x.__rrshift__(y)`|
 |按位and运算|`x & y`|`x.__rand__(y)`|
 |按位xor或运算|`x ^ y`|`x.__rxor__(y)`|
 |按位or运算|`x | y`|`x.__ror__(y)`|
@@ -122,7 +122,7 @@ __*`__getattr__()`和`__getattribute__()`方法之间的区别很微妙但很重
 |整除与取余|`divmod(x, y)`|`x.__idivmod__(y)`|
 |平方|`x ** y`|`x.__ipow__(y)`|
 |左移|`x << y`|`x.__ilshift__(y)`|
-|友移|`x >> y`|`x.__irshift__(y)`|
+|右移|`x >> y`|`x.__irshift__(y)`|
 |按位and运算|`x & y`|`x.__iand__(y)`|
 |按位xor或运算|`x ^ y`|`x.__ixor__(y)`|
 |按位or运算|`x | y`|`x.__ior__(y)`|
