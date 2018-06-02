@@ -1,5 +1,11 @@
 [
   {
+    "title": "面试滴滴失败的反思",
+    "createdAt": "2018-06-01",
+    "link": "/essay/2018/06/01/introspection-on-the-failure-of-the-interview.html",
+    "preview": "这两天以电话的形式面试了滴滴的大数据研发团队 —— 这是目前的第一次面试失败. 第一次的失败,我内心还是挺难受的.发现了自己大量的不足,曾经自己认为自己对于编程学得还好,其实就是一坨*."
+  },
+  {
     "title": "Python magic methods",
     "createdAt": "2018-05-27",
     "link": "/essay/2018/05/27/python-magic-methods.html",
