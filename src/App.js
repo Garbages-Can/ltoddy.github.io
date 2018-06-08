@@ -4,20 +4,20 @@ import Header from './Header';
 import Content from './content/Content';
 import Footer from './Footer';
 import Corner from './components/Corner';
-import essays from '../essays';
 
 import css from './App.css';
+import { username, essays, header } from '../config';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { repos: [] }
+    this.state = {repos: []}
   }
 
   componentWillMount() {
-    fetch('https://api.github.com/users/ltoddy/repos')
+    fetch(`https://api.github.com/users/${username}/repos`)
       .then(response => response.json())
-      .then(repos => this.setState({ repos: repos.sort((a, b) => a.stargazers_count < b.stargazers_count) }));
+      .then(repos => this.setState({repos: repos.sort((a, b) => a.stargazers_count < b.stargazers_count)}));
   }
 
   componentWillUnmount() {
@@ -27,7 +27,11 @@ class App extends React.Component {
   render() {
     return (
       <div className={css.container}>
-        <Header/>
+        <Header
+          title={header.title}
+          subtitle={header.subtitle}
+          content={header.content}
+        />
         <Content essays={essays}
                  repos={this.state.repos}
         />
