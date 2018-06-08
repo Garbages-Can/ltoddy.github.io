@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --history-api-fallback --host 0.0.0.0 --mode development",
     "build": "webpack --mode production",
-    "lint": "eslint **/*.js"
+    "lint": "eslint src/**/*.js"
   },
   "repository": {
     "type": "git",
