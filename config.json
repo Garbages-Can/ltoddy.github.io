@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "12-factors",
+      "createdAt": "2018-06-20",
+      "link": "/essay/2018/06/20/the-twelve-factor-app.html",
+      "preview": "如今，软件通常会作为一种服务来交付，它们被称为网络应用程序，或软件即服务（SaaS）。12-Factor 为构建如下的 SaaS 应用提供了方法论"
+    },
+    {
       "title": "Python垃圾回收机制",
       "createdAt": "2018-06-06",
       "link": "/essay/2018/06/06/python-gc.html",
