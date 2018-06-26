@@ -45,3 +45,7 @@
 
 具体字体图标使用说明请看: [https://fontawesome.com/get-started](https://fontawesome.com/get-started)
 
+
+# Python Interview
+
+鉴于曾经面试Python岗位失败过,所以来记录一下Python面试经验、知识点等等。
