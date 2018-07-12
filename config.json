@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "时下我对rust的一些见解",
+      "createdAt": "2018-07-12",
+      "link": "/essay/2018/07/12/my-opinion-on-rust.html",
+      "preview": "我写的rust代码，已经在很多用户的电脑中运行了。我与2018年年初，由于工作原因，开始使用rust在公司编写程序，当时只是为了完成任务，基本都是抄文档然后改。"
+    },
+    {
       "title": "12-factors",
       "createdAt": "2018-06-20",
       "link": "/essay/2018/06/20/the-twelve-factor-app.html",

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>时下我对rust的一些见解</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- jQuert Microsoft CDN -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>时下我对rust的一些见解</h1>
+    <p><em>我写的rust代码，已经在很多用户的电脑中运行了。</em></p>
+    <hr>
+    <p>我与2018年年初，由于工作原因，开始使用rust在公司编写程序，当时只是为了完成任务，基本都是抄文档然后改。<br>
+        没有仔细的 <strong>“思考”</strong> rust.</p>
+    <pre><code class="language-rust"><span class="hljs-keyword">let</span> a = ...;
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> b = ...;
+</code></pre>
+    <p>很多人会把这当做是定义变量，然后赋值。这是错误的，rust中随处可见模式匹配于结构，这两行代码是pattern destructure。</p>
+    <p>rust并没有什么真正“强”之初，只不过是你的程序为编译器提供了大量的信息，让rust可以在编译期做大量的事情(可以简单的视为，他把你把程序先跑了一遍)，以此来实现所谓的“安全”。</p>
+    <h4>可变引用与不可变引用</h4>
+    <pre><code class="language-rust"><span class="hljs-keyword">let</span> a = ...;
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> b = ...;
+</code></pre>
+    <p>a是不可变的，b是可变的， 可变引用只允许有一个引用，而不可变可以有多个引用指向它。<br>
+        动动脑子都知道，对于可变引用，只有一个引用，这肯定不会因为并发而影响造成脏数据。<br>
+        而不可变引用，因为他是不可变的，那的状态保持不变，你可以随便的使用它，毕竟没有副作用。</p>
+    <hr>
+    <p>rust在github上开源： <a href="https://github.com/rust-lang/rust">https://github.com/rust-lang/rust</a></p>
+    <p>关于rust的简短介绍是: A safe, concurrent, practical language.</p>
+    <h4>关于 concurrent.</h4>
+    <p>std lib里面大量的blocking api，不过关于并发方便的利器，只提供了channel。协程、异步都要自己实现。<br>
+        可能我了解rust的信息都太老了，也没有关注rust官方，可能rust官方新出了新的API。</p>
+    <h4>关于 practical</h4>
+    <p>不得不面对的一个现实就是很多人在最开始是不适应rust的设计、语法的。确实，虽然自己是C语言程序员出身，<br>
+        然后转向以Python+Javasc为主，加以爱好lisp，了解过各种小众语言，确实不适应rust。</p>
+    <hr>
+    <p>很多人说rust是为了编写高性能的系统程序，可是我看系统级别的程序还是得靠C语言。<br>
+        rust最初由ocaml实现，但是ocaml目前还有百分之十左右的c实现代码，也就是说rust的实现离不开c语言。</p>
+    <h4>最后</h4>
+    <p>至于我为什么会再次看一下rust，很大一部分原因在于rust的包管理——cargo。<br>
+        可以自动生成binary和动态链接库，无需编写Makefile。这样子就省了很多事。</p>
+    <p>展望未来，我要使用rust编写一个中间件，然后在我的毕业设计中使用。</p>
+</div>
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+        alt="Fork me on GitHub"
+        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+</body>
+</html>
