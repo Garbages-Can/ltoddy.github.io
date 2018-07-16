@@ -26,7 +26,7 @@ Windows下的操作，在linux上照样都可以。
 - the old new thing
 - 以及gmail的邮件列表
 
-####　开源
+#### 开源
 
 拥抱开源，开源世界有着无穷的资源。
 从上世纪倡导的free software到现在的open source。
