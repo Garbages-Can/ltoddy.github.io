@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "一些建议",
+      "createdAt": "2018-07-16",
+      "link": "/essay/2018/07/16/suggestion.html",
+      "preview": "linux不是影片中黑客专有，而是所有人都可以轻易使用的系统，当你接触linux时，请不要对它有任何畏惧。Windows下的操作，在linux上照样都可以。"
+    },
+    {
       "title": "时下我对rust的一些见解",
       "createdAt": "2018-07-12",
       "link": "/essay/2018/07/12/my-opinion-on-rust.html",
