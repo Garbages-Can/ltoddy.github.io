@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "rust 一些知识总结",
+      "createdAt": "2018-07-28",
+      "link": "/essay/2018/07/28/rust-summary.html",
+      "preview": "rust的基本类型 -- 基本类型的size (bytes) -- rust 关键字 -- markers -- Rust 的内置 Traits"
+    },
+    {
       "title": "一些建议",
       "createdAt": "2018-07-16",
       "link": "/essay/2018/07/16/suggestion.html",
