@@ -14,10 +14,10 @@ class App extends React.Component {
     this.state = {repos: []}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(response => response.json())
-      .then(repos => this.setState({repos: repos.sort((a, b) => a.stargazers_count < b.stargazers_count)}));
+      .then(repos => this.setState(() => ({repos: repos.sort((a, b) => a.stargazers_count < b.stargazers_count)})));
   }
 
   componentWillUnmount() {
