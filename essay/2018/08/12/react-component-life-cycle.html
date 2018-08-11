@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理解React生命周期</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="ltoddy's blog">
+    <meta name="author" content="liutao">
+    <meta name="author" content="ltoddy">
+    <meta name="author" content="just for fun">
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
+
+    <!-- jQuert Microsoft CDN -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>理解React生命周期</h1>
+    <p>react为我们提供了一些组件生命周期的函数（钩子函数），允许我们更新组件UI和状态。<br>
+        但是他们如何在react中工作的呢？</p>
+    <hr>
+    <h2><code>constructor</code></h2>
+    <p><code>constructor</code>是一个特殊的函数，是OOP（面向对象编程）的构造函数，当一个对象被创建的时候，这个函数被调用。<br>
+        当我们的一个类继承了另一个类的时候，有一个非常重要的函数要被调用：<code>super</code>，调用此函数的时候，会将父类初始化，<br>
+        这也是为什么我们可以在我们自己定义的组件中使用<code>this.props</code></p>
+    <p>同时，构造函数也是最完美的设置组件中字段（变量以<code>this.</code>开头）的地方、初始化<code>state</code>、接收<code>props</code>。<br>
+        而且这也是唯一设置<code>this.state</code>的地方。</p>
+    <h4>Do:</h4>
+    <ul>
+        <li>
+            <p>初始化<code>state</code>（<code>this.state = {}</code>）</p>
+        </li>
+        <li>
+            <p>将事件处理函数绑定到实例上. (<code>this.handleClick = this.handleClick.bind(this)</code>).</p>
+        </li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>别做那些有副作用的事情（比如 <code>AJAX</code> 等等）</li>
+    </ul>
+    <hr>
+    <h2>被遗弃: <code>componentWillMount</code></h2>
+    <p>这是一个特殊情况 - <code>componentWillMount</code>与构造函数没有太大区别 - 它也只在初始安装生命周期中调用一次。</p>
+    <p>很多人（比如我）想要使用这个在这个函数中发送一些请求去获取数据，并且希望在<code>render</code>函数之前准备好数据。<br>
+        可惜事实并不是这样，虽然请求在<code>render</code>之前发生，但是在渲染之前是无法拿到数据的。</p>
+    <p>####　Do</p>
+    <ul>
+        <li>
+            <p>通过<code>this.setState</code> 更新状态</p>
+        </li>
+        <li>
+            <p>实现最后一分的优化</p>
+        </li>
+        <li>
+            <p>执行一些有副作用的操作（server端渲染）</p>
+        </li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>不要执行一些有副作用的操作（客户端渲染）</li>
+    </ul>
+    <hr>
+    <h2>被遗弃: <code>componentWillReceiveProps(nextProps)</code></h2>
+    <p>在每个更新生命周期中都会调用此函数。<br>
+        注意的是，父组件被重新渲染的时候，这个函数会调用，即使<code>props</code>没有改变。</p>
+    <p>如果你有一个组件，其<code>state</code>部分依赖于从父组件传递的<code>props</code>，在这里调用<code>this.setState</code>不会引起额外的渲染调用（pretty good）。</p>
+    <h4>Do</h4>
+    <ul>
+        <li>把<code>state</code>同步到<code>props</code></li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>不要做一些有副作用的操作</li>
+    </ul>
+    <hr>
+    <h2><code>shouldComponentUpdate(nextProps, nextState, nextContext)</code></h2>
+    <p>默认情况下，所有基于类的组件在接收到的<code>props</code>，<code>state</code>或<code>context</code>发生变化时都会重新渲染,</p>
+    <p>如果重新渲染组件是需要大量计算（例如生成图表）或由于某些性能原因而不推荐，则开发人员可以在更新周期中调用的特殊函数。</p>
+    <p>这个函数在内部使用<code>nextProps</code>, <code>nextState</code>, <code>nextContext</code>来调用，开发人员可以使用它们来验证是否需要重新渲染，<br>
+        <code>return false</code> 来阻止重新渲染，其他情况要 <code>return true</code></p>
+    <h4>Do</h4>
+    <ul>
+        <li>用于提高性能较差的组件的性能</li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>
+            <p>别做有副作用的操作</p>
+        </li>
+        <li>
+            <p>别调用 <code>this.setState</code></p>
+        </li>
+    </ul>
+    <hr>
+    <h2>被遗弃: <code>componentWillUpdate(nextProps, nextState)</code></h2>
+    <p>如果未实现<code>shouldComponentUpdate</code>函数，或者它确定组件应在此渲染周期中更新，则将调用另一个生命周期函数。<br>
+        此函数通常用于在<code>state</code>的某些部分基于props时执行<code>state</code>和<code>props</code>同步。</p>
+    <p>在实现<code>shouldComponentUpdate</code>的情况下，可以使用此函数而不是<code>componentWillReceiveProps</code>，因为只有在实际重新渲染组件时才会调用它。</p>
+    <p>与所有其他<code>componentWill*</code>函数类似，此函数可能会在渲染之前多次调用，因此不建议在此处执行导致操作的副作用。</p>
+    <h4>Do</h4>
+    <ul>
+        <li>将state同步到props</li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>别做有副作用的操作</li>
+    </ul>
+    <hr>
+    <h2><code>componentDidUpdate(prevProps, prevState, prevContext)</code></h2>
+    <p>这个函数在每次重新渲染周期的 <code>render</code> 函数完成之后，这意味着您可以确保组件及其所有子组件已正确渲染。</p>
+    <p>由于这是唯一保证在每个重新渲染周期中仅被调用一次的函数，因此建议将此函数执行任何引起副作用的操作。</p>
+    <p>与<code>componentWillUpdate</code>和<code>componentWillReceiveProps</code>类似，使用<code>prevProps</code>, <code>prevState</code>, <code>prevContext</code>的对象映射调用此函数，<br>
+        即使这些值没有发生实际的更改。</p>
+    <h4>Do</h4>
+    <ul>
+        <li>一些有副作用的操作</li>
+    </ul>
+    <h4><a id="Dont_113"></a>Don’t</h4>
+    <ul>
+        <li>不要调用 <code>this.setState</code>，这会造成重新渲染。</li>
+    </ul>
+    <hr>
+    <h2><code>componentDidCatch(errorString, errorInfo)</code></h2>
+    <p>React 16中的新增功能 - 这种生命周期方法的特殊之处在于它可以对子组件中发生的事件作出反应，特别是对任何子组件中发生的任何未捕获的错误做出反应。</p>
+    <p>通过这种功能，您可以使您的父元素处理错误 - 例如： 在状态中设置错误信息并在其渲染中返回适当的消息，或者打日志：</p>
+    <pre><code class="language-jsx">componentDidCatch(errorString, errorInfo) {
+  this.setState({
+    error: errorString
+  });
+  ErrorLoggingTool.log(errorInfo);
+}
+render() {
+  if(this.state.error) return &lt;ShowErrorMessage error={this.state.error} /&gt;
+  return (
+    // render normal component output
+  );
+}
+</code></pre>
+    <p>发生错误时，将调用该函数：</p>
+    <ul>
+        <li>
+            <p>errorString: <code>.toString()</code> 查看错误信息</p>
+        </li>
+        <li>
+            <p>errorInfo: 具有单个字段<code>componentStack</code>的对象，它表示堆栈跟踪返回错误发生的位置.</p>
+        </li>
+    </ul>
+    <hr>
+    <h2><code>componentDidMount</code></h2>
+    <p>此函数将在给定组件的整个生命周期中仅调用一次,由于这个函数只被调用一次，因此它是执行任何引起诸如AJAX请求的副作用操作的理想选择。</p>
+    <h4>Do</h4>
+    <ul>
+        <li>执行一些有副作用的操作</li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>不要调用 <code>this.setState</code> 这会造成重新渲染</li>
+    </ul>
+    <hr>
+    <h2><code>componentWillUnmount</code></h2>
+    <p>如果组件构建了<code>timers</code>或<code>listeners</code>（<code>setTimeout</code>，<code>setInterval</code>），或者打开了<code>socket</code>等等其他需要移除或者关闭的东西，<br>
+        如故这些东西不再使用，用这个函数去清除它们。</p>
+    <h4>Do</h4>
+    <ul>
+        <li>删除在组件生命周期中创建的任何<code>timers</code>或<code>listeners</code></li>
+    </ul>
+    <h4>Don’t</h4>
+    <ul>
+        <li>不要调用<code>this.setState</code>，或者启动新的<code>timers</code>或<code>listeners</code></li>
+    </ul>
+</div>
+
+<a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+        alt="Fork me on GitHub"
+        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
+
+</body>
+</html>

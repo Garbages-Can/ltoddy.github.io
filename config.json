@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "理解React生命周期",
+      "createdAt": "2018-08-12",
+      "link": "/essay/2018/08/12/react-component-life-cycle.html",
+      "preview": "react为我们提供了一些组件生命周期的函数（钩子函数），允许我们更新组件UI和状态。但是他们如何在react中工作的呢？"
+    },
+    {
       "title": "rust 一些知识总结",
       "createdAt": "2018-07-28",
       "link": "/essay/2018/07/28/rust-summary.html",
