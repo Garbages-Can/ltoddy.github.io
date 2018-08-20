@@ -14,6 +14,12 @@
   },
   "essays": [
     {
+      "title": "关于 JavaScript 的 this",
+      "createdAt": "2018-08-20",
+      "link": "/essay/2018/08/20/javascript-this.html",
+      "preview": "在非严格模式下， `foo()` 最后会将 `this` 设置为全局对象。在严格模式下，这是未定义的行为，在访问bar属性时会出错——因此 `global` 是 `this.bar` 创建的值。"
+    },
+    {
       "title": "理解React生命周期",
       "createdAt": "2018-08-12",
       "link": "/essay/2018/08/12/react-component-life-cycle.html",
