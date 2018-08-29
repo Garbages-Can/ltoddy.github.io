@@ -28,13 +28,8 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015', 'react']
-          }
-        }
-      },
+        use: ['babel-loader']
+	  },
       {
         test: /\.(png|jpg|svg)$/,
         use: [
