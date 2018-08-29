@@ -6,7 +6,7 @@ import Footer from './Footer';
 import Corner from './components/Corner';
 
 import css from './App.css';
-import { username, essays, header } from '../config';
+import { username, essays, header, perPageCount } from '../config';
 
 class App extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class App extends React.Component {
         />
         <Content essays={essays}
                  repos={this.state.repos}
+                 perPageCount={perPageCount}
         />
         <Footer/>
         <Corner/>
