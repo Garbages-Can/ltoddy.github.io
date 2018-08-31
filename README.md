@@ -1,4 +1,14 @@
-# ltoddy's blog
+<p align="center">
+    <img src="assets/bitbucket.jpg" width="300px" alt="github bitbucket">
+</p>
+
+<h1 align="center">My blog</h1>
+<p align="center">
+    <img src="https://img.shields.io/github/stars/ltoddy/ltoddy.github.io.svg" alt="starts">
+    <img src="https://img.shields.io/github/license/ltoddy/ltoddy.github.io.svg" alt="license">
+    <img src="https://img.shields.io/badge/author-ltoddy-lightblue.svg" alt="author">
+    <img src="https://img.shields.io/badge/view-React-%2361dafb.svg" alt="React">
+</p>
 
 [https://ltoddy.github.io/](https://ltoddy.github.io/)
 
