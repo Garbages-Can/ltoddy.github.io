@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/github-octocat.png" width="300px" alt="github bitbucket">
+    <img src="assets/github-octocat.png" width="400px" alt="github bitbucket">
 </p>
 
 <h1 align="center">My blog</h1>
