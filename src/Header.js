@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import { StyleRoot } from 'radium';
+
 import { slideInDown } from './animation-config';
 import PropTypes from 'prop-types';
 
 import me from '../assets/me.jpg'
 import css from './Header.css';
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -45,4 +47,4 @@ Header.propTypes = {
   content: PropTypes.array
 };
 
-module.exports = Header;
+export default Header;

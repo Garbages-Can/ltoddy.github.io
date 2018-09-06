@@ -8,6 +8,7 @@ import Corner from './components/Corner';
 import css from './App.css';
 import { username, essays, header, perPageCount } from '../config';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -43,4 +44,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = App;
+export default App;

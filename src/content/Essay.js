@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+
 import { TimelineEvent } from 'react-event-timeline';
 import PropTypes from 'prop-types';
+
 import css from './Essay.css';
+
 
 const Essay = (props) => (
   <TimelineEvent title={props.title}
@@ -23,4 +26,4 @@ Essay.propTypes = {
   preview: PropTypes.string
 };
 
-module.exports = Essay;
+export default Essay;

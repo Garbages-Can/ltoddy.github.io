@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
+
 import css from './Repository.css';
+
 
 const languageColor = {
   Python: '#3572A5',
@@ -40,7 +42,6 @@ class Repository extends React.Component {
     );
   }
 
-
   render() {
     return (
       <a href={this.props.html_url} target="_blank" data-tip data-for={this.props.full_name}>
@@ -75,4 +76,4 @@ Repository.propTypes = {
   language: PropTypes.string
 };
 
-module.exports = Repository;
+export default Repository;

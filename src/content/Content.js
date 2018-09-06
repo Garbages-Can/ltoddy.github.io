@@ -11,6 +11,7 @@ import Pagination from './Pagination';
 
 import css from './Content.css';
 
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -83,4 +84,4 @@ Content.propTypes = {
   perPageCount: PropTypes.number
 };
 
-module.exports = Content;
+export default Content;

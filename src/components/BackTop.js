@@ -3,6 +3,7 @@ import ReactTooltip from 'react-tooltip'
 
 import css from './BackTop.css';
 
+
 class BackTop extends React.Component {
   constructor() {
     super();
@@ -40,4 +41,4 @@ class BackTop extends React.Component {
   }
 }
 
-module.exports = BackTop;
+export default BackTop;

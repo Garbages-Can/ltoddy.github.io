@@ -7,6 +7,7 @@ import qq from '../assets/qq.jpg';
 import { rubberBand } from './animation-config';
 import css from './Footer.css';
 
+
 const Footer = () => (
   <div className={css.footer}>
     <div className={css.container}>
@@ -36,4 +37,4 @@ const Footer = () => (
   </div>
 );
 
-module.exports = Footer;
+export default Footer;

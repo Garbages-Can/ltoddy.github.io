@@ -1,7 +1,10 @@
 import React from 'react';
+
 import BackTop from './BackTop';
 import Old from './Old';
+
 import css from './Corner.css';
+
 
 class Corner extends React.Component {
   constructor() {
@@ -24,4 +27,4 @@ class Corner extends React.Component {
   }
 }
 
-module.exports = Corner;
+export default Corner;

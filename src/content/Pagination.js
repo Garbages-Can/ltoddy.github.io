@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import css from './Pagination.css';
 
+
 class Pagination extends React.Component {
   constructor(props) {
     super(props);

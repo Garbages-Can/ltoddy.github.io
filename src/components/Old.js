@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
+
 import old from '../../assets/old.png';
+
 import css from './Old.css';
 
 
@@ -32,4 +34,4 @@ class Old extends React.Component {
   }
 }
 
-module.exports = Old;
+export default Old;

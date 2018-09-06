@@ -1,6 +1,7 @@
 import Radium from 'radium';
 import { rubberBand, rollIn, flipInX, slideInDown } from 'react-animations';
 
+
 module.exports = {
   slideInDown: {
     animation: 'x 0.6s',
