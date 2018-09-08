@@ -5,7 +5,7 @@ import { StyleRoot } from 'radium';
 import { slideInDown } from './animation-config';
 import PropTypes from 'prop-types';
 
-import me from '../assets/me.jpg'
+import me from '../../assets/me.jpg'
 import css from './Header.css';
 
 
