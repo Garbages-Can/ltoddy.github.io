@@ -2,7 +2,7 @@
     <img src="assets/github-octocat.png" width="400px" alt="github bitbucket">
 </p>
 
-<h1 align="center">My blog</h1>
+<h1 align="center">个人主页</h1>
 <p align="center">
     <a target="_blank" href="https://travis-ci.org/ltoddy/ltoddy.github.io"><img src="https://travis-ci.org/ltoddy/ltoddy.github.io.svg?branch=master" alt="travis-ci"></a>
     <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=8560e61d5213f7c656c03fb79ef2877a31ef61126b6cde015e81bb3ea90b1f83"><img src="https://img.shields.io/badge/QQ%E7%BE%A4-630398887-lightblue.svg" alt="QQ群"></a>
