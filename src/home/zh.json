@@ -1,0 +1,9 @@
+{
+  "name": "刘涛",
+  "links": [
+    ["主页", "/"],
+    ["博客", "/blog"],
+    ["Github开源项目", "https://github.com/ltoddy"],
+    ["个人简历", "/resume"]
+  ]
+}
