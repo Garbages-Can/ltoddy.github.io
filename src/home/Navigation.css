@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: left;
+  margin: 15px 0;
+}
+
+.breadcrumb span:first-child a {
+  color: #000;
+  cursor: not-allowed;
+}
+
+.breadcrumbItem > a {
+  color: lightslategray;
+}
+
+.breadcrumbItem:hover {
+  color: darkslategray;
+  text-shadow: 1px 2px 20px gray;
+}
+
+.breadcrumbDivider {
+  margin: 0 4px;
+  font-weight: bolder;
+  font-style: italic;
+  color: gray;
+}
