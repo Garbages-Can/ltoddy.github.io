@@ -15,6 +15,12 @@
   "perPageCount": 11,
   "essays": [
     {
+      "title": "一件遗憾的事情",
+      "createdAt": "2018-09-16",
+      "link": "/essay/2018/09/16/regret.html",
+      "preview": "最近,上床睡觉的时间越来越多晚了,给自己定下了太多需要学的东西.其中有一件事是尽可能的让自己成为一名Python专家,每天要花费两个小时去熟悉Python内置的api."
+    },
+    {
       "title": "关于 JavaScript 的 this",
       "createdAt": "2018-08-20",
       "link": "/essay/2018/08/20/javascript-this.html",
