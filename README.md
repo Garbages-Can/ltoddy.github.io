@@ -16,6 +16,10 @@
 
 [see more](./react-webpack/)
 
+### 学习笔记
+
+[笔记写在wiki中](https://github.com/ltoddy/ltoddy.github.io/wiki)
+
 ### License
 
 [![GitHub license](https://img.shields.io/github/license/ltoddy/ltoddy.github.io.svg)](https://github.com/ltoddy/ltoddy.github.io/blob/master/LICENSE.md)
