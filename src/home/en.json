@@ -5,5 +5,13 @@
     ["blog", "/blog"],
     ["Github", "https://github.com/ltoddy"],
     ["resume", "/resume"]
-  ]
+  ],
+  "introduce": "我叫刘涛,喜欢开源世界,完全使用 Linux(目前使用Ubuntu 18.04) 工作,喜欢用命令行. 平常使用 Python 和 JavaScript 进行编程,主要从事web开发工作. 同时也喜欢一些小众语言. 过程式,面向对象,函数式,原型,逻辑-约束等等.",
+  "find": {
+    "title": "Find me",
+    "links": [
+      ["Github", "https://github.com/ltoddy"],
+      ["Twitter", "https://twitter.com/logicalmaiden"]
+    ]
+  }
 }
