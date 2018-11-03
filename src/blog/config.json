@@ -15,18 +15,6 @@
   "perPageCount": 11,
   "essays": [
     {
-      "title": "JavaScript 与 DOM",
-      "createdAt": "2018-10-05",
-      "link": "/essay/2018/10/05/js-dom.html",
-      "preview": "DOM标准中,定义了一系列的JavaScript事件,以及事件接口.其中,DOM Level 0 Event提供了类似`onclick`的属性来支持事件, DOM Level 2 Event提供了`addEventListener`, `removeEventListener`, `dispatchEvent`,还有IE < 9的`attachEvent`."
-    },
-    {
-      "title": "一件遗憾的事情",
-      "createdAt": "2018-09-16",
-      "link": "/essay/2018/09/16/regret.html",
-      "preview": "最近,上床睡觉的时间越来越多晚了,给自己定下了太多需要学的东西.其中有一件事是尽可能的让自己成为一名Python专家,每天要花费两个小时去熟悉Python内置的api."
-    },
-    {
       "title": "关于 JavaScript 的 this",
       "createdAt": "2018-08-20",
       "link": "/essay/2018/08/20/javascript-this.html",
