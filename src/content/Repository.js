@@ -14,7 +14,8 @@ const languageColor = {
   C: '#555555',
   'C++': '#f34b7d',
   Racket: '#22228f',
-  Rust: '#dea584'
+  Rust: '#dea584',
+  Haskell: '#5e5086'
 };
 
 class Repository extends React.Component {

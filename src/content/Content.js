@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { Timeline } from 'react-event-timeline';
 import LazyLoad from 'react-lazyload';
 import { StyleRoot } from 'radium';
 import PropTypes from 'prop-types';
+
 import { flipInX, rollIn } from '../animation-config';
 import Repository from './Repository';
 import Essay from './Essay';

@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
-
-import { TimelineEvent } from 'react-event-timeline';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
+import { TimelineEvent } from 'react-event-timeline';
 
 import css from './Essay.css';
 

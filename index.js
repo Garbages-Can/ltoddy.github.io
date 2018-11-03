@@ -1,6 +1,7 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-import createRouter from './src';
+import Application from './src/App';
 
 
-ReactDOM.render(createRouter(), document.querySelector('#root'));
+ReactDOM.render(<Application/>, document.querySelector('#root'));

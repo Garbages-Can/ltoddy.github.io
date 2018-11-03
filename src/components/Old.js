@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 
-import old from '../../../assets/old.png';
+import old from '../../assets/old.png';
 
 import css from './Old.css';
 

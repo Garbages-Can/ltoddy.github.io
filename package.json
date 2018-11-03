@@ -27,7 +27,6 @@
     "react-dom": "^16.3.1",
     "react-event-timeline": "^1.5.1",
     "react-lazyload": "^2.3.0",
-    "react-router-dom": "^4.3.1",
     "react-tooltip": "^3.5.0",
     "react-vertical-timeline-component": "^2.0.6"
   },

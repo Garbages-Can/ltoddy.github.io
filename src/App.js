@@ -9,7 +9,7 @@ import css from './App.css';
 import { username, essays, header, perPageCount } from './config';
 
 
-class App extends React.Component {
+class Application extends React.Component {
   constructor(props) {
     super(props);
     this.state = {repos: []}
@@ -44,4 +44,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Application;

@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip'
 import LazyLoad from 'react-lazyload';
 import { StyleRoot } from 'radium';
 
-import qq from '../../assets/qq.jpg';
+import qq from '../assets/qq.jpg';
 import { rubberBand } from './animation-config';
 import css from './Footer.css';
 
