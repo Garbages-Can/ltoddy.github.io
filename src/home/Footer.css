@@ -1,0 +1,23 @@
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container {
+}
+
+.language {
+  color: lightslategray;  margin: 0 4px;
+  cursor: pointer;
+}
+
+.language:hover {
+  color: darkslategray;
+  text-shadow: 1px 2px 20px gray;
+}
+
+.divider {
+  font-weight: bolder;
+  font-style: italic;
+  color: gray;
+}

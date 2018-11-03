@@ -1,0 +1,22 @@
+.container {
+  background-image: url("../../assets/home/bg.png");
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  margin: 50px 0;
+  width: 600px;
+  background-color: white;
+  box-shadow: 2px 5px 10px black;
+  padding: 45px;
+}
+
+.name {
+  font-size: 45px;
+  padding-bottom: 20px;
+}
+
+.introduce {
+  margin: 10px 0;
+}
