@@ -53,7 +53,7 @@ class Repository extends React.Component {
 
           <div className={css.repo}>
             <span className={css.language}>
-              <i className="fas fa-circle" style={{ 'color': `${languageColor[this.props.language]}` }}/>
+              <i className="fas fa-circle" style={{'color': `${languageColor[this.props.language]}`}}/>
               <span>&nbsp;{this.props.language}</span>
             </span>
 

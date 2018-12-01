@@ -29,7 +29,8 @@
   <p>其中有一件事是尽可能的让自己成为一名Python专家,每天要花费两个小时去熟悉Python内置的api.<br>
     当然这其中也是收获很大的,标准库使Python的feature更加丰满,而且也能够使你写的Python代码更加的简洁与优雅.</p>
   <p>比如:</p>
-  <pre><code class="language-python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> total_ordering
+  <pre><code class="language-python"><span class="hljs-keyword">from</span> functools <span
+      class="hljs-keyword">import</span> total_ordering
 
 
 <span class="hljs-decorator">@total_ordering</span>
@@ -50,8 +51,10 @@
 
 p1 = Point(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>)
 p2 = Point(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)
-<span class="hljs-keyword">for</span> expr <span class="hljs-keyword">in</span> [<span class="hljs-string">'p1 &lt; p2'</span>, <span
-        class="hljs-string">'p1 &lt;= p2'</span>, <span class="hljs-string">'p1 == p2'</span>, <span class="hljs-string">'p1 &gt;= p2'</span>, <span
+<span class="hljs-keyword">for</span> expr <span class="hljs-keyword">in</span> [<span
+        class="hljs-string">'p1 &lt; p2'</span>, <span
+        class="hljs-string">'p1 &lt;= p2'</span>, <span class="hljs-string">'p1 == p2'</span>, <span
+        class="hljs-string">'p1 &gt;= p2'</span>, <span
         class="hljs-string">'p1 &gt; p2'</span>]:
     print(<span class="hljs-string">'{:&lt;6}:'</span>.format(expr))
     result = eval(expr)

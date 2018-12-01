@@ -1,67 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>JavaScript 与 DOM</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <meta charset="UTF-8">
+  <title>JavaScript 与 DOM</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
 
-    <!-- jQuert Microsoft CDN -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container">
-    <h1>JavaScript 与 DOM</h1>
-    <h3>JavaScript 事件</h3>
-    <p>首先我们来回顾一下DOM事件的行为,事件从发生开始经历了三个阶段:</p>
-    <ol>
-        <li>
-            <p>捕捉阶段(capture phase):从最上层元素,直到最下层(你点击的那个<code>target</code>)元素.路过的所有节点都可以捕捉到该事件.</p>
-        </li>
-        <li>
-            <p>命中阶段(target phase):如果该事件成功到达了target元素,它会进行事件处理.</p>
-        </li>
-        <li>
-            <p>冒泡阶段(bubbling phase):事件从最下层向上传递,依次触发父元素的该事件处理函数.</p>
-        </li>
-    </ol>
-    <p><img src="event-flow.svg" alt="event-flow"></p>
-    <p>DOM标准中,定义了一系列的JavaScript事件,以及事件接口.其中,DOM Level 0 Event提供了类似<code>onclick</code>的属性来支持事件,<br>
-        DOM Level 2 Event提供了<code>addEventListener</code>, <code>removeEventListener</code>, <code>dispatchEvent</code>,还有IE &lt; 9的<code>attachEvent</code>.</p>
-    <p>两种事件处理模型的区别在于,</p>
-    <ul>
-        <li>前者(onclick)是一次性的事件处理,而且是通过操作DOM元素的属性来完成,因而只能绑定一个处理函数.</li>
-        <li>后者(addEventListener)更加高级,不仅可以添加多个事件处理函数,还支持事件的捕获.</li>
-    </ul>
-    <h3>DOM Level 0 Event</h3>
-    <p>DOM Level 0 Event从Netscape浏览器开始就有支持,最初是通过在HTML中写入<code>onclick</code>属性来完成事件绑定:</p>
-    <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"clickHandler()"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <h1>JavaScript 与 DOM</h1>
+  <h3>JavaScript 事件</h3>
+  <p>首先我们来回顾一下DOM事件的行为,事件从发生开始经历了三个阶段:</p>
+  <ol>
+    <li>
+      <p>捕捉阶段(capture phase):从最上层元素,直到最下层(你点击的那个<code>target</code>)元素.路过的所有节点都可以捕捉到该事件.</p>
+    </li>
+    <li>
+      <p>命中阶段(target phase):如果该事件成功到达了target元素,它会进行事件处理.</p>
+    </li>
+    <li>
+      <p>冒泡阶段(bubbling phase):事件从最下层向上传递,依次触发父元素的该事件处理函数.</p>
+    </li>
+  </ol>
+  <p><img src="event-flow.svg" alt="event-flow"></p>
+  <p>DOM标准中,定义了一系列的JavaScript事件,以及事件接口.其中,DOM Level 0 Event提供了类似<code>onclick</code>的属性来支持事件,<br>
+    DOM Level 2 Event提供了<code>addEventListener</code>, <code>removeEventListener</code>, <code>dispatchEvent</code>,还有IE
+    &lt; 9的<code>attachEvent</code>.</p>
+  <p>两种事件处理模型的区别在于,</p>
+  <ul>
+    <li>前者(onclick)是一次性的事件处理,而且是通过操作DOM元素的属性来完成,因而只能绑定一个处理函数.</li>
+    <li>后者(addEventListener)更加高级,不仅可以添加多个事件处理函数,还支持事件的捕获.</li>
+  </ul>
+  <h3>DOM Level 0 Event</h3>
+  <p>DOM Level 0 Event从Netscape浏览器开始就有支持,最初是通过在HTML中写入<code>onclick</code>属性来完成事件绑定:</p>
+  <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span
+      class="hljs-attribute">onclick</span>=<span class="hljs-value">"clickHandler()"</span>&gt;</span><span
+      class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clickHandler</span>()</span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span
+    class="hljs-title">clickHandler</span>()</span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'clicked'</span>);
 }
 </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-    <p>后来随着Web技术的进步,我们可以在JavaScript定义并且绑定事件了.此后我们可以做到事件处理和页面展示的分离, 在不支持JavaScript的浏览器中,<br>
-        以及搜索引擎看来,页面变得更加地兼容.请看:</p>
-    <pre><code class="language-html">document.getElementById("#foo").onclick = function() {
+  <p>后来随着Web技术的进步,我们可以在JavaScript定义并且绑定事件了.此后我们可以做到事件处理和页面展示的分离, 在不支持JavaScript的浏览器中,<br>
+    以及搜索引擎看来,页面变得更加地兼容.请看:</p>
+  <pre><code class="language-html">document.getElementById("#foo").onclick = function() {
     console.log('clicked');
 }
 </code></pre>
-    <p>即时支持在JS中绑定事件,DOM Level 0 事件也存在一些问题.例如:</p>
-    <pre><code class="language-html">var el = document.getElementById("#foo");
+  <p>即时支持在JS中绑定事件,DOM Level 0 事件也存在一些问题.例如:</p>
+  <pre><code class="language-html">var el = document.getElementById("#foo");
 el.onclick = function(){
     console.log('clicked 1');
 }
@@ -69,13 +73,13 @@ el.onclick = function(){
     console.log('clicked 2');
 }
 </code></pre>
-    <p>是因为<code>el.onclick</code>的本质是对DOM元素属性的赋值,后一次事件绑定会使得前一次事件绑定失效.</p>
-    <h4>addEventListener</h4>
-    <p>2000年11月,W3C发布了DOM (Document Object Model) Level 2 Event,提供了更复杂的事件处理模型:</p>
-    <pre><code class="language-html">el.addEventListener("click", func, false);
+  <p>是因为<code>el.onclick</code>的本质是对DOM元素属性的赋值,后一次事件绑定会使得前一次事件绑定失效.</p>
+  <h4>addEventListener</h4>
+  <p>2000年11月,W3C发布了DOM (Document Object Model) Level 2 Event,提供了更复杂的事件处理模型:</p>
+  <pre><code class="language-html">el.addEventListener("click", func, false);
 </code></pre>
-    <p>通过<code>addEventListener</code>添加任意多个事件处理函数,第三个参数用来设置是否捕获来自子元素的事件,默认为false.</p>
-    <pre><code class="language-html">el.addEventListener("click", function(){
+  <p>通过<code>addEventListener</code>添加任意多个事件处理函数,第三个参数用来设置是否捕获来自子元素的事件,默认为false.</p>
+  <pre><code class="language-html">el.addEventListener("click", function(){
     console.log('clicked 1');
 });
 
@@ -83,97 +87,115 @@ el.addEventListener("click", function(){
     console.log('clicked 2');
 });
 </code></pre>
-    <p>这样,两个事件处理函数都会得到执行.</p>
-    <h4>removeEventListener</h4>
-    <p>DOM Level 2 Event还提供了<code>removeEventListener(type, listener[, useCapture])</code>方法,用来移除事件处理函数. <code>callback</code>是必选参数！<br>
-        <code>capture</code>默认值为<code>false</code>:</p>
-    <blockquote>
-        <p>如果同一个监听事件分别为“事件捕获”和“事件冒泡”注册了一次,一共两次,这两次事件需要分别移除.两者不会互相干扰.</p>
-    </blockquote>
-    <pre><code class="language-html">var div = document.getElementById('div');
+  <p>这样,两个事件处理函数都会得到执行.</p>
+  <h4>removeEventListener</h4>
+  <p>DOM Level 2 Event还提供了<code>removeEventListener(type, listener[, useCapture])</code>方法,用来移除事件处理函数.
+    <code>callback</code>是必选参数！<br>
+    <code>capture</code>默认值为<code>false</code>:</p>
+  <blockquote>
+    <p>如果同一个监听事件分别为“事件捕获”和“事件冒泡”注册了一次,一共两次,这两次事件需要分别移除.两者不会互相干扰.</p>
+  </blockquote>
+  <pre><code class="language-html">var div = document.getElementById('div');
 var listener = function (event) {
   /* do something here */
 };
 div.addEventListener('click', listener, false);
 div.removeEventListener('click', listener, false);
 </code></pre>
-    <h3>捕获与冒泡</h3>
-    <p>本文最开始已经给出了事件处理的三个阶段:捕获、目标、冒泡.在DOM Level 2 Event中,<br>
-        如果<code>addEventListener</code>第三个参数为<code>true</code>则为添加捕获阶段的事件处理函数,否则为添加冒泡阶段的事件处理函数.</p>
-    <blockquote>
-        <p>如果当前对象就是目标对象本身时,添加的事件处理函数只在目标阶段起作用,第三个参数无效.</p>
-    </blockquote>
-    <p>来看例子吧:</p>
-    <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"l1"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"l2"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <h3>捕获与冒泡</h3>
+  <p>本文最开始已经给出了事件处理的三个阶段:捕获、目标、冒泡.在DOM Level 2 Event中,<br>
+    如果<code>addEventListener</code>第三个参数为<code>true</code>则为添加捕获阶段的事件处理函数,否则为添加冒泡阶段的事件处理函数.</p>
+  <blockquote>
+    <p>如果当前对象就是目标对象本身时,添加的事件处理函数只在目标阶段起作用,第三个参数无效.</p>
+  </blockquote>
+  <p>来看例子吧:</p>
+  <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span
+      class="hljs-attribute">id</span>=<span class="hljs-value">"l1"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span
+      class="hljs-value">"l2"</span>&gt;</span><span class="hljs-tag">&lt;/<span
+        class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> l1 = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'l1'</span>);
-  <span class="hljs-keyword">var</span> l2 = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'l2'</span>);
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span
+    class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">var</span> l1 = <span class="hljs-built_in">document</span>.getElementById(<span
+        class="hljs-string">'l1'</span>);
+  <span class="hljs-keyword">var</span> l2 = <span class="hljs-built_in">document</span>.getElementById(<span
+        class="hljs-string">'l2'</span>);
 
-  l1.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'l1 capture'</span>)}, <span class="hljs-literal">true</span>);
-  l1.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'l1 bubbling'</span>)});
-  l2.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'l2 target'</span>)});
-  l2.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'l2 target, invalid capture'</span>)}, <span class="hljs-literal">true</span>);
+  l1.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span
+        class="hljs-built_in">console</span>.log(<span class="hljs-string">'l1 capture'</span>)}, <span
+        class="hljs-literal">true</span>);
+  l1.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span
+        class="hljs-built_in">console</span>.log(<span class="hljs-string">'l1 bubbling'</span>)});
+  l2.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span
+        class="hljs-built_in">console</span>.log(<span class="hljs-string">'l2 target'</span>)});
+  l2.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{ <span
+        class="hljs-built_in">console</span>.log(<span class="hljs-string">'l2 target, invalid capture'</span>)}, <span
+        class="hljs-literal">true</span>);
 </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-    <p>为元素<code>l1</code>添加了一个捕获阶段的处理函数<code>l1 captured</code>,一个冒泡阶段的处理函数<code>l1 bubbling</code>.为<code>l2</code>添加了一个目标阶段的事件处理函数.<br>
-        运行结果是:</p>
-    <pre><code>l1 capture
+  <p>为元素<code>l1</code>添加了一个捕获阶段的处理函数<code>l1 captured</code>,一个冒泡阶段的处理函数<code>l1 bubbling</code>.为<code>l2</code>添加了一个目标阶段的事件处理函数.<br>
+    运行结果是:</p>
+  <pre><code>l1 capture
 l2 target
 l2 target, invalid capture
 l1 bubbling
 </code></pre>
-    <p>其中,<code>l2 target, invalid capture</code>设置了捕获,但因为当前对象就是目标对象,捕获无效.该函数仍然作用于目标阶段. 既然捕获失效,<br>
-        那么它的执行顺序就按照注册事件的顺序了,不会因为它设置了无效的捕获而提前得到执行.</p>
-    <h3>DispatchEvent</h3>
-    <p><code>target.DispatchEvent(event)</code>也是DOM Level 2 Event提供的方法.用来从<code>target</code>开始分发事件<code>event</code>. 例如,我们可以创建一个<code>clickDOM</code>事件:</p>
-    <pre><code class="language-html">var event = new MouseEvent('click', {
+  <p>其中,<code>l2 target, invalid capture</code>设置了捕获,但因为当前对象就是目标对象,捕获无效.该函数仍然作用于目标阶段. 既然捕获失效,<br>
+    那么它的执行顺序就按照注册事件的顺序了,不会因为它设置了无效的捕获而提前得到执行.</p>
+  <h3>DispatchEvent</h3>
+  <p><code>target.DispatchEvent(event)</code>也是DOM Level 2 Event提供的方法.用来从<code>target</code>开始分发事件<code>event</code>.
+    例如,我们可以创建一个<code>clickDOM</code>事件:</p>
+  <pre><code class="language-html">var event = new MouseEvent('click', {
   view: window,
   bubbles: true,
   cancelable: true
 });
 l2.dispatchEvent(event);
 </code></pre>
-    <p>会产生与点击完全相同的输出:</p>
-    <pre><code>l1 capture
+  <p>会产生与点击完全相同的输出:</p>
+  <pre><code>l1 capture
 l2 target
 l2 target, invalid capture
 l1 bubbling
 </code></pre>
-    <p>如果用<code>l1</code>来<code>dispatchEvent</code>会怎样？</p>
-    <pre><code>l1 capture
+  <p>如果用<code>l1</code>来<code>dispatchEvent</code>会怎样？</p>
+  <pre><code>l1 capture
 l1 bubbling
 </code></pre>
-    <p>因为<code>l1</code>确实拥有子元素,所以事件仍然会下行和冒泡.但事件的<code>target</code>并非<code>l2</code>,所以<code>l2</code>不会触发目标阶段的事件处理函数.</p>
-    <h2>什么是DOM？</h2>
-    <p>外行看来前端工程师的工作就是改页面(HTML、CSS),写脚本(JavaScript).当你意识到你不是在改HTML而是在操作DOM时,你就升级了！ 那么什么是DOM？</p>
-    <blockquote>
-        <p>MDN: 文档对象模型 (DOM) 是HTML和XML文档的编程接口.它提供了对文档的结构化的表述,并定义了一种方式可以使从程序中对该结构进行访问,从而改变文档的结构,样式和内容.DOM 将文档解析为一个由节点和对象(包含属性和方法的对象)组成的结构集合.简言之,它会将web页面和脚本或程序语言连接起来.</p>
-    </blockquote>
-    <p><strong>说白了DOM就是浏览器为JavaScript提供的一系列接口(通过<code>window.documnet</code>提供的),通过这些接口我们可以操作web页面. 但DOM并不是编程语言,它是文档对象的模型,该模型是独立于编程语言的.比如我们在Python中也可以操作DOM:</strong></p>
-    <pre><code class="language-Python"><span class="hljs-keyword">import</span> xml.dom.minidom <span class="hljs-keyword">as</span> m
+  <p>因为<code>l1</code>确实拥有子元素,所以事件仍然会下行和冒泡.但事件的<code>target</code>并非<code>l2</code>,所以<code>l2</code>不会触发目标阶段的事件处理函数.
+  </p>
+  <h2>什么是DOM？</h2>
+  <p>外行看来前端工程师的工作就是改页面(HTML、CSS),写脚本(JavaScript).当你意识到你不是在改HTML而是在操作DOM时,你就升级了！ 那么什么是DOM？</p>
+  <blockquote>
+    <p>MDN: 文档对象模型 (DOM) 是HTML和XML文档的编程接口.它提供了对文档的结构化的表述,并定义了一种方式可以使从程序中对该结构进行访问,从而改变文档的结构,样式和内容.DOM
+      将文档解析为一个由节点和对象(包含属性和方法的对象)组成的结构集合.简言之,它会将web页面和脚本或程序语言连接起来.</p>
+  </blockquote>
+  <p><strong>说白了DOM就是浏览器为JavaScript提供的一系列接口(通过<code>window.documnet</code>提供的),通过这些接口我们可以操作web页面.
+    但DOM并不是编程语言,它是文档对象的模型,该模型是独立于编程语言的.比如我们在Python中也可以操作DOM:</strong></p>
+  <pre><code class="language-Python"><span class="hljs-keyword">import</span> xml.dom.minidom <span
+      class="hljs-keyword">as</span> m
 doc = m.parse(<span class="hljs-string">"/path/chap1.xml"</span>);
 doc.nodeName <span class="hljs-comment"># DOM property of document object;</span>
 p_list = doc.getElementsByTagName(<span class="hljs-string">"para"</span>);
 </code></pre>
-    <p>所以Web前端常讲的DOM API (web 或 XML 页面) = DOM + JS (脚本语言)</p>
-    <h3>DOM 创建</h3>
-    <p><strong>DOM节点(Node)</strong> 通常对应于一个标签,一个文本,或者一个HTML属性.DOM节点有一个nodeType属性用来表示当前元素的类型,它是一个整数:</p>
-    <ol>
-        <li>Element,元素</li>
-        <li>Attribute,属性</li>
-        <li>Text,文本</li>
-    </ol>
-    <p>DOM节点创建最常用的便是<code>document.createElement</code>和<code>document.createTextNode</code>方法:</p>
-    <pre><code class="language-html">var el1 = document.createElement('div');
+  <p>所以Web前端常讲的DOM API (web 或 XML 页面) = DOM + JS (脚本语言)</p>
+  <h3>DOM 创建</h3>
+  <p><strong>DOM节点(Node)</strong> 通常对应于一个标签,一个文本,或者一个HTML属性.DOM节点有一个nodeType属性用来表示当前元素的类型,它是一个整数:</p>
+  <ol>
+    <li>Element,元素</li>
+    <li>Attribute,属性</li>
+    <li>Text,文本</li>
+  </ol>
+  <p>DOM节点创建最常用的便是<code>document.createElement</code>和<code>document.createTextNode</code>方法:</p>
+  <pre><code class="language-html">var el1 = document.createElement('div');
 var el2 = document.createElement('input');
 var node = document.createTextNode('hello world!');
 </code></pre>
-    <h3>DOM 查询</h3>
-    <p>元素查询的API返回的的结果是DOM节点或者DOM节点的列表.document提供了两种Query方法:</p>
-    <pre><code class="language-html">// 返回当前文档中第一个类名为 "myclass" 的元素
+  <h3>DOM 查询</h3>
+  <p>元素查询的API返回的的结果是DOM节点或者DOM节点的列表.document提供了两种Query方法:</p>
+  <pre><code class="language-html">// 返回当前文档中第一个类名为 "myclass" 的元素
 var el = document.querySelector(".myclass");
 
 // 返回一个文档中所有的class为"note"或者 "alert"的div元素
@@ -184,8 +206,8 @@ var el = document.getElementById('xxx');
 var els = document.getElementsByClassName('highlight');
 var els = document.getElementsByTagName('td');
 </code></pre>
-    <p>Element也提供了很多相对于元素的DOM导航方法:</p>
-    <pre><code class="language-html">// 获取父元素、父节点
+  <p>Element也提供了很多相对于元素的DOM导航方法:</p>
+  <pre><code class="language-html">// 获取父元素、父节点
 var parent = ele.parentElement;
 var parent = ele.parentNode;
 
@@ -204,8 +226,8 @@ var el = ele.lastElementChild;
 var el = ele.nextElementSibling;
 var el = ele.previousElementSibling;
 </code></pre>
-    <h3>DOM 更改</h3>
-    <pre><code class="language-html">// 添加、删除子元素
+  <h3>DOM 更改</h3>
+  <pre><code class="language-html">// 添加、删除子元素
 ele.appendChild(el);
 ele.removeChild(el);
 
@@ -215,8 +237,8 @@ ele.replaceChild(el1, el2);
 // 插入子元素
 parentElement.insertBefore(newElement, referenceElement);
 </code></pre>
-    <h3>属性操作</h3>
-    <pre><code class="language-html">// 获取一个{name, value}的数组
+  <h3>属性操作</h3>
+  <pre><code class="language-html">// 获取一个{name, value}的数组
 var attrs = el.attributes;
 
 // 获取、设置属性
@@ -230,26 +252,27 @@ el.removeAttribute('class');
 // 是否有属性设置
 el.hasAttributes();
 </code></pre>
-    <h3>常见的面试问题</h3>
-    <h4>innerHTML与outerHTML的区别？</h4>
-    <p>DOM元素的<code>innerHTML</code>, <code>outerHTML</code>, <code>innerText</code>, <code>outerText</code>属性的区别也经常被面试官问到, 比如对于这样一个<code>HTML</code>元素:<br>
-        <code>&lt;div&gt;content&lt;br/&gt;&lt;/div&gt;</code>.</p>
-    <ul>
-        <li><code>innerHTML</code>:内部HTML,<code>content&lt;br/&gt;</code>;</li>
-        <li><code>outerHTML</code>:外部HTML,<code>&lt;div&gt;content&lt;br/&gt;&lt;/div&gt;</code>;</li>
-        <li><code>innerText</code>:内部文本,<code>content</code>;</li>
-        <li><code>outerText</code>:内部文本,<code>content</code>;</li>
-    </ul>
-    <p>上述四个属性不仅可以读取,还可以赋值.<code>outerText</code>和<code>innerText</code>的区别在于<code>outerText</code>赋值时会把标签一起赋值掉,<br>
-        另外<code>xxText</code>赋值时HTML特殊字符会被转义.</p>
-    <p><img src="./dom-content.gif" alt="dom-content"></p>
+  <h3>常见的面试问题</h3>
+  <h4>innerHTML与outerHTML的区别？</h4>
+  <p>DOM元素的<code>innerHTML</code>, <code>outerHTML</code>, <code>innerText</code>, <code>outerText</code>属性的区别也经常被面试官问到,
+    比如对于这样一个<code>HTML</code>元素:<br>
+    <code>&lt;div&gt;content&lt;br/&gt;&lt;/div&gt;</code>.</p>
+  <ul>
+    <li><code>innerHTML</code>:内部HTML,<code>content&lt;br/&gt;</code>;</li>
+    <li><code>outerHTML</code>:外部HTML,<code>&lt;div&gt;content&lt;br/&gt;&lt;/div&gt;</code>;</li>
+    <li><code>innerText</code>:内部文本,<code>content</code>;</li>
+    <li><code>outerText</code>:内部文本,<code>content</code>;</li>
+  </ul>
+  <p>上述四个属性不仅可以读取,还可以赋值.<code>outerText</code>和<code>innerText</code>的区别在于<code>outerText</code>赋值时会把标签一起赋值掉,<br>
+    另外<code>xxText</code>赋值时HTML特殊字符会被转义.</p>
+  <p><img src="./dom-content.gif" alt="dom-content"></p>
 </div>
 
 <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
 </a>
 
 </body>

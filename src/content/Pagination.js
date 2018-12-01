@@ -10,7 +10,7 @@ class Pagination extends React.Component {
 
     this.renderPagination = this.renderPagination.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.state = { changeEssayPagination: this.props.changeEssayPagination };
+    this.state = {changeEssayPagination: this.props.changeEssayPagination};
   }
 
   handleClick(event) {

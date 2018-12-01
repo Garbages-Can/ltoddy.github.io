@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>introspection-on-the-failure-of-the-interview</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>introspection-on-the-failure-of-the-interview</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- jQuert Microsoft CDN -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container">
-    <h1>面试滴滴失败的反思</h1>
-    <p>这两天以电话的形式面试了滴滴的大数据研发团队 —— 这是目前的第一次面试失败.</p>
-    <p>第一次的失败,我内心还是挺难受的.发现了自己大量的不足,曾经自己认为自己对于编程学得还好,其实就是一坨*.</p>
-    <p>估计滴滴数据团队主要是用Python进行数据分析,面试的时候问了我不少关于Python的问题,问得问题我很多都不会.有些会,但是当时犹豫上来就受挫,导致脑袋不能平稳有序的思考.</p>
-    <h3>我最想说的是关于最后的技术面试.</h3>
-    <p>整体问得问题以底层为主,应用层问得很少.应用层一共问了三个,也都是不常见的.</p>
-    <ul>
-        <li>
-            <p>第一个是关于Python多继承,如果遇到了三角继承这样的情况,你如何线性化,《流畅的Ｐython》是有相关内容的,以及《流畅的Ｐython》举了tkinter库多继承的例子.包括继承顺序的协议: <code>__mro__</code>
-                属性. 由于时间太久,而且平常几乎就没有用过多继承,应为平常用的组合多,首先是 <code>__mro__</code>
-                这个属性我只是隐隐约约记得,但是我忘记他是一个属性还是一个函数了,其次我竟然闲得没事跟面试官扯前趋图和拓扑排序.(当时真的智障了)</p>
-        </li>
-        <li>
-            <p>第二个是关于Python的属性描述符,对应的协议是: <code>__get__(self, instance, owner)</code> 和 <code>__set__(self, instance,
-                value)</code> 当时刚总结完一篇文章,就是关于<a
-                    href="https://ltoddy.github.io/essay/2018/05/27/python-magic-methods.html">Python魔法方法</a>的文章,这个问题我还是会的.
-            </p>
-        </li>
-        <li>
-            <p>第三个就是关于Python的装饰器,问得是装饰器的实现原理,也就是它是怎么实现的. 这个问题到现在我还是挺纳闷的,</p>
-            <pre><code class="language-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span
-                    class="hljs-title">decorator</span><span class="hljs-params">(f)</span>:</span>
+  <h1>面试滴滴失败的反思</h1>
+  <p>这两天以电话的形式面试了滴滴的大数据研发团队 —— 这是目前的第一次面试失败.</p>
+  <p>第一次的失败,我内心还是挺难受的.发现了自己大量的不足,曾经自己认为自己对于编程学得还好,其实就是一坨*.</p>
+  <p>估计滴滴数据团队主要是用Python进行数据分析,面试的时候问了我不少关于Python的问题,问得问题我很多都不会.有些会,但是当时犹豫上来就受挫,导致脑袋不能平稳有序的思考.</p>
+  <h3>我最想说的是关于最后的技术面试.</h3>
+  <p>整体问得问题以底层为主,应用层问得很少.应用层一共问了三个,也都是不常见的.</p>
+  <ul>
+    <li>
+      <p>第一个是关于Python多继承,如果遇到了三角继承这样的情况,你如何线性化,《流畅的Ｐython》是有相关内容的,以及《流畅的Ｐython》举了tkinter库多继承的例子.包括继承顺序的协议:
+        <code>__mro__</code>
+        属性. 由于时间太久,而且平常几乎就没有用过多继承,应为平常用的组合多,首先是 <code>__mro__</code>
+        这个属性我只是隐隐约约记得,但是我忘记他是一个属性还是一个函数了,其次我竟然闲得没事跟面试官扯前趋图和拓扑排序.(当时真的智障了)</p>
+    </li>
+    <li>
+      <p>第二个是关于Python的属性描述符,对应的协议是: <code>__get__(self, instance, owner)</code> 和 <code>__set__(self, instance,
+        value)</code> 当时刚总结完一篇文章,就是关于<a
+          href="https://ltoddy.github.io/essay/2018/05/27/python-magic-methods.html">Python魔法方法</a>的文章,这个问题我还是会的.
+      </p>
+    </li>
+    <li>
+      <p>第三个就是关于Python的装饰器,问得是装饰器的实现原理,也就是它是怎么实现的. 这个问题到现在我还是挺纳闷的,</p>
+      <pre><code class="language-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span
+          class="hljs-title">decorator</span><span class="hljs-params">(f)</span>:</span>
     do_something():
     <span class="hljs-keyword">return</span> f
 
 <span class="hljs-decorator">@decorator</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">foo</span><span
-        class="hljs-params">()</span>:</span>
+    class="hljs-params">()</span>:</span>
     <span class="hljs-keyword">pass</span>
 </code></pre>
-            <p>与之等价的形式:</p>
-            <pre><code class="language-python">foo = decorator(foo)
+      <p>与之等价的形式:</p>
+      <pre><code class="language-python">foo = decorator(foo)
 </code></pre>
-            <p>这不就是语法糖嘛,我是了是语法糖,没理我这茬……</p>
-        </li>
-    </ul>
-    <p>其他的就是底层了,主要是cpython和操作系统相关,以及它们使用的算法.</p>
-    <h3>反思总结</h3>
-    <p>其实最近挺浮躁的,学习效率异常的低下,这次面试失败倒是把我&quot;打醒了&quot;.也找出了自己的不足,也有了前进的方向去弥补, 不过这也更加坚定了我一个决心:用Python去工作,Python使用的还是挺多的.</p>
-    <p>不过我还是要说明一点,如果你看了这篇文章不要有这样的想法:我去拼命学底层的东西.</p>
-    <p>一辆自行车,你要先学会怎么骑自行车,然后你有精力有时间的话去研究自行车运动的原理,你的力量如何通过车链子带动车轮使自行车行驶起来.</p>
-    <p>(最后想吐槽一下,没毕业的大学生这么惨嘛,面试这么难,工资是200一天……没毕业的大学生就是典型的廉价劳动力)</p>
+      <p>这不就是语法糖嘛,我是了是语法糖,没理我这茬……</p>
+    </li>
+  </ul>
+  <p>其他的就是底层了,主要是cpython和操作系统相关,以及它们使用的算法.</p>
+  <h3>反思总结</h3>
+  <p>其实最近挺浮躁的,学习效率异常的低下,这次面试失败倒是把我&quot;打醒了&quot;.也找出了自己的不足,也有了前进的方向去弥补, 不过这也更加坚定了我一个决心:用Python去工作,Python使用的还是挺多的.</p>
+  <p>不过我还是要说明一点,如果你看了这篇文章不要有这样的想法:我去拼命学底层的东西.</p>
+  <p>一辆自行车,你要先学会怎么骑自行车,然后你有精力有时间的话去研究自行车运动的原理,你的力量如何通过车链子带动车轮使自行车行驶起来.</p>
+  <p>(最后想吐槽一下,没毕业的大学生这么惨嘛,面试这么难,工资是200一天……没毕业的大学生就是典型的廉价劳动力)</p>
 </div>
 <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
 </a>
 </body>
 </html>

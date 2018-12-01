@@ -9,4 +9,4 @@ class Application extends React.Component {
   }
 }
 
-ReactDOM.render(<Application />, document.querySelector('#root'));
+ReactDOM.render(<Application/>, document.querySelector('#root'));

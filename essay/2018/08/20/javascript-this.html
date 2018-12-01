@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>关于 JavaScript 的 this </title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <meta charset="UTF-8">
+  <title>关于 JavaScript 的 this </title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
 
-    <!-- jQuert Microsoft CDN -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container">
-    <h2>关于 JavaScript 的 this</h2>
-    <pre><code><span><span>function</span> <span>foo</span>() </span>{<span>console</span>.log(<span>this</span>.bar);
+  <h2>关于 JavaScript 的 this</h2>
+  <pre><code><span><span>function</span> <span>foo</span>() </span>{<span>console</span>.log(<span>this</span>.bar);
 }
 
 <span>var</span> bar = <span>'global'</span>;
@@ -43,28 +43,29 @@ obj1.foo();
 foo.call(obj2);
 <span>new</span> foo();
 </code></pre>
-    <ul>
-        <li>
-            <p>在非严格模式下， <code>foo()</code> 最后会将 <code>this</code> 设置为全局对象。在严格模式下，这是未定义的行为，在访问bar属性时会出错——因此 <code>&quot;global&quot;</code> 是 <code>this.bar</code>
-                创建的值。</p>
-        </li>
-        <li>
-            <p><code>obj1.foo()</code> 将 <code>this</code> 设置为对象 <code>obj1</code>。</p>
-        </li>
-        <li>
-            <p><code>foo.call(obj2)</code> 将 <code>this</code> 设置为对象 <code>obj2</code>。</p>
-        </li>
-        <li>
-            <p><code>new foo()</code> 将 <code>this</code> 设置为一个全新的空对象。</p>
-        </li>
-    </ul>
+  <ul>
+    <li>
+      <p>在非严格模式下， <code>foo()</code> 最后会将 <code>this</code> 设置为全局对象。在严格模式下，这是未定义的行为，在访问bar属性时会出错——因此 <code>&quot;global&quot;</code>
+        是 <code>this.bar</code>
+        创建的值。</p>
+    </li>
+    <li>
+      <p><code>obj1.foo()</code> 将 <code>this</code> 设置为对象 <code>obj1</code>。</p>
+    </li>
+    <li>
+      <p><code>foo.call(obj2)</code> 将 <code>this</code> 设置为对象 <code>obj2</code>。</p>
+    </li>
+    <li>
+      <p><code>new foo()</code> 将 <code>this</code> 设置为一个全新的空对象。</p>
+    </li>
+  </ul>
 </div>
 
 <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
 </a>
 
 </body>

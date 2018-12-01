@@ -1,297 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>rust summary</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="ltoddy's blog">
-    <meta name="author" content="liutao">
-    <meta name="author" content="ltoddy">
-    <meta name="author" content="just for fun">
+  <title>rust summary</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="ltoddy's blog">
+  <meta name="author" content="liutao">
+  <meta name="author" content="ltoddy">
+  <meta name="author" content="just for fun">
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha383-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg3Va+PmSTsz/K68vbdEjh3u" crossorigin="anonymous">
 
-    <!-- jQuert Microsoft CDN -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+  <!-- jQuert Microsoft CDN -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha383-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container">
-    <h1>rust的基本类型</h1>
-    <p><code>array: [T; N]</code>: 数组, 长度需要在编译时就确定为非负整数N; 元素的类型T要相同.</p>
-    <p><code>bool</code>: 布尔类型.</p>
-    <p><code>char</code>: 字符类型.</p>
-    <p><code>f32, f64</code>: 32位和64位的浮点数.</p>
-    <p><code>fn</code>: 表示函数. 例如: fn(usize) -&gt; bool.</p>
-    <p><code>i8, i16, i32, i64</code>: 8位, 16位, 32位和64位的有符号整数.</p>
-    <p><code>isize</code>: 表示长度(size)的有符号整数.</p>
-    <p><code>pointer</code>: 原始, 不安全的指针, 有 *const T 和 *mut T.</p>
-    <p><code>reference</code>: 索引, 包括被分享的和可变的.</p>
-    <p><code>slice</code>: 切片. 以动态长度的角度去看一个连续序列, [T].</p>
-    <p><code>str</code>: 字符串切片.</p>
-    <p><code>tuple</code>: 长度有限的多类型序列, (T, U, …).</p>
-    <p><code>u8, u16, u32, u64</code>: 8位, 16位, 32位和64位的无符号整数.</p>
-    <p><code>usize</code>: 表示长度(size)的无符号整数.</p>
-    <h2>基本类型的size (bytes)</h2>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>Type</th>
-            <th>size_of::&lt;Type&gt;()</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>()</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>u8</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>u16</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>u32</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>u64</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>i8</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>i16</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>i32</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>i64</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>f32</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>f64</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>char</td>
-            <td>4</td>
-        </tr>
-        </tbody>
-    </table>
-    <h1>rust 关键字</h1>
-    <p><code>as</code>: 基本类型变换, 消除某个项中包含的特定trait的歧义性, 或者是重命名<code>use</code>和<code>extern crate</code>中所用到的项.</p>
-    <p><code>break</code>: 立刻退出一个循环.</p>
-    <p><code>const</code>: 常量项以及常量原始指针.</p>
-    <p><code>continue</code>: 继续下一个循环迭代.</p>
-    <p><code>crate</code>: 连接外部crate, 或者是一个宏变量以表示宏定义所处于的crate.</p>
-    <p><code>else</code>: if 和 if let 控制流结构的回退.</p>
-    <p><code>enum</code>: 定义枚举体.</p>
-    <p><code>extern</code>: 外部crate, 函数, 以及可变链接.</p>
-    <p><code>false</code>: 布尔false.</p>
-    <p><code>fn</code>: 函数定义和函数指针类型.</p>
-    <p><code>for</code>: 迭代循环; trait impl 语法的一部分; 更高级的生命周期语法.</p>
-    <p><code>if</code>: 条件分支.</p>
-    <p><code>impl</code>: 本能和trait实现块.</p>
-    <p><code>in</code>: for 循环结构的一部分.</p>
-    <p><code>let</code>: 变量绑定.</p>
-    <p><code>loop</code>: 无条件的无限循环.</p>
-    <p><code>match</code>: 模式匹配．</p>
-    <p><code>mod</code>: 模块声明.</p>
-    <p><code>move</code>: 使得一个闭包获得它的所有捕获项的所有权.</p>
-    <p><code>mut</code>: 表示索引中的可变性, 原始指针和模式绑定.</p>
-    <p><code>pub</code>: 表示struct字段, impl块和模块的公共可见性.</p>
-    <p><code>ref</code>: 索引绑定.</p>
-    <p><code>return</code>: 从函数返回.</p>
-    <p><code>Self</code>: 某类型在实现一个trait时的类型别名.</p>
-    <p><code>self</code>: 方法标题或当前模块.</p>
-    <p><code>static</code>: 全局变量或者生命周期为整个程序执行时间.</p>
-    <p><code>struct</code>: 结构体定义.</p>
-    <p><code>super</code>: 当前模块的父模块.</p>
-    <p><code>trait</code>: 特性定义.</p>
-    <p><code>true</code>: 布尔true.</p>
-    <p><code>type</code>: 类型别名; 关联类型定义.</p>
-    <p><code>unsafe</code>: 表示不安全的代码, 功能, 特征和实现.</p>
-    <p><code>use</code>:　将符号导入作用域．</p>
-    <p><code>where</code>: type约束条件.</p>
-    <p><code>while</code>: 条件循环.</p>
-    <p><code>union</code>: (1.19新增)联合体声明, 与struct不同的是其中所有fields共用存储空间.</p>
-    <h1>markers</h1>
-    <blockquote>
-        <p>在rust中, 可以根据类型(Type) 的固有属性来将它们分类, 这些分类就表现为 特性(trait). 有一些 trait 和 struct 是用来表明类型的某些基本属性的. 例如:</p>
-    </blockquote>
-    <ul>
-        <li>
-            <p>Send 可以在线程之间传递.</p>
-        </li>
-        <li>
-            <p>Sized 在编译时的大小为常量.</p>
-        </li>
-        <li>
-            <p>Unsize 可以被转化为动态大小(使用?Sized)．</p>
-        </li>
-        <li>
-            <p>Copy 可以通过简单地拷贝数据(bits)来复制. 是Clone的子集. 对String的Copy只会复制指针, 所以String是Clone的而非Copy的.</p>
-        </li>
-        <li>
-            <p>Sync 它的引用(references)可以在线程之间安全共享.</p>
-        </li>
-        <li>
-            <p>Freeze 编译器内部特性, 用于判断 type 中是否有 UnsafeCell.</p>
-        </li>
-        <li>
-            <p>PhantomData&lt;T&gt; (struct) 大小为零的类型, 可以使事物的行为变得像它们拥有了类型为 T 的数据一样.</p>
-        </li>
-    </ul>
-    <h1>Rust 的内置 Traits</h1>
-    <ul>
-        <li>(Partial)-Eq/Ord</li>
-    </ul>
-    <p>PartialEq 定义了部分相等. 这种关系具有对称性(对于该类型的任意a,b, 有 a == b → b == a)以及传递性(对于该类型的任意a,b,c, 有 a == b ∧ b == c → a == c).</p>
-    <p>PartialOrd 定义了部分顺序, 并通过 Ordering 关系扩展了 PartialEq 的相等性. 这里的 Partial 意味着你的类型的某些实例可能不能被有意义地比较.<br>
-        PartialOrd 作用于 &lt;, &lt;=, =&gt; 和 &gt; 运算符.</p>
-    <ul>
-        <li>算数运算符</li>
-    </ul>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>Operator</th>
-            <th>Trait</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>a + b</td>
-            <td>Add</td>
-        </tr>
-        <tr>
-            <td>a - b</td>
-            <td>Sub</td>
-        </tr>
-        <tr>
-            <td>-a</td>
-            <td>Neg</td>
-        </tr>
-        <tr>
-            <td>a * b</td>
-            <td>Mul</td>
-        </tr>
-        <tr>
-            <td>a / b</td>
-            <td>Div</td>
-        </tr>
-        <tr>
-            <td>a % b</td>
-            <td>Rem</td>
-        </tr>
-        </tbody>
-    </table>
-    <ul>
-        <li>位运算符</li>
-    </ul>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>Operator</th>
-            <th>Trait</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>!a</td>
-            <td>Not</td>
-        </tr>
-        <tr>
-            <td>a &amp; b</td>
-            <td>BitAnd</td>
-        </tr>
-        <tr>
-            <td>a | b</td>
-            <td>BitOr</td>
-        </tr>
-        <tr>
-            <td>a ^ b</td>
-            <td>BitXor</td>
-        </tr>
-        <tr>
-            <td>a &lt;&lt; b</td>
-            <td>Shl</td>
-        </tr>
-        <tr>
-            <td>a &gt;&gt; b</td>
-            <td>Shr</td>
-        </tr>
-        </tbody>
-    </table>
-    <ul>
-        <li>Index 和 IndexMut</li>
-    </ul>
-    <p>Index 和 IndexMut traits 制定了对不可变和可变类型的索引操作. 前者是只读的, 后者允许赋值和修改, 即调用一个参数为 &amp;mut 的函数(注意这不一定是 self ).<br>
-        你可以对任何 collection 类型来实现它们.</p>
-    <ul>
-        <li>Fn, FnMut 和 FnOnce</li>
-    </ul>
-    <p><code>Fn*</code> 类的 traits 是对调用某些东西的抽象. 它们的差别仅仅是如何处理 self: <code>Fn</code> 使用引用, <code>FnMut</code> 使用可变引用,
-        <code>FnOnce</code> 消费掉它的值(这就是为什么只能被调用一次, 因为之后没有 self 可供调用了).<br>
-        注意, 这些区别只针对与 self, 与其它任何参数无关. 用可变引用甚至是 owned/moved 的值作为参数来调用 Fn 是完全正确的.</p>
-    <ul>
-        <li>Display 和 Debug</li>
-    </ul>
-    <p>Display 和 Debug 用于格式化值. 前者是为了产生面向用户的输出, 所以不可以自动派生, 而后者通常会产生类似JSON的表示, 并且可以安全地为大多数类型自动派生.</p>
-    <ul>
-        <li>Copy 和 Clone</li>
-    </ul>
-    <p>这两个 traits 用于复制对象.</p>
-    <p>Copy 表明你的类型可以被安全地复制. 这意味这如果你复制了类型的值所在的内存, 就会得到一个新的有效的值, 而不会引用原始数据. 它可以是自动派生的(需要 Clone, 因为根据定义, 所有可 Copy 的类型都可
-        Clone). 事实上, 从来不需要手动地实现它.</p>
-    <ul>
-        <li>Drop</li>
-    </ul>
-    <p>Drop trait 的作用是当事物到达范围之外时, 归还所占用的资源. 关于此已经有过很多讨论了, 以及你为什么不应该直接调用它. 不过, 这十分适用于包装 FFI 结构, 它们需要在稍后才被回收, 同时也适用于文件,
-        sockets, 数据库句柄以及厨房水槽.</p>
-    <ul>
-        <li>Default</li>
-    </ul>
-    <p>Default 用于声明类型的默认值. 它可以被自动派生, 但只适用于所有成员都有 Default 实现的结构.</p>
-    <p>它在标准库中被许多类型实现了, 并且可以在很多地方使用. 所以如果你的类型有一个可以被认为是&quot;默认&quot;的值, 那么实现这个 trait 是一个好主意.</p>
-    <ul>
-        <li>Error</li>
-    </ul>
-    <p>Error 是 Rust 中所有表示错误的值的基本 trait. 对Java熟悉的人来说, 相当于是 Throwable, 它们的行为也类似(除了我们既不 catch 也不 throw 它们).</p>
-    <ul>
-        <li>Hash</li>
-    </ul>
-    <p>哈希是将一包数据减少为单个值的过程，不同的数据哈希后的值依然不同，相同的依然相同，而不需要比较哈希前的数据那么多的位.<br>
-        在Rust中， Hash trait 表示该类型是否可以被哈希。 请注意，这个特性并不涉及任何有关哈希算法的信息（这是封装在 Hasher trait中），它基本上只是命令这些比特位被哈希.</p>
-    <ul>
-        <li>Iterator 和它的朋友们</li>
-    </ul>
-    <p>Rust的 for 循环可以遍历所有实现了 IntoIterator 的类型。 是的，这包括Iterator本身。 除此之外， Iterator特性有很多很酷的方法来处理迭代的值，比如filter， map，
-        enumerate， fold， any， all， sum， min等等。</p>
+  <h1>rust的基本类型</h1>
+  <p><code>array: [T; N]</code>: 数组, 长度需要在编译时就确定为非负整数N; 元素的类型T要相同.</p>
+  <p><code>bool</code>: 布尔类型.</p>
+  <p><code>char</code>: 字符类型.</p>
+  <p><code>f32, f64</code>: 32位和64位的浮点数.</p>
+  <p><code>fn</code>: 表示函数. 例如: fn(usize) -&gt; bool.</p>
+  <p><code>i8, i16, i32, i64</code>: 8位, 16位, 32位和64位的有符号整数.</p>
+  <p><code>isize</code>: 表示长度(size)的有符号整数.</p>
+  <p><code>pointer</code>: 原始, 不安全的指针, 有 *const T 和 *mut T.</p>
+  <p><code>reference</code>: 索引, 包括被分享的和可变的.</p>
+  <p><code>slice</code>: 切片. 以动态长度的角度去看一个连续序列, [T].</p>
+  <p><code>str</code>: 字符串切片.</p>
+  <p><code>tuple</code>: 长度有限的多类型序列, (T, U, …).</p>
+  <p><code>u8, u16, u32, u64</code>: 8位, 16位, 32位和64位的无符号整数.</p>
+  <p><code>usize</code>: 表示长度(size)的无符号整数.</p>
+  <h2>基本类型的size (bytes)</h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Type</th>
+      <th>size_of::&lt;Type&gt;()</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>()</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>u8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>u16</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>u32</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>u64</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>i8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>i16</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>i32</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>i64</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>f32</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>f64</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>char</td>
+      <td>4</td>
+    </tr>
+    </tbody>
+  </table>
+  <h1>rust 关键字</h1>
+  <p><code>as</code>: 基本类型变换, 消除某个项中包含的特定trait的歧义性, 或者是重命名<code>use</code>和<code>extern crate</code>中所用到的项.</p>
+  <p><code>break</code>: 立刻退出一个循环.</p>
+  <p><code>const</code>: 常量项以及常量原始指针.</p>
+  <p><code>continue</code>: 继续下一个循环迭代.</p>
+  <p><code>crate</code>: 连接外部crate, 或者是一个宏变量以表示宏定义所处于的crate.</p>
+  <p><code>else</code>: if 和 if let 控制流结构的回退.</p>
+  <p><code>enum</code>: 定义枚举体.</p>
+  <p><code>extern</code>: 外部crate, 函数, 以及可变链接.</p>
+  <p><code>false</code>: 布尔false.</p>
+  <p><code>fn</code>: 函数定义和函数指针类型.</p>
+  <p><code>for</code>: 迭代循环; trait impl 语法的一部分; 更高级的生命周期语法.</p>
+  <p><code>if</code>: 条件分支.</p>
+  <p><code>impl</code>: 本能和trait实现块.</p>
+  <p><code>in</code>: for 循环结构的一部分.</p>
+  <p><code>let</code>: 变量绑定.</p>
+  <p><code>loop</code>: 无条件的无限循环.</p>
+  <p><code>match</code>: 模式匹配．</p>
+  <p><code>mod</code>: 模块声明.</p>
+  <p><code>move</code>: 使得一个闭包获得它的所有捕获项的所有权.</p>
+  <p><code>mut</code>: 表示索引中的可变性, 原始指针和模式绑定.</p>
+  <p><code>pub</code>: 表示struct字段, impl块和模块的公共可见性.</p>
+  <p><code>ref</code>: 索引绑定.</p>
+  <p><code>return</code>: 从函数返回.</p>
+  <p><code>Self</code>: 某类型在实现一个trait时的类型别名.</p>
+  <p><code>self</code>: 方法标题或当前模块.</p>
+  <p><code>static</code>: 全局变量或者生命周期为整个程序执行时间.</p>
+  <p><code>struct</code>: 结构体定义.</p>
+  <p><code>super</code>: 当前模块的父模块.</p>
+  <p><code>trait</code>: 特性定义.</p>
+  <p><code>true</code>: 布尔true.</p>
+  <p><code>type</code>: 类型别名; 关联类型定义.</p>
+  <p><code>unsafe</code>: 表示不安全的代码, 功能, 特征和实现.</p>
+  <p><code>use</code>:　将符号导入作用域．</p>
+  <p><code>where</code>: type约束条件.</p>
+  <p><code>while</code>: 条件循环.</p>
+  <p><code>union</code>: (1.19新增)联合体声明, 与struct不同的是其中所有fields共用存储空间.</p>
+  <h1>markers</h1>
+  <blockquote>
+    <p>在rust中, 可以根据类型(Type) 的固有属性来将它们分类, 这些分类就表现为 特性(trait). 有一些 trait 和 struct 是用来表明类型的某些基本属性的. 例如:</p>
+  </blockquote>
+  <ul>
+    <li>
+      <p>Send 可以在线程之间传递.</p>
+    </li>
+    <li>
+      <p>Sized 在编译时的大小为常量.</p>
+    </li>
+    <li>
+      <p>Unsize 可以被转化为动态大小(使用?Sized)．</p>
+    </li>
+    <li>
+      <p>Copy 可以通过简单地拷贝数据(bits)来复制. 是Clone的子集. 对String的Copy只会复制指针, 所以String是Clone的而非Copy的.</p>
+    </li>
+    <li>
+      <p>Sync 它的引用(references)可以在线程之间安全共享.</p>
+    </li>
+    <li>
+      <p>Freeze 编译器内部特性, 用于判断 type 中是否有 UnsafeCell.</p>
+    </li>
+    <li>
+      <p>PhantomData&lt;T&gt; (struct) 大小为零的类型, 可以使事物的行为变得像它们拥有了类型为 T 的数据一样.</p>
+    </li>
+  </ul>
+  <h1>Rust 的内置 Traits</h1>
+  <ul>
+    <li>(Partial)-Eq/Ord</li>
+  </ul>
+  <p>PartialEq 定义了部分相等. 这种关系具有对称性(对于该类型的任意a,b, 有 a == b → b == a)以及传递性(对于该类型的任意a,b,c, 有 a == b ∧ b == c → a == c).</p>
+  <p>PartialOrd 定义了部分顺序, 并通过 Ordering 关系扩展了 PartialEq 的相等性. 这里的 Partial 意味着你的类型的某些实例可能不能被有意义地比较.<br>
+    PartialOrd 作用于 &lt;, &lt;=, =&gt; 和 &gt; 运算符.</p>
+  <ul>
+    <li>算数运算符</li>
+  </ul>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Operator</th>
+      <th>Trait</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>a + b</td>
+      <td>Add</td>
+    </tr>
+    <tr>
+      <td>a - b</td>
+      <td>Sub</td>
+    </tr>
+    <tr>
+      <td>-a</td>
+      <td>Neg</td>
+    </tr>
+    <tr>
+      <td>a * b</td>
+      <td>Mul</td>
+    </tr>
+    <tr>
+      <td>a / b</td>
+      <td>Div</td>
+    </tr>
+    <tr>
+      <td>a % b</td>
+      <td>Rem</td>
+    </tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>位运算符</li>
+  </ul>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Operator</th>
+      <th>Trait</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>!a</td>
+      <td>Not</td>
+    </tr>
+    <tr>
+      <td>a &amp; b</td>
+      <td>BitAnd</td>
+    </tr>
+    <tr>
+      <td>a | b</td>
+      <td>BitOr</td>
+    </tr>
+    <tr>
+      <td>a ^ b</td>
+      <td>BitXor</td>
+    </tr>
+    <tr>
+      <td>a &lt;&lt; b</td>
+      <td>Shl</td>
+    </tr>
+    <tr>
+      <td>a &gt;&gt; b</td>
+      <td>Shr</td>
+    </tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>Index 和 IndexMut</li>
+  </ul>
+  <p>Index 和 IndexMut traits 制定了对不可变和可变类型的索引操作. 前者是只读的, 后者允许赋值和修改, 即调用一个参数为 &amp;mut 的函数(注意这不一定是 self ).<br>
+    你可以对任何 collection 类型来实现它们.</p>
+  <ul>
+    <li>Fn, FnMut 和 FnOnce</li>
+  </ul>
+  <p><code>Fn*</code> 类的 traits 是对调用某些东西的抽象. 它们的差别仅仅是如何处理 self: <code>Fn</code> 使用引用, <code>FnMut</code> 使用可变引用,
+    <code>FnOnce</code> 消费掉它的值(这就是为什么只能被调用一次, 因为之后没有 self 可供调用了).<br>
+    注意, 这些区别只针对与 self, 与其它任何参数无关. 用可变引用甚至是 owned/moved 的值作为参数来调用 Fn 是完全正确的.</p>
+  <ul>
+    <li>Display 和 Debug</li>
+  </ul>
+  <p>Display 和 Debug 用于格式化值. 前者是为了产生面向用户的输出, 所以不可以自动派生, 而后者通常会产生类似JSON的表示, 并且可以安全地为大多数类型自动派生.</p>
+  <ul>
+    <li>Copy 和 Clone</li>
+  </ul>
+  <p>这两个 traits 用于复制对象.</p>
+  <p>Copy 表明你的类型可以被安全地复制. 这意味这如果你复制了类型的值所在的内存, 就会得到一个新的有效的值, 而不会引用原始数据. 它可以是自动派生的(需要 Clone, 因为根据定义, 所有可 Copy 的类型都可
+    Clone). 事实上, 从来不需要手动地实现它.</p>
+  <ul>
+    <li>Drop</li>
+  </ul>
+  <p>Drop trait 的作用是当事物到达范围之外时, 归还所占用的资源. 关于此已经有过很多讨论了, 以及你为什么不应该直接调用它. 不过, 这十分适用于包装 FFI 结构, 它们需要在稍后才被回收, 同时也适用于文件,
+    sockets, 数据库句柄以及厨房水槽.</p>
+  <ul>
+    <li>Default</li>
+  </ul>
+  <p>Default 用于声明类型的默认值. 它可以被自动派生, 但只适用于所有成员都有 Default 实现的结构.</p>
+  <p>它在标准库中被许多类型实现了, 并且可以在很多地方使用. 所以如果你的类型有一个可以被认为是&quot;默认&quot;的值, 那么实现这个 trait 是一个好主意.</p>
+  <ul>
+    <li>Error</li>
+  </ul>
+  <p>Error 是 Rust 中所有表示错误的值的基本 trait. 对Java熟悉的人来说, 相当于是 Throwable, 它们的行为也类似(除了我们既不 catch 也不 throw 它们).</p>
+  <ul>
+    <li>Hash</li>
+  </ul>
+  <p>哈希是将一包数据减少为单个值的过程，不同的数据哈希后的值依然不同，相同的依然相同，而不需要比较哈希前的数据那么多的位.<br>
+    在Rust中， Hash trait 表示该类型是否可以被哈希。 请注意，这个特性并不涉及任何有关哈希算法的信息（这是封装在 Hasher trait中），它基本上只是命令这些比特位被哈希.</p>
+  <ul>
+    <li>Iterator 和它的朋友们</li>
+  </ul>
+  <p>Rust的 for 循环可以遍历所有实现了 IntoIterator 的类型。 是的，这包括Iterator本身。 除此之外， Iterator特性有很多很酷的方法来处理迭代的值，比如filter， map，
+    enumerate， fold， any， all， sum， min等等。</p>
 </div>
 <a href="https://github.com/ltoddy/ltoddy.github.io" target="_blank"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
-        src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-        alt="Fork me on GitHub"
-        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+    alt="Fork me on GitHub"
+    data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
 </a>
 </body>
 </html>
