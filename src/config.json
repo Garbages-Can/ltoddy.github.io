@@ -1,16 +1,30 @@
 {
   "username": "ltoddy",
   "header": {
-    "title": "The computer science actually has a lot in common with magic.",
-    "subtitle": "希望在2020年1月1日前,自己在技术上能够独挡一面.",
-    "content": [
-      "自己已经完全使用Linux(Ubuntu)工作快两年了,熟练的使用命令行.",
-      "目前已经使用docker进行容器化开发.",
-      "熟悉的框架:Django, Flask, Sanic.",
-      "熟悉MySQL, mongodb, redis三大数据库.",
-      "喜欢开源(Github),喜欢折腾.",
-      "由SICP这本书认识Scheme,并觉得Scheme是世界上最好的语言:("
-    ]
+    "navigation": {
+      "channels": [
+        {
+          "title": "docker-tutorial",
+          "link": "null"
+        },
+        {
+          "title": "kubernetes-tutorial",
+          "link": "null"
+        }
+      ]
+    },
+    "banner": {
+      "title": "The computer science actually has a lot in common with magic.",
+      "subtitle": "希望在2020年1月1日前,自己在技术上能够独挡一面.",
+      "content": [
+        "自己已经完全使用Linux(Ubuntu)工作快两年了,熟练的使用命令行.",
+        "目前已经使用docker进行容器化开发.",
+        "熟悉的框架:Django, Flask, Sanic.",
+        "熟悉MySQL, mongodb, redis三大数据库.",
+        "喜欢开源(Github),喜欢折腾.",
+        "由SICP这本书认识Scheme,并觉得Scheme是世界上最好的语言:("
+      ]
+    }
   },
   "perPageCount": 11,
   "essays": [

@@ -5,8 +5,8 @@ import css from './BackTop.css';
 
 
 class BackTop extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.toTop = this.toTop.bind(this);
   }
 

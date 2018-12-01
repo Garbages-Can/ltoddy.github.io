@@ -1,0 +1,22 @@
+.channel > a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 10px;
+}
+
+.container {
+  background: linear-gradient(rgba(94, 94, 94, 1) 0%, rgba(102, 102, 102, 0.9) 70%, rgba(77, 77, 77, 1) 100%);
+  height: 60px;
+  box-shadow: rgb(25, 25, 112) 0 5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #E5E5E5;
+}
+
+.channels {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

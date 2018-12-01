@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Header from './Header';
+import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './Footer';
 import Corner from './components/Corner';
@@ -29,13 +29,13 @@ class Application extends React.Component {
     return (
       <div className={css.container}>
         <Header
-          title={header.title}
-          subtitle={header.subtitle}
-          content={header.content}
+          navigation={header.navigation}
+          banner={header.banner}
         />
-        <Content essays={essays}
-                 repos={this.state.repos}
-                 perPageCount={perPageCount}
+        <Content
+          essays={essays}
+          repos={this.state.repos}
+          perPageCount={perPageCount}
         />
         <Footer/>
         <Corner/>
