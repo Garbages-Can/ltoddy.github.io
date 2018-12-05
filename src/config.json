@@ -29,6 +29,12 @@
   "perPageCount": 11,
   "essays": [
     {
+      "title": "使用typescript写graphql服务的一个大坑",
+      "createdAt": "2018-11-04",
+      "link": "/essay/2018/11/04/ts-graphql-trap.html",
+      "preview": "今天在公司新开了一个后端服务, 技术选择: 语言使用`typescript`, 框架使用`graphql-yogo`.关于 typescript 的配置以及配置文件用的是:https://github.com/ltoddy/ltoddy.github.io/tree/master/express-typescript"
+    },
+    {
       "title": "JavaScript 与 DOM",
       "createdAt": "2018-10-05",
       "link": "/essay/2018/10/05/js-dom.html",
