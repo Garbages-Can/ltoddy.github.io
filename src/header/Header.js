@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Navigation from './Navigation';
+// import Navigation from './Navigation';
 import Banner from './Banner';
 
 
@@ -11,11 +11,13 @@ class Header extends React.Component {
   }
 
   render() {
-    const {navigation, banner} = this.props;
+    // const {navigation, banner} = this.props;
+    const {banner} = this.props;
 
     return (
       <React.Fragment>
-        <Navigation channels={navigation.channels}/>
+        {/*TODO*/}
+        {/*<Navigation channels={navigation.channels}/>*/}
         <Banner title={banner.title} subtitle={banner.subtitle} content={banner.content}/>
       </React.Fragment>
     )
