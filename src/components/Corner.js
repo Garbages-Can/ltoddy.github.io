@@ -1,30 +1,29 @@
-import React from 'react';
+import React from 'react'
 
-import BackTop from './BackTop';
-import Old from './Old';
+import BackTop from './BackTop'
+import Old from './Old'
 
-import css from './Corner.css';
-
+import css from './Corner.css'
 
 class Corner extends React.Component {
   constructor() {
-    super();
+    super()
   }
 
   shouldComponentUpdate() {
-    return false;
+    return false
   }
 
   render() {
     return (
       <div className={css.position}>
         <div className={css.container}>
-          <Old/>
-          <BackTop/>
+          <Old />
+          <BackTop />
         </div>
       </div>
     )
   }
 }
 
-export default Corner;
+export default Corner

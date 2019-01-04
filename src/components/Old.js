@@ -1,32 +1,31 @@
-import React from 'react';
+import React from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import old from '../../assets/old.png';
+import old from '../../assets/old.png'
 
-import css from './Old.css';
-
+import css from './Old.css'
 
 class Old extends React.Component {
   constructor() {
-    super();
+    super()
   }
 
   shouldComponentUpdate() {
-    return false;
+    return false
   }
 
   render() {
     return (
       <div>
-        <div className={css.container} data-tip data-for='old'>
+        <div className={css.container} data-tip data-for="old">
           <a href="./old" target="_blank">
-            <i className="fas fa-info"/>
+            <i className="fas fa-info" />
           </a>
         </div>
         <ReactTooltip id="old">
           <span>旧blog</span>
           <div className={css.old}>
-            <img src={old} alt=""/>
+            <img src={old} alt="" />
           </div>
         </ReactTooltip>
       </div>
@@ -34,4 +33,4 @@ class Old extends React.Component {
   }
 }
 
-export default Old;
+export default Old
