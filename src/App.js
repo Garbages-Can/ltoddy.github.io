@@ -17,11 +17,7 @@ class Application extends React.Component {
   componentDidMount() {
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(response => response.json())
-      .then(repos =>
-        this.setState(() => ({
-          repos: repos.sort((a, b) => a.stargazers_count < b.stargazers_count),
-        }))
-      )
+      .then(repos => this.setState(() => ({ repos: repos.sort((a, b) => b.stargazers_count - a.stargazers_count) })))
   }
 
   componentWillUnmount() {
@@ -31,14 +27,14 @@ class Application extends React.Component {
   render() {
     return (
       <div className={css.container}>
-        <Header navigation={header.navigation} banner={header.banner} />
+        <Header navigation={header.navigation} banner={header.banner}/>
         <Content
           essays={essays}
           repos={this.state.repos}
           perPageCount={perPageCount}
         />
-        <Footer />
-        <Corner />
+        <Footer/>
+        <Corner/>
       </div>
     )
   }
