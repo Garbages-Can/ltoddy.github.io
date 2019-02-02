@@ -1,12 +1,12 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
-  entry: path.resolve(__dirname, 'index.js'),
+  entry: path.resolve(__dirname, 'src', 'index.js'),
 
   output: {
     publicPath: 'dist/',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   module: {
@@ -15,20 +15,20 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
             loader: 'css-loader',
             options: {
-              modules: true
-            }
-          }
-        ]
+              modules: true,
+            },
+          },
+        ],
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['babel-loader'],
       },
       {
         test: /\.(png|jpg|svg)$/,
@@ -36,11 +36,11 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
-            }
-          }
-        ]
-      }
-    ]
-  }
-};
+              limit: 8192,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
