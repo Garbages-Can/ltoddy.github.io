@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip'
 import { StyleRoot } from 'radium'
 import PropTypes from 'prop-types'
 
-import { slideInDown } from '../animation-config'
+import { slideInDownOption } from '../animation-config'
 
 import me from '../../assets/me.jpg'
 import css from './Banner.css'
@@ -21,7 +21,7 @@ class Banner extends React.Component {
         </div>
         <div className={css.introduce}>
           <StyleRoot>
-            <div style={slideInDown}>
+            <div style={slideInDownOption}>
               <a
                 href="https://github.com/ltoddy"
                 target="_blank"

@@ -4,7 +4,7 @@ import LazyLoad from 'react-lazyload'
 import { StyleRoot } from 'radium'
 import PropTypes from 'prop-types'
 
-import { flipInX, rollIn } from '../animation-config'
+import { flipInXOption, rollInOption } from '../animation-config'
 import Repository from './Repository'
 import Essay from './Essay'
 import Pagination from './Pagination'
@@ -35,7 +35,7 @@ class Content extends React.Component {
     return this.props.repos.map((repo, index) => (
       <LazyLoad height={200} key={index}>
         <StyleRoot>
-          <div style={flipInX}>
+          <div style={flipInXOption}>
             <Repository {...repo} />
           </div>
         </StyleRoot>
@@ -49,7 +49,7 @@ class Content extends React.Component {
       .map((essay, index) => (
         <LazyLoad height={150} key={index}>
           <StyleRoot>
-            <div style={rollIn}>
+            <div style={rollInOption}>
               <Essay {...essay} />
             </div>
           </StyleRoot>
