@@ -4,7 +4,7 @@ import LazyLoad from 'react-lazyload'
 import { StyleRoot } from 'radium'
 
 import qq from '../assets/qq.jpg'
-import { rubberBand } from './animation-config'
+import { rubberBandOption } from './animation-config'
 import css from './Footer.css'
 
 const Footer = () => (
@@ -15,7 +15,7 @@ const Footer = () => (
       <div className={css.logo}>
         <LazyLoad height={200}>
           <StyleRoot>
-            <div style={rubberBand}>
+            <div style={rubberBandOption}>
               <a
                 href="https://github.com/ltoddy/ltoddy.github.io"
                 target="_blank"
