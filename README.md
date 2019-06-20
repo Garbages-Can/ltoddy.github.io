@@ -1,3 +1,5 @@
+不再使用此项目，请移至： [https://github.com/ltoddy/blog](https://github.com/ltoddy/blog)
+
 <p align="center">
     <img src="assets/github-octocat.png" width="400px" alt="github bitbucket">
 </p>
